@@ -6,7 +6,7 @@ import { getItemFromStorage, setItemInStorage, wait } from "../utils/utils";
 import { postRequest } from "../utils/api";
 
 const RootContext = createContext();
-export const RootPovider = ({children})=>{
+export const RootProvider = ({children})=>{
     const [starter, setStarter] = useState({
         is_started: false,
     });

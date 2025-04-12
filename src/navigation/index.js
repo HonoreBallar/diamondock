@@ -4,16 +4,25 @@
 // import { ProductProvider } from "../context/ProductContext";
 // import { WishlistProvider } from "../context/WishlistContext";
 import { CartProvider } from "../context/CartContext";
-import { RootPovider } from "../context/RootContext";
+import { CategoryProvider } from "../context/CategoryContext";
+import { ProductProvider } from "../context/ProductContext";
+import { RootProvider } from "../context/RootContext";
+import { WishlistProvider } from "../context/WishlistContext";
 import StackNavigator from "./StackNavigator";
 
 export default function RootNavigator(){
     return (
-        <RootPovider>
-            <CartProvider>
-                <StackNavigator />
-            </CartProvider>
-        </RootPovider>
+        <RootProvider>
+            <WishlistProvider>
+                <CartProvider>
+                    <ProductProvider>
+                        <CategoryProvider>
+                            <StackNavigator />
+                        </CategoryProvider>
+                    </ProductProvider>
+                </CartProvider>
+            </WishlistProvider>
+        </RootProvider>
         // <CartProvider>
         //     <OrderProvider>
         //         <CategoryProvider>

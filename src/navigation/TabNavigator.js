@@ -8,6 +8,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import OrderScreen from '../screens/OrderScreen';
 import { useCart } from '../context/CartContext';
 import ProfilScreen from '../screens/ProfilScreen';
+import colors from '../utils/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,10 +31,10 @@ const TabNavigator = () => {
             } else if (route.name === 'Mon compte') {
                 iconName = 'user-tie';
             }
-          return <FontAwesome5 name={iconName} size={focused ? 24 : 20 } color={focused? '#03045e': color} />;
+          return <FontAwesome5 name={iconName} size={focused ? 24 : 20 } color={focused? colors.primary: color} />;
         },
         headerShown: false,
-        tabBarActiveTintColor: '#03045e',
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: '#666',
         tabBarStyle: { backgroundColor: '#f8f9fa', height: 55},
         tabBarBadgeStyle:{ backgroundColor: "orange", color: "black"}

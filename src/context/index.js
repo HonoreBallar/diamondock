@@ -1,22 +1,24 @@
-import { Text } from "react-native";
 import { CategoryProvider } from "./CategoryContext";
 import { OrderProvider } from "./OrderContext";
 import { ProductProvider } from "./ProductContext";
-import { RootPovider } from "./RootContext";
-// import { SearchProvider } from "./SearchContext";
+import { RootProvider } from "./RootContext";
+import { SearchProvider } from "./SearchContext";
+import { CartProvider } from "./CartContext";
 
 export const AppProvider = ({children}) =>{
     return (
-        <RootPovider>
-            <OrderProvider>
-                <ProductProvider>
+        <RootProvider>
+            <CartProvider>
+                <OrderProvider>
                     <SearchProvider>
-                        <CategoryProvider>
-                            {children}
-                        </CategoryProvider>
+                        <ProductProvider>
+                            <CategoryProvider>
+                                {children}
+                            </CategoryProvider>
+                        </ProductProvider>
                     </SearchProvider>
-                </ProductProvider>
-            </OrderProvider>
-        </RootPovider>
+                </OrderProvider>
+            </CartProvider>
+        </RootProvider>
     );
 }
