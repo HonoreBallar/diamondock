@@ -11,7 +11,7 @@ export default function CategoryCard(){
                 <Text style={{marginLeft: 10, fontSize: 18, fontWeight: '500'}}>Women</Text>  
                 <View style={{flexDirection: 'row'}}>
                     <Text style={{backgroundColor: '#A9C7FF', marginRight: 8, padding: 2, borderRadius: 5}}>10</Text>
-                    <FontAwesome5 name="chevron-right" size={15} color="black" />
+                    <FontAwesome5 name="chevron-right" size={17} color="black" />
                 </View>
             </View>
         </TouchableOpacity>

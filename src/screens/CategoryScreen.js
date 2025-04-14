@@ -2,13 +2,14 @@ import { FlatList, ScrollView, Text, View } from "react-native"
 import Header from "../components/Header";
 import CategoryCard from "../components/CategoryCard";
 import { useCategories } from "../context/CategoryContext";
+import Title from "../components/Title";
 
 export default function CategoryScreen(){
     const {categories} = useCategories();
     return(
         <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
             <Header />
-            {/* <CategoryCard/> */}
+            <Title title="Toutes les categories" />
             <View style={{marginHorizontal: 13, marginVertical: 15}}>
                 <FlatList
                     data={categories}

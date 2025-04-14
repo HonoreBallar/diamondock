@@ -7,15 +7,18 @@ export const ProductProvider = ({children})=>{
     const [products, setProducts] = useState([
         {
             token: '5255533',
-            name: 'sneaker'
+            name: 'sneaker',
+            price: 15000
         },
         {
             token: '58621233',
-            name: 'Iphone x'
+            name: 'Iphone x',
+            price: 155000
         },
         {
             token: '6686666',
-            name: 'Ordinateur'
+            name: 'Ordinateur',
+            price: 635000
         }
 
     ]);
