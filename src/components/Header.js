@@ -4,13 +4,21 @@ import colors from '../utils/colors';
 
 export default function Header({navigation}){
     return (
-        <View style={{flexDirection: 'row',justifyContent:'space-between' ,padding: 15, height: 60, marginTop: 40}}>
-            <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}>Diamondock</Text>
-            <View>
+        <View>
+            <View style={{flexDirection: 'row',justifyContent:'space-between' ,padding: 15, height: 60, marginTop: 40}}>
+                <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}>Diamondock</Text>
+                <View>
+                </View>
+                <TouchableOpacity onPress={()=>alert('menu')}>
+                    <FontAwesome5 name="stream" size={20} color="#000" style={{marginTop: 9}}/>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={()=>alert('menu')}>
-                <FontAwesome5 name="stream" size={20} color="#000" style={{marginTop: 9}}/>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity onPress={()=>alert('menu')} style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
+                    <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
+                    <Text style={{marginLeft: 8, fontSize: 16, marginTop: 4,}}>Rechercher un article ...</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

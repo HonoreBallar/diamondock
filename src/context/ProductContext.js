@@ -8,7 +8,16 @@ export const ProductProvider = ({children})=>{
         {
             token: '5255533',
             name: 'sneaker'
+        },
+        {
+            token: '58621233',
+            name: 'Iphone x'
+        },
+        {
+            token: '6686666',
+            name: 'Ordinateur'
         }
+
     ]);
     const [loading, setLoading] = useState(true);
 
