@@ -63,7 +63,7 @@ export default function CartScreen({navigation, }){
                                     <Text style={{color: '#c3c3c3', fontSize: 18}}>Total :</Text>
                                     <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}> {formatAmount(getTotal() || 0)}</Text>
                                 </View>
-                                <TouchableOpacity onPress={()=>navigation.navigate('ValidateOrderScreen')} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10 }}>
+                                <TouchableOpacity onPress={()=>navigation.navigate('PaymentScreen')} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10 }}>
                                     <Text style={{color: 'white', fontWeight: 'bold',  textAlign: 'center'}}>Valider ma commande</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={()=>handleClearCart()}>

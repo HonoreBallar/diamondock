@@ -8,7 +8,7 @@ export default function CategoryCard({category}){
                 <Image source={{uri: category.image}} style={{width: 50, height: 50, borderRadius: 25}} resizeMode="cover"/>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '70%'}}>
-                <Text style={{marginLeft: 10, fontSize: 18, fontWeight: '500'}}>Women</Text>  
+                <Text style={{marginLeft: 10, fontSize: 18, fontWeight: '400'}}>{category.name}</Text>  
                 <View style={{flexDirection: 'row'}}>
                     <Text style={{backgroundColor: '#A9C7FF', marginRight: 8, padding: 2, borderRadius: 5}}>10</Text>
                     <FontAwesome5 name="chevron-right" size={17} color="black" style={{marginTop: 2}}/>
