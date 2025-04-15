@@ -44,23 +44,23 @@ export default function CartCard({navigation, product}){
     }
 
     return (
-        <View style={{flexDirection: 'row', height: 120, backgroundColor: 'white', borderRadius: 10, padding: 10, marginBottom: 10}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product: product})}>
-                <Image source={{uri: product?.main_image}} style={{height: 100, width: 100, marginRight: 15, borderRadius: 5}} />
+        <View style={{flexDirection: 'row', height: 120, borderRadius: 10, padding: 10, marginBottom: 10}}>
+            <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product: product})} style={{backgroundColor: 'white', width: 130, height: 110, borderRadius: 8, borderWidth: 0.1, justifyContent: 'center',alignItems: 'center'}}>
+                <Image source={{uri: product?.image}} style={{height: 100, width: 120, borderRadius: 8}} resizeMode='cover'/>
             </TouchableOpacity>
-            <View style={{width: '80%'}}>
+            <View style={{width: '70%', marginLeft: 8}}>
                 <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product: product})} >
                     <Text style={{fontSize: 15, fontWeight: 'bold', marginBottom: 2, color: colors.primary, width: '70%'}} numberOfLines={1}>{product?.name || 'nom produit'}</Text>
                 </TouchableOpacity>
                 <Text style={{fontSize: 12, color: '#555555', marginTop: 5, width: '70%'}} numberOfLines={1}>Categorie: {product?.category || 'categorie'}</Text>
-                <Text style={{fontSize: 14, color: '#03045e', fontWeight: 'bold'}}>Prix: {formatAmount(product?.price || 0)}</Text>
+                <Text style={{fontSize: 14, color: '#000', fontWeight: 'bold'}}>Prix: {formatAmount(product?.price || 0)}</Text>
                 <View style={{flexDirection: 'row', justifyContent:'space-between', width: '80%', marginTop: 10, }}>
                     <View style={{flexDirection: 'row', width: '60%', justifyContent: 'space-around'}}>
                         <TouchableOpacity onPress={()=>handleDecrement(product.token)} style={{}}>
                             {loadingButton ? (
                                 <ActivityIndicator size={22} color="black" />
                             ):(
-                                <FontAwesome5 name="minus-circle" size={25} color="#c5c5c5" />
+                                <FontAwesome5 name="minus-circle" size={25} color={colors.primary} />
                             )}
                         </TouchableOpacity>
                         <Text style={{fontWeight: 'bold', fontSize: 20, marginTop: 1}}>{product?.quantity}</Text>
@@ -68,7 +68,7 @@ export default function CartCard({navigation, product}){
                             {loadingMinus ? (
                                 <ActivityIndicator size={22} color="black" />
                             ):(
-                                <FontAwesome5 name="plus-circle" size={25} color="#c5c5c5" />
+                                <FontAwesome5 name="plus-circle" size={25} color={colors.primary} />
                             )}
                         </TouchableOpacity>
                     </View>

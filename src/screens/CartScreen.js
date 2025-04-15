@@ -1,4 +1,4 @@
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
 import Title from "../components/Title";
 import { useCart } from "../context/CartContext";
@@ -33,7 +33,7 @@ export default function CartScreen({navigation, }){
         <ScrollView style={{flex: 1}}>
             <Header />
             <Title title="Mon panier" />
-            <View style={{flex: 1, padding: 15, marginBottom: 100}}>
+            <View style={{flex: 1, padding: 15, marginBottom: 20}}>
                 { loading ? (
                     <ActivityIndicator size="large" color={colors.primary} />
                 ) : (
