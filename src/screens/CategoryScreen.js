@@ -17,7 +17,7 @@ export default function CategoryScreen(){
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
-                        <CategoryCard />
+                        <CategoryCard category={item} />
                     )}
                     ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
                 />

@@ -10,22 +10,22 @@ export const CategoryProvider = ({ children }) => {
     {
       name: 'Sneaker',
       nb_products: 5,
-      image: '../assets/chaussure.jpg'
+      image: 'https://images.augustman.com/wp-content/uploads/sites/3/2022/09/23154503/untitled-design-38.jpeg'
     },
     {
       name: 'Chaines',
       nb_products: 2,
-      image: '../assets/chaussure.jpg'
+      image: 'https://www.cdiscount.com/pdt2/7/3/9/1/700x700/auc2009798206739/rw/chaine-figaro-collier-homme-plaque-or-24-carats-so.jpg'
     },
     {
       name: 'Hommes',
       nb_products: 2,
-      image: '../assets/chaussure.jpg'
+      image: 'https://assets.devred.com/media/catalog/product/cache/61a2edd6ccaebfacf96d2d13faad9703/c/h/chemise-homme-ville-unie-extra-slim-5164020_01_1.jpg'
     },
     {
       name: 'Femmes',
       nb_products: 122,
-      image: '../assets/chaussure.jpg'
+      image: 'https://www.romyboutique.fr/13430/chemise-oversize-.jpg'
     },
   ]);
   const [loading, setLoading] = useState(true);

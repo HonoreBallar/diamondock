@@ -34,9 +34,10 @@ export default function ProductCard({navigation, product}){
 
     return (
         <TouchableOpacity onPress={handlePress}>
-            <View style={{backgroundColor: '#f7f7f7', width: 150, height: 225, borderRadius: 10, marginRight: 10, padding: 8}}>
+            <View style={{backgroundColor: '#f7f7f7', width: 150, height: 230, borderRadius: 10, marginRight: 10, padding: 8}}>
                 <View style={{alignSelf: 'center',marginTop: 10, height: 120, width: 130, backgroundColor: 'white', borderRadius: 10}}>
-                    <Image source={{uri: product?.main_image}} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }}/>
+                    {/* <Image source={{uri: product?.main_image}} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }}/> */}
+                    <Image source={{uri: product.image}} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }} resizeMode='cover'/>
                     <View style={{marginTop: -115, alignItems: 'flex-end'}}>
                         <TouchableOpacity onPress={()=>handleAddToWishlist(product)} style={{backgroundColor: '#fff', borderRadius: 15, width:30, height:30, justifyContent: 'center', alignItems: 'center'}}>
                             {loadingWishlist ? (
@@ -53,9 +54,9 @@ export default function ProductCard({navigation, product}){
                     </View>
                 </View>
                 <View style={{margin: 10}}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product})}><Text style={{fontSize: 15, fontWeight: '500', color: colors.primary, marginTop: 1}} numberOfLines={1}>{product?.name || 'nom produit'}</Text></TouchableOpacity>
-                    <Text style={{fontSize: 15, color: colors.primary, marginTop: 1, fontWeight: '500'}}>{ formatAmount(product?.price || 0)}</Text>
-                    <View style={{marginTop: 2, alignItems: 'center'}}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product})}><Text style={{fontSize: 15, fontWeight: '500', color: colors.gray, marginTop: 1}} numberOfLines={1}>{product?.name || 'nom produit'}</Text></TouchableOpacity>
+                    <Text style={{fontSize: 15, color: '#000', marginTop: 1, fontWeight: '800',}}>{ formatAmount(product?.price || 0)}</Text>
+                    <View style={{marginTop: 3, alignItems: 'center'}}>
                         <TouchableOpacity disabled={loading} onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#f29f03', borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                             {loading ? (
                                 <ActivityIndicator size="small" color={colors.primary} />

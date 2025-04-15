@@ -29,7 +29,7 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={()=>navigation.navigate('DetailCategoryScreen',{category: item})} style={{marginRight: 10, marginBottom: 10, padding: 5 }}>
                                 <View style={{width: 80, height: 80, borderRadius: 40, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderWidth: 0.5, borderColor: '#ccc'}}>
-                                    <Image source={require('../assets/chaussure.jpg')} style={{width: 60, height: 60, borderRadius: 30}} resizeMode="contain"/>
+                                    <Image source={{uri: item.image}} style={{width: 80, height: 80, borderRadius: 40}} resizeMode="cover"/>
                                 </View>
                                 <Text style={{fontSize: 14, fontWeight: '400',textAlign: 'center'}}>{item.name || 'Categorie'} ({item.nb_products || 0})</Text>
                             </TouchableOpacity>
