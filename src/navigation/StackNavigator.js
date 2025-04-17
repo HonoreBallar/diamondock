@@ -27,8 +27,6 @@ const StackNavigator = ({navigation}) => {
       <Stack.Screen name="DrawerScreen" component={DrawerScreen} options={{ 
         headerShown: false,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        
-
       }} />
     </Stack.Navigator>
   );

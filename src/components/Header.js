@@ -10,9 +10,9 @@ export default function Header(){
     return (
         <View>
             <View style={{flexDirection: 'row',justifyContent:'space-between' ,padding: 15, height: 60, marginTop: 40}}>
-                <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}>Diamondock</Text>
-                {/* <View>
-                </View> */}
+                <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
+                    <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}>Diamondock</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={()=>navigation.navigate('DrawerScreen')}>
                     <FontAwesome5 name="stream" size={20} color="#000" style={{marginTop: 9}}/>
                 </TouchableOpacity>
