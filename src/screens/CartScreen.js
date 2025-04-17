@@ -30,7 +30,7 @@ export default function CartScreen({navigation, }){
     };
 
     return(
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
             <Header />
             <Title title="Mon panier" />
             <View style={{flex: 1, padding: 15, marginBottom: 20}}>
@@ -39,13 +39,10 @@ export default function CartScreen({navigation, }){
                 ) : (
                     cart.length === 0 ? (
                         <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 150}}>
-                            {/* <Image source={require('../../assets/empty_cart.png')} style={{width: 200, height: 200}} /> */}
-                            <View style={{margin: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.jumpTo('Home')} style={{flexDirection: 'row', width: '60%', backgroundColor: colors.primary, padding:10, alignSelf: 'center', borderRadius: 15, justifyContent: 'center'}}>
-                                    <Text style={{fontSize:15, color : 'white'}}>Visiter les produits</Text>
-                                    <FontAwesome5 name="hand-point-right" size={18} color='white' style={{marginLeft: 8}}/>
-                                </TouchableOpacity>
+                            <View style={{width: 100, height: 100, borderRadius: 50, backgroundColor: 'white', elevation: 2, justifyContent: 'center', alignItems: 'center'}}>
+                                <FontAwesome5 name="shopping-bag" size={48} color={colors.primary}/>
                             </View>
+                            <Text style={{marginTop: 20, fontSize: 20, color: '#999', fontWeight: '400'}}>Aucun produit dans votre panier</Text>
                         </View>
                     ) : (
                         <>

@@ -9,14 +9,16 @@ import colors from "../utils/colors";
 export default function WishlistScreen({navigation}){
     const {wishlist} = useWishlist();
     return(
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
             <Header/>
             <Title title="Mes favoris" />
             <View style={{flex: 1, padding: 15, marginBottom: 80}}>
                 { wishlist.length === 0? (
-                    <View style={{alignItems: 'center', justifyContent: 'center', height: 200, backgroundColor: 'white', marginTop: 150, borderRadius: 10}}>
-                        <FontAwesome5 name="heartbeat" size={35} color={colors.primary} style={{marginTop: 5}}/>
-                        <Text style={{fontSize: 18, fontWeight: 'bold', color: colors.primary}}>Votre liste de favoris est vide.</Text>
+                    <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 150}}>
+                        <View style={{width: 100, height: 100, borderRadius: 50, backgroundColor: 'white', elevation: 2, justifyContent: 'center', alignItems: 'center'}}>
+                            <FontAwesome5 name="heartbeat" size={48} color={colors.primary}/>
+                        </View>
+                        <Text style={{marginTop: 20, fontSize: 20, color: '#999', fontWeight: '400'}}>Aucun produit dans votre liste d'envie</Text>
                     </View>
                 ) : (
                     <>
