@@ -7,6 +7,7 @@ import DrawerScreen from '../screens/DrawerScreen';
 import DigitalMallScreen from '../screens/DigitalMallScreen';
 import SocialMediaManager from '../screens/SocialMediaManagerScreen';
 import DiamondAresScreen from '../screens/DiamondAresScreen';
+import CategoryDetailScreen from '../screens/CategoryDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const StackNavigator = ({navigation}) => {
       <Stack.Screen name="DigitalMallScreen" component={DigitalMallScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SocialMediaManager" component={SocialMediaManager} options={{ headerShown: false }} />
       <Stack.Screen name="DiamondAresScreen" component={DiamondAresScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="CategoryDetailScreen" component={CategoryDetailScreen} options={{ headerShown: false }} />
       <Stack.Screen name="DrawerScreen" component={DrawerScreen} options={{ 
         headerShown: false,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,

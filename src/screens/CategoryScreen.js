@@ -4,7 +4,7 @@ import CategoryCard from "../components/CategoryCard";
 import { useCategories } from "../context/CategoryContext";
 import Title from "../components/Title";
 
-export default function CategoryScreen(){
+export default function CategoryScreen({navigation}){
     const {categories} = useCategories();
     return(
         <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
@@ -17,7 +17,7 @@ export default function CategoryScreen(){
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
-                        <CategoryCard category={item} />
+                        <CategoryCard category={item} navigation={navigation}/>
                     )}
                     ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
                 />

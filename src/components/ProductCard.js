@@ -59,7 +59,7 @@ export default function ProductCard({navigation, product}){
                     <View style={{marginTop: 3, alignItems: 'center'}}>
                         <TouchableOpacity disabled={loading} onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#f29f03', borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                             {loading ? (
-                                <ActivityIndicator size="small" color={colors.primary} />
+                                <ActivityIndicator size="small" color={colors.border} />
                             ):(
                                 <View style={{flexDirection: 'row'}}>
                                     <FontAwesome5 name="cart-plus" size={15} color="#000" />

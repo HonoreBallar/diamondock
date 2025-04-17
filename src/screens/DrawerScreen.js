@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import { Text, TouchableOpacity, View } from "react-native";
 import colors from "../utils/colors";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -19,6 +20,7 @@ export default function DrawerScreen({navigation}){
                 <CardNavigation icon={'store'} title={'Vendeur'}/>
                 <CardNavigation icon={'user-tie'} title={'Devenir Vendeur'}/>
             </View>
+            <Text style={{textAlign: 'center', marginTop: 60, color: '#999'}}>Version : {Constants.expoConfig.version} © Diamondock</Text>
         </View>
     )
 }
