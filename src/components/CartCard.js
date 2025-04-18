@@ -44,7 +44,7 @@ export default function CartCard({navigation, product}){
     }
 
     return (
-        <View style={{flexDirection: 'row', height: 130, borderRadius: 10, padding: 10, marginBottom: 10, borderWidth: 0.1}}>
+        <View style={{flexDirection: 'row', height: 130, borderRadius: 10, padding: 10, marginBottom: 10, backgroundColor: colors.tertiary, borderWidth: 0.1}}>
             <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product: product})} style={{backgroundColor: 'white', width: 130, height: 110, borderRadius: 8, borderWidth: 0.1, justifyContent: 'center',alignItems: 'center'}}>
                 <Image source={{uri: product?.image}} style={{height: 100, width: 120, borderRadius: 8}} resizeMode='cover'/>
             </TouchableOpacity>

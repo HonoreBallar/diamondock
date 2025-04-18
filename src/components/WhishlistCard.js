@@ -33,9 +33,10 @@ export default function WishlistCard({navigation, product}){
         }, 50);
     }
     return (
-        <View style={{flexDirection: 'row', height: 120, backgroundColor: 'white', borderRadius: 10, padding: 10, marginBottom: 10}}>
+        <View style={{flexDirection: 'row', height: 120, backgroundColor: '#f9f9f9', borderRadius: 10, padding: 10, marginBottom: 10, elevation: 1}}>
             <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen', {product})}>
-                <Image source={{uri: product?.main_image}} style={{height: 100, width: 100, marginRight: 15, borderRadius: 5}} />
+                {/* <Image source={{uri: product?.main_image}} style={{height: 100, width: 100, marginRight: 15, borderRadius: 5}} /> */}
+                <Image source={{uri: product?.image}} style={{height: 100, width: 100, marginRight: 15, borderRadius: 5}} />
             </TouchableOpacity>
             <View>
                 <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen', {product})}>

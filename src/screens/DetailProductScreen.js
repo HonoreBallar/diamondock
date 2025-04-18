@@ -1,13 +1,28 @@
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Header from "../components/Header";
 import Title from "../components/Title";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import MyBottomSheet from "../components/MyBottomSheet";
 
 export default function DetailProductScreen({navigation}){
+
+    const bottomSheetRef = useRef(null);
+
+    // Définir les points d'accroche spécifiques à cet écran
+    const snapPoints = ['25%', '60%', '90%'];
+
+    const openBottomSheet = () => {
+        bottomSheetRef.current?.snapToIndex(1); // Ouvre au deuxième point d'accroche (60%)
+    };
+
+    const closeBottomSheet = () => {
+        bottomSheetRef.current?.close(); // Ferme le bottom sheet
+    }
+
     const [quantity, setQuantity] = useState('1');
     const photos = [
         'https://britannia-jewellery.co.uk/wp-content/uploads/C11257-B-scaled.jpg',
@@ -18,7 +33,7 @@ export default function DetailProductScreen({navigation}){
     return(
         <View style={{flex: 1}}>
             <StatusBar translucent backgroundColor="transparent" />
-            <ScrollView style={{flex: 1, marginBottom: 80}} bounces={false}>
+            <ScrollView style={{flex: 1, marginBottom: 80}} bounces={false} showsHorizontalScrollIndicator={false}>
                 <View>
                     <Swiper
                         style={{height: 350}}
@@ -77,8 +92,32 @@ export default function DetailProductScreen({navigation}){
                             </View>
                         </View>
                     </View>
+                    <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Avis clients</Text>
+                    <TouchableOpacity onPress={openBottomSheet} style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <View style={{flexDirection: 'row'}}>
+                                <FontAwesome5 name="star" size={20} color="#fec727"/>
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
+                                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
+                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900 avi(s))</Text>
+                                </View>
+                            </View>
+                            <FontAwesome5 name="chevron-right" size={20} color="#000"/>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
+            <MyBottomSheet
+                bottomSheetRef={bottomSheetRef}
+                snapPoints={snapPoints}
+                initialIndex={1} // Commence fermé (-1) ou 0 pour le premier snapPoint
+            >
+                {/* Contenu spécifique à afficher dans le BottomSheet */}
+                <Text style={styles.bottomSheetTitle}>Contenu Personnalisé</Text>
+                <Text>Ceci est le contenu affiché dans le BottomSheet.</Text>
+                <Button title="Action 1" onPress={() => console.log('Action 1')} />
+                <Button title="Fermer" onPress={closeBottomSheet} /> 
+            </MyBottomSheet>
             <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <TouchableOpacity>

@@ -55,7 +55,7 @@ export default function CartScreen({navigation, }){
                                     />
                                 ))
                             }
-                            <View style={{backgroundColor: 'white', borderRadius: 10, padding: 5, marginTop: 5}}>
+                            <View style={{backgroundColor: colors.tertiary, borderRadius: 10, padding: 5, marginTop: 5, elevation: 1}}>
                                 <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 10, paddingHorizontal: 15, alignItems: 'center', height: 50}}>
                                     <Text style={{color: '#c3c3c3', fontSize: 18}}>Total :</Text>
                                     <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}> {formatAmount(getTotal() || 0)}</Text>
@@ -67,7 +67,7 @@ export default function CartScreen({navigation, }){
                                     {loadingCart ? (
                                         <ActivityIndicator size="small" color="red" />
                                     ): (
-                                        <Text style={{color: 'red', fontWeight: 'bold', textDecorationLine: 'underline', textAlign: 'center'}}>Vider le panier</Text>
+                                        <Text style={{color: 'red', fontWeight: '400', textDecorationLine: 'underline', textAlign: 'center'}}>Vider le panier</Text>
                                     )}
                                 </TouchableOpacity>
                             </View>

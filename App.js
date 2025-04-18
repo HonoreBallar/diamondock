@@ -2,16 +2,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import RootNavigator from './src/navigation';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
   return (
-    <NavigationContainer>
-        <StatusBar
-          backgroundColor="white"
-          barStyle="light-content"
-        />
-        <RootNavigator />
-    </NavigationContainer>
+    <GestureHandlerRootView>
+      <NavigationContainer>
+          <StatusBar
+            backgroundColor="white"
+            barStyle="light-content"
+          />
+          <RootNavigator />
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
