@@ -8,10 +8,19 @@ import DigitalMallScreen from '../screens/DigitalMallScreen';
 import SocialMediaManager from '../screens/SocialMediaManagerScreen';
 import DiamondAresScreen from '../screens/DiamondAresScreen';
 import CategoryDetailScreen from '../screens/CategoryDetailScreen';
+import SplashScreen from '../screens/SplashScreen';
+import { useRootContext } from '../context/RootContext';
 
 const Stack = createStackNavigator();
 
 const StackNavigator = ({navigation}) => {
+
+  const {loading} = useRootContext();
+
+  if(loading){
+    return <SplashScreen />
+  }
+  
   return (
     <Stack.Navigator 
     // initialRouteName='OrderScreen'

@@ -70,11 +70,11 @@ export default function OrderScreen(){
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 20 },
     title: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
-    buttonContainer: { flexDirection: "row", justifyContent: "space-around", marginBottom: 10, textAlign: 'center' },
+    buttonContainer: { flexDirection: "row", justifyContent: "space-between", marginBottom: 10, marginHorizontal: 10, textAlign: 'center' },
     button: {
         backgroundColor: "gray",
         paddingHorizontal: 5,
-        paddingVertical: 10,
+        paddingVertical: 5,
         borderRadius: 15,
         width: '80',
     },
@@ -84,6 +84,8 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "white",
         fontWeight: "bold",
+        textAlign: 'center',
+        textTransform: 'capitalize'
     },
     activeButtonText: {
         color: "white", // Couleur du texte du bouton actif

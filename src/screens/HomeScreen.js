@@ -27,7 +27,7 @@ export default function HomeScreen({navigation}){
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={()=>navigation.navigate('DetailCategoryScreen',{category: item})} style={{marginRight: 10, marginBottom: 10, padding: 5 }}>
+                            <TouchableOpacity onPress={()=>navigation.navigate('CategoryDetailScreen',{category: item})} style={{marginRight: 10, marginBottom: 10, padding: 5 }}>
                                 <View style={{width: 80, height: 80, borderRadius: 40, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderWidth: 0.5, borderColor: '#ccc'}}>
                                     <Image source={{uri: item.image}} style={{width: 80, height: 80, borderRadius: 40}} resizeMode="cover"/>
                                 </View>
