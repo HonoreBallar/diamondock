@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard";
 import { useState } from "react";
 import FlottingCart from "../components/FlottingCart";
 
-export default function CategoryDetailScreen({category, navigation}){
+export default function DetailSellerScreen({category, navigation}){
 
     const {products} = useProducts();
     const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function CategoryDetailScreen({category, navigation}){
                         <FontAwesome5 name="arrow-left" size={20} color={colors.primary} style={{marginTop: 4, marginLeft: 5}}/>
                     </TouchableOpacity>
                     {/* <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>Categorie {category.name ?? 'N/A'}</Text> */}
-                    <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>Categorie {'Sneaker'}</Text>
+                    <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>Vendeur {'Sneaker'}</Text>
                 </View>
                 <FlottingCart navigation={navigation}/>
             </View>
@@ -31,7 +31,7 @@ export default function CategoryDetailScreen({category, navigation}){
                     </View>
                     <View style={{margin: 10}}>
                         {/* <Text style={{fontSize: 22, fontWeight: 'bold',marginBottom: 5, color: colors.primary}}>Categorie : {category.name ?? 'N/A'}</Text> */}
-                        <Text style={{fontSize: 22, fontWeight: 'bold',marginBottom: 5, color: colors.primary}}>Categorie : Sneaker</Text>
+                        <Text style={{fontSize: 22, fontWeight: 'bold',marginBottom: 5, color: colors.primary}}>Vendeur : Sneaker</Text>
                         {/* <Text style={{color: '#555555'}}>{category?.nb_products ?? '0'} produit(s) disponible</Text> */}
                         <Text style={{color: '#555555'}}>{5} produit(s) disponible</Text>
                     </View>

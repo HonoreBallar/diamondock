@@ -64,7 +64,7 @@ export default function ProfilScreen({navigation}){
                     </TouchableOpacity>
                 </View>
                 <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('OrderScreen')}  style={{padding: 15, marginBottom: 5}}>
+                    <TouchableOpacity onPress={()=>alert('terms')}  style={{padding: 15, marginBottom: 5}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <FontAwesome5 name={"scroll"} size={20} color="#8cbdef" style={{marginTop: 2}}/>

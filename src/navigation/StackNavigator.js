@@ -15,6 +15,7 @@ import AddressScreen from '../screens/AddressScreen';
 import MethodPaymentScreen from '../screens/MethodPaymentScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import DetailSellerScreen from '../screens/DetailSellerScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ const StackNavigator = () => {
       <Stack.Screen name="MethodPaymentScreen" component={MethodPaymentScreen} options={{ headerShown: false }} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="DetailSellerScreen" component={DetailSellerScreen} options={{ headerShown: false }} />
       
 
       {/* Add more screens here */}
