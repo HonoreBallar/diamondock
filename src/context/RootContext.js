@@ -12,7 +12,7 @@ export const RootProvider = ({children})=>{
     });
     const [loading, setLoading] = useState(true);
     const [auth, setAuth] = useState({
-        isLoggedIn: true,
+        isLoggedIn: false,
         user: null
     });
 

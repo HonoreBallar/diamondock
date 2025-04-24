@@ -36,15 +36,13 @@ export default function ProductCard({navigation, product}){
         <TouchableOpacity onPress={handlePress}>
             <View style={{backgroundColor: '#f7f7f7', width: 150, height: 230, borderRadius: 10, marginRight: 10, padding: 8}}>
                 <View style={{alignSelf: 'center',marginTop: 10, height: 120, width: 130, backgroundColor: 'white', borderRadius: 10}}>
-                    {/* <Image source={{uri: product?.main_image}} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }}/> */}
-                    <Image source={{uri: product.image}} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }} resizeMode='cover'/>
+                    <Image source={{uri: product?.main_image}} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }}/>
                     <View style={{marginTop: -115, alignItems: 'flex-end'}}>
                         <TouchableOpacity onPress={()=>handleAddToWishlist(product)} style={{backgroundColor: '#fff', borderRadius: 15, width:30, height:30, justifyContent: 'center', alignItems: 'center'}}>
                             {loadingWishlist ? (
                                 <ActivityIndicator size="small" color={colors.onPrimary} />
                             ) : (
                                 isProductInWishlist(product.token) ? (
-                                    // <FontAwesome5 name="heartbeat" size={15} color="red" />
                                     <Text>❤️</Text>
                                 ):(
                                     <FontAwesome5 name="heart" size={15} color="red" />

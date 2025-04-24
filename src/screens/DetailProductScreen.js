@@ -4,6 +4,7 @@ import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
+import FlottingCart from "../components/FlottingCart";
 
 export default function DetailProductScreen({navigation}){
 
@@ -39,10 +40,11 @@ export default function DetailProductScreen({navigation}){
                             </View>
                         ))}
                     </Swiper>
-                    <View style={{paddingTop: 50, position: 'absolute',paddingHorizontal: 15}}>
+                    <View style={{paddingTop: 50, position: 'absolute',paddingHorizontal: 15, justifyContent: 'space-between', width: '100%', flexDirection: 'row', alignItems: 'center'}}>
                         <TouchableOpacity onPress={()=>navigation.goBack()}>
                             <FontAwesome5 name="arrow-left" size={20} color="white"/>
                         </TouchableOpacity>
+                        <FlottingCart navigation={navigation}/>
                     </View>
                 </View>
                 <View style={{margin: 13}}>
