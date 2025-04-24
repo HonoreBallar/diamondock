@@ -1,27 +1,11 @@
 import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Header from "../components/Header";
-import Title from "../components/Title";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
-import MyBottomSheet from "../components/MyBottomSheet";
+import { useState } from "react";
 
 export default function DetailProductScreen({navigation}){
-
-    const bottomSheetRef = useRef(null);
-
-    // Définir les points d'accroche spécifiques à cet écran
-    const snapPoints = ['25%', '60%', '90%'];
-
-    const openBottomSheet = () => {
-        bottomSheetRef.current?.snapToIndex(1); // Ouvre au deuxième point d'accroche (60%)
-    };
-
-    const closeBottomSheet = () => {
-        bottomSheetRef.current?.close(); // Ferme le bottom sheet
-    }
 
     const [quantity, setQuantity] = useState('1');
     const photos = [
@@ -93,32 +77,44 @@ export default function DetailProductScreen({navigation}){
                         </View>
                     </View>
                     <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Avis clients</Text>
-                    <TouchableOpacity onPress={openBottomSheet} style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
+                    <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{fontSize: 20, marginBottom: 3}}>⭐</Text>
                                 {/* <FontAwesome5 name="star" size={20} color="#fec727"/> */}
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
                                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
-                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900 avi(s))</Text>
+                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900)</Text>
                                 </View>
                             </View>
-                            <FontAwesome5 name="chevron-right" size={20} color="#000"/>
+                            {/* <FontAwesome5 name="chevron-right" size={20} color="#000"/> */}
                         </View>
-                    </TouchableOpacity>
+                    </View>
+                    <View>
+                        <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text>⭐⭐⭐⭐</Text>
+                                    <FontAwesome5 name="star" size={12} color="#fec727" style={{marginTop: 2}}/>
+                                </View>
+                            </View>
+                            <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
+                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
+                        </View>
+                        <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+                                <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text>⭐⭐⭐⭐⭐</Text>
+                                </View>
+                            </View>
+                            <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
+                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
+                        </View>
+                    </View>
                 </View>
             </ScrollView>
-            <MyBottomSheet
-                bottomSheetRef={bottomSheetRef}
-                snapPoints={snapPoints}
-                initialIndex={1} // Commence fermé (-1) ou 0 pour le premier snapPoint
-            >
-                {/* Contenu spécifique à afficher dans le BottomSheet */}
-                <Text style={styles.bottomSheetTitle}>Contenu Personnalisé</Text>
-                <Text>Ceci est le contenu affiché dans le BottomSheet.</Text>
-                <Button title="Action 1" onPress={() => console.log('Action 1')} />
-                <Button title="Fermer" onPress={closeBottomSheet} /> 
-            </MyBottomSheet>
             <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <TouchableOpacity>

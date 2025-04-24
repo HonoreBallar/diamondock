@@ -3,7 +3,7 @@ import HeaderSimple from '../components/HeaderSimple';
 import Input from "../components/Input";
 import Btn from "../components/Btn";
 import { useRootContext } from "../context/RootContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { wait } from "../utils/utils";
 
@@ -15,9 +15,11 @@ export default function LoginScreen({navigation}){
     const [password, setPassword] = useState('');
 
     // Vérifier si l'utilisateur est déjà connecté
-    if(auth.isLoggedIn){
-        navigation.navigate('Main');
-    }
+    useEffect(() => {
+        if(auth.isLoggedIn){
+            navigation.navigate('Main');
+        }
+    }, [auth.isLoggedIn]);
 
     const handleLoginUser = async () => {
         // if(email === '' || password === ''){
@@ -35,7 +37,7 @@ export default function LoginScreen({navigation}){
         //     return;
         // }
         setLoading(true);
-        await wait(2000);
+        await wait(1000);
         await loginUser(email, password);
         // navigation.navigate('Main');
         setLoading(false);

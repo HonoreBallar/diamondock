@@ -1,4 +1,4 @@
-import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Title from "../components/Title";
@@ -105,7 +105,13 @@ export default function ProfilScreen({navigation}){
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={handleLogout} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10, marginTop: 20 }}>
-                    <Text style={{color: 'white', fontWeight: 'bold',  textAlign: 'center'}}>Se déconnecter</Text>
+                    <View style={{flexDirection: 'row',justifyContent: "center", alignItems: 'center'}}>
+                        {loading ? 
+                        (<ActivityIndicator size={20} color="white" style={{marginTop: 2, marginRight: 5}}/>):
+                        (<FontAwesome5 name="sign-out-alt" size={20} color="white" style={{marginTop: 2, marginRight: 5}}/>)
+                        }
+                        <Text style={{color: 'white', fontWeight: 'bold',  textAlign: 'center'}}>Se déconnecter</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </ScrollView>

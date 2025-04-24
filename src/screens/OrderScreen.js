@@ -72,7 +72,7 @@ export default function OrderScreen({navigation}){
                 {auth.isLoggedIn === false && (
                     <View style={{marginTop: 20, marginBottom: 20}}>
                         <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                            <Text style={{textAlign: 'center', marginBottom: 10, fontWeight: 'bold'}}>Connecter à votre compte pour passer vos commandes</Text>
+                            <Text style={{textAlign: 'center', marginBottom: 10, fontWeight: 'bold', textDecorationLine: 'underline'}}>Connecter à votre compte pour passer vos commandes</Text>
                         </TouchableOpacity>
                     </View>
                 )}
