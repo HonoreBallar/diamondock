@@ -12,7 +12,7 @@ export const RootProvider = ({children})=>{
     });
     const [loading, setLoading] = useState(true);
     const [auth, setAuth] = useState({
-        isLoggedIn: false,
+        isLoggedIn: true,
         user: null
     });
 
@@ -27,7 +27,7 @@ export const RootProvider = ({children})=>{
                 setAuth(JSON.parse(auth));
             }
             // console.log(auth, starter, loading);
-            await wait(3000);
+            await wait(2000);
             setLoading(false);
         }
 

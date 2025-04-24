@@ -9,11 +9,13 @@ import OrderScreen from '../screens/OrderScreen';
 import { useCart } from '../context/CartContext';
 import ProfilScreen from '../screens/ProfilScreen';
 import colors from '../utils/colors';
+import { useRootContext } from '../context/RootContext';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   const { cart } = useCart();
+  const {auth} = useRootContext();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -31,6 +33,9 @@ const TabNavigator = () => {
             } else if (route.name === 'Mon compte') {
                 iconName = 'user-tie';
             }
+            else if (route.name === 'Commandes') {
+                iconName = 'clipboard-list';
+            }
           return <FontAwesome5 name={iconName} size={focused ? 24 : 20 } color={focused? colors.primary: color} />;
         },
         headerShown: false,
@@ -44,7 +49,11 @@ const TabNavigator = () => {
       <Tab.Screen name="Categories" component={CategoryScreen} />
       <Tab.Screen name="Panier" component={CartScreen} options={{tabBarBadge: cart.length > 0 ? cart.length : null}}/>
       <Tab.Screen name="Favoris" component={WishlistScreen} />
-      <Tab.Screen name="Mon compte" component={ProfilScreen} />
+      {auth.isLoggedIn ? 
+        (<Tab.Screen name="Mon compte" component={ProfilScreen} />)
+      :
+        (<Tab.Screen name="Commandes" component={OrderScreen} />)
+      }
     </Tab.Navigator>
   );
 };

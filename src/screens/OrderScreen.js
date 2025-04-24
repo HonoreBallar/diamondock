@@ -2,15 +2,17 @@ import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "
 import Header from "../components/Header";
 import Title from "../components/Title";
 import { useState } from "react";
+import { useRootContext } from "../context/RootContext";
 
 const ordersData = [
-    { id: "1", status: "en attente", price: 25 },
-    { id: "2", status: "livré", price: 50 },
-    { id: "3", status: "annulé", price: 30 },
-    { id: "4", status: "en attente", price: 40 },
+    // { id: "1", status: "en attente", price: 25 },
+    // { id: "2", status: "livré", price: 50 },
+    // { id: "3", status: "annulé", price: 30 },
+    // { id: "4", status: "en attente", price: 40 },
 ];
 
-export default function OrderScreen(){
+export default function OrderScreen({navigation}){
+    const {auth} = useRootContext();
     const [filteredOrders, setFilteredOrders] = useState(ordersData);
     const [activeFilter, setActiveFilter] = useState("tous");
 
@@ -29,27 +31,30 @@ export default function OrderScreen(){
             <Header/>
             <Title title="Mes commandes" />
             <View>
-                <View style={styles.buttonContainer}>
-                    {["tous", "en attente", "livré", "annulé"].map((status) => (
-                        <TouchableOpacity
-                            key={status}
-                            style={[
-                                styles.button,
-                                activeFilter === status ? styles.activeButton : null, // Change l'apparence du bouton actif
-                            ]}
-                            onPress={() => filterOrders(status)}
-                        >
-                            <Text
+                {filterOrders.length > 1 && (
+                    <View style={styles.buttonContainer}>
+                        <Text>{filterOrders.length}</Text>
+                        {["tous", "en attente", "livré", "annulé"].map((status) => (
+                            <TouchableOpacity
+                                key={status}
                                 style={[
-                                    styles.buttonText,
-                                    activeFilter === status ? styles.activeButtonText : null,
+                                    styles.button,
+                                    activeFilter === status ? styles.activeButton : null, // Change l'apparence du bouton actif
                                 ]}
+                                onPress={() => filterOrders(status)}
                             >
-                                {status}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
+                                <Text
+                                    style={[
+                                        styles.buttonText,
+                                        activeFilter === status ? styles.activeButtonText : null,
+                                    ]}
+                                >
+                                    {status}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                )}
 
                 <FlatList
                     data={filteredOrders}
@@ -61,7 +66,16 @@ export default function OrderScreen(){
                             <Text>Prix : ${item.price}</Text>
                         </View>
                     )}
+                    ListEmptyComponent={<Text style={{ textAlign: 'center', marginTop: 20 }}>Aucune commande trouvée</Text>}
+                    showsVerticalScrollIndicator={false}
                 />
+                {auth.isLoggedIn === false && (
+                    <View style={{marginTop: 20, marginBottom: 20}}>
+                        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                            <Text style={{textAlign: 'center', marginBottom: 10, fontWeight: 'bold'}}>Connecter à votre compte pour passer vos commandes</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         </ScrollView>
     );

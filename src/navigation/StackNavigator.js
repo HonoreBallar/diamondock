@@ -13,6 +13,8 @@ import { useRootContext } from '../context/RootContext';
 import EditProfilScreen from '../screens/EditProfilScreen';
 import AddressScreen from '../screens/AddressScreen';
 import MethodPaymentScreen from '../screens/MethodPaymentScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +48,8 @@ const StackNavigator = () => {
       <Stack.Screen name="EditProfilScreen" component={EditProfilScreen} options={{ headerShown: false }} />
       <Stack.Screen name="AddressScreen" component={AddressScreen} options={{ headerShown: false }} />
       <Stack.Screen name="MethodPaymentScreen" component={MethodPaymentScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
       
 
       {/* Add more screens here */}
