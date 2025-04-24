@@ -1,10 +1,31 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Title from "../components/Title";
 import colors from "../utils/colors";
+import { useRootContext } from "../context/RootContext";
+import { useState } from "react";
 
 export default function ProfilScreen({navigation}){
+    const {logout} = useRootContext();
+    const [loading, setLoading] = useState(false);
+
+    const handleLogout = () => {
+        setLoading(true);
+        Alert.alert(
+            'Se déconnecter',
+            'Voulez-vous vraiment vous déconnecter ?',
+            [
+                {text: 'Annuler', style: 'cancel', onPress: ()=> setLoading(false)},
+                {text: 'valider', onPress: async () => {
+                    await logout();
+                    setLoading(false);
+                }}
+            ],
+            {cancelable: false}
+        );
+    };
+
     return(
         <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
             <Header />
@@ -83,7 +104,7 @@ export default function ProfilScreen({navigation}){
                         </View>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={()=>alert('Déconnexion')} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10, marginTop: 20 }}>
+                <TouchableOpacity onPress={handleLogout} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10, marginTop: 20 }}>
                     <Text style={{color: 'white', fontWeight: 'bold',  textAlign: 'center'}}>Se déconnecter</Text>
                 </TouchableOpacity>
             </View>

@@ -5,6 +5,7 @@ import Btn from "../components/Btn";
 import { useRootContext } from "../context/RootContext";
 import { useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { wait } from "../utils/utils";
 
 export default function LoginScreen({navigation}){
 
@@ -18,26 +19,26 @@ export default function LoginScreen({navigation}){
         navigation.navigate('Main');
     }
 
-    const handleLogin = async () => {
-        if(email === '' || password === ''){
-            showMessage({
-                message: "Veuillez remplir tous les champs",
-                type: "danger",
-            });
-            return;
-        }
-        if(!email.includes('@')){
-            showMessage({
-                message: "Veuillez entrer un email valide",
-                type: "danger",
-            });
-            return;
-        }
+    const handleLoginUser = async () => {
+        // if(email === '' || password === ''){
+        //     showMessage({
+        //         message: "Veuillez remplir tous les champs",
+        //         type: "danger",
+        //     });
+        //     return;
+        // }
+        // if(!email.includes('@')){
+        //     showMessage({
+        //         message: "Veuillez entrer un email valide",
+        //         type: "danger",
+        //     });
+        //     return;
+        // }
         setLoading(true);
         await wait(2000);
-        await loginUser({email: email, password: password});
+        await loginUser(email, password);
+        // navigation.navigate('Main');
         setLoading(false);
-        navigation.navigate('Main');
     }
 
 
@@ -69,7 +70,7 @@ export default function LoginScreen({navigation}){
                     />
                 </View>
                 <View style={{marginTop: 20}}>
-                    <Btn label={"Connexion"} loader={loading === true ? true : false} action={handleLogin} />
+                    <Btn label={"Connexion"} loader={loading === true ? true : false} action={handleLoginUser} />
                 </View>
                 <View>
                     <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>

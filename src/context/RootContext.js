@@ -26,7 +26,7 @@ export const RootProvider = ({children})=>{
             if(auth){
                 setAuth(JSON.parse(auth));
             }
-            // console.log(auth, starter, loading);
+            console.log(auth, starter, loading);
             await wait(2000);
             setLoading(false);
         }
@@ -54,6 +54,12 @@ export const RootProvider = ({children})=>{
 
     const logout = async ()=>{
         await updateAuthState({isLoggedIn: false, user: null});
+        showMessage({
+            message: "Déconnexion réussie",
+            type: "info",
+            icon: { icon: "info"},
+            duration: 2000,
+        });
     };
 
     const registerUser = async (datas)=>{
@@ -108,19 +114,21 @@ export const RootProvider = ({children})=>{
         }
     }
 
-    const loginUser = async(datas={})=>{
+    const loginUser = async (datas={})=>{
         try {
-            const response = await postRequest('/client/login', datas);
-            if(response.status === false){
-                showMessage({
-                    message: response?.message,
-                    type: "danger",
-                    icon: { icon: "danger"},
-                    duration: 2000,
-                });
-                return;
-            }
-            await updateAuthState({isLoggedIn: true, user: response.data});
+            // const response = await postRequest('/client/login', datas);
+            // if(response.status === false){
+            //     showMessage({
+            //         message: response?.message,
+            //         type: "danger",
+            //         icon: { icon: "danger"},
+            //         duration: 2000,
+            //     });
+            //     return;
+            // }
+            // await updateAuthState({isLoggedIn: true, user: response.data});
+            console.log(datas);
+            await updateAuthState({isLoggedIn: true});
             showMessage({
 
                 message: "Connexion réussie",
