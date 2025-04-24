@@ -33,7 +33,7 @@ export default function DetailProductScreen({navigation}){
     return(
         <View style={{flex: 1}}>
             <StatusBar translucent backgroundColor="transparent" />
-            <ScrollView style={{flex: 1, marginBottom: 80}} bounces={false} showsHorizontalScrollIndicator={false}>
+            <ScrollView style={{flex: 1, marginBottom: 80}}>
                 <View>
                     <Swiper
                         style={{height: 350}}
@@ -96,7 +96,8 @@ export default function DetailProductScreen({navigation}){
                     <TouchableOpacity onPress={openBottomSheet} style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name="star" size={20} color="#fec727"/>
+                                <Text style={{fontSize: 20, marginBottom: 3}}>⭐</Text>
+                                {/* <FontAwesome5 name="star" size={20} color="#fec727"/> */}
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
                                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
                                     <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900 avi(s))</Text>

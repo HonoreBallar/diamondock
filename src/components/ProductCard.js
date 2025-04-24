@@ -44,7 +44,8 @@ export default function ProductCard({navigation, product}){
                                 <ActivityIndicator size="small" color={colors.onPrimary} />
                             ) : (
                                 isProductInWishlist(product.token) ? (
-                                    <FontAwesome5 name="heartbeat" size={15} color="red" />
+                                    // <FontAwesome5 name="heartbeat" size={15} color="red" />
+                                    <Text>❤️</Text>
                                 ):(
                                     <FontAwesome5 name="heart" size={15} color="red" />
                                 )

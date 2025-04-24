@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     title: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
     buttonContainer: { flexDirection: "row", justifyContent: "space-between", marginBottom: 10, marginHorizontal: 10, textAlign: 'center' },
     button: {
-        backgroundColor: "gray",
+        backgroundColor: "#f4f4f4",
         paddingHorizontal: 5,
         paddingVertical: 5,
         borderRadius: 15,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor: "blue", // Couleur du bouton actif
     },
     buttonText: {
-        color: "white",
+        color: "#ccc",
         fontWeight: "bold",
         textAlign: 'center',
         textTransform: 'capitalize'

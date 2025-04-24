@@ -7,7 +7,7 @@ import CardNavigation from "../components/CardNavigation";
 export default function DrawerScreen({navigation}){
     return (
         <View style={{flex: 1, backgroundColor: 'white'}}>
-            <View style={{marginTop: 20, padding: 15, backgroundColor: '#f9f9f9', borderBottomRightRadius: 35, borderBottomLeftRadius: 35, elevation: 2}}>
+            <View style={{marginTop: 20, padding: 15, backgroundColor: '#f9f9f9', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, elevation: 1}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <FontAwesome5 name="angle-left" size={28} color="#000" style={{marginTop: 15}}/>
                 </TouchableOpacity>

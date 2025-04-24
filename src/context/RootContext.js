@@ -27,7 +27,7 @@ export const RootProvider = ({children})=>{
                 setAuth(JSON.parse(auth));
             }
             // console.log(auth, starter, loading);
-            await wait(2000);
+            await wait(3000);
             setLoading(false);
         }
 
