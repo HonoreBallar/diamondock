@@ -14,8 +14,11 @@ import { useRootContext } from '../context/RootContext';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+
   const { cart } = useCart();
+
   const {auth} = useRootContext();
+  
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

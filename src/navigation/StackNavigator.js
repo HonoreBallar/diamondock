@@ -1,4 +1,4 @@
-import { CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack';
+import { CardStyleInterpolators } from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
 import PaymentScreen from '../screens/PaymentScreen';
 import DetailProductScreen from '../screens/DetailProductScreen';
@@ -8,8 +8,6 @@ import DigitalMallScreen from '../screens/DigitalMallScreen';
 import SocialMediaManager from '../screens/SocialMediaManagerScreen';
 import DiamondAresScreen from '../screens/DiamondAresScreen';
 import CategoryDetailScreen from '../screens/CategoryDetailScreen';
-import SplashScreen from '../screens/SplashScreen';
-import { useRootContext } from '../context/RootContext';
 import EditProfilScreen from '../screens/EditProfilScreen';
 import AddressScreen from '../screens/AddressScreen';
 import MethodPaymentScreen from '../screens/MethodPaymentScreen';
@@ -21,16 +19,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-
-  const {loading} = useRootContext();
-
-  if(loading){
-    return <SplashScreen />
-  }
   
   return (
     <Stack.Navigator 
-    // initialRouteName='OrderScreen'
+    initialRouteName='Main'
     >
       <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{ headerShown: false }} />

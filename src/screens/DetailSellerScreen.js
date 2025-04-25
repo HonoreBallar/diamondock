@@ -18,8 +18,9 @@ export default function DetailSellerScreen({route, navigation}){
             setLoading(true);
             try {
                 // Simulate an API call to fetch products based on the category
-                const response = await getRequest(`/seller/${seller.token}`);
-                setSellers(response?.data?.products ?? []);
+                // const response = await getRequest(`/seller/${seller.token}`);
+                // setSellers(response?.data?.products ?? []);
+                setSellers([]);
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {
