@@ -56,7 +56,7 @@ export default function ProductCard({navigation, product}){
                     <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product})}><Text style={{fontSize: 15, fontWeight: '500', color: colors.gray, marginTop: 1}} numberOfLines={1}>{product?.name || 'nom produit'}</Text></TouchableOpacity>
                     <Text style={{fontSize: 15, color: '#000', marginTop: 1, fontWeight: '800',}}>{ formatAmount(product?.price || 0)}</Text>
                     <View style={{marginTop: 3, alignItems: 'center'}}>
-                        <TouchableOpacity disabled={loading} onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#f29f03', borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
+                        <TouchableOpacity disabled={loading} onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#ffa100', borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                             {loading ? (
                                 <ActivityIndicator size="small" color={colors.border} />
                             ):(

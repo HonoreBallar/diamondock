@@ -9,9 +9,9 @@ export default function Header(){
 
     return (
         <View>
-            <View style={{flexDirection: 'row',justifyContent:'space-between' ,padding: 15, height: 60, marginTop: 40}}>
+            <View style={{flexDirection: 'row',justifyContent:'space-between' ,paddingHorizontal: 15, height: 60, marginTop: 40, alignItems: 'center'}}>
                 <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
-                    <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}>Diamondock</Text>
+                    <Image source={require('../assets/logo.png')} style={{width: 190, height: "100%"}} resizeMode='contain'/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>navigation.navigate('DrawerScreen')}>
                     <FontAwesome5 name="stream" size={20} color="#000" style={{marginTop: 9}}/>

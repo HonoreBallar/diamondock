@@ -45,7 +45,7 @@ const TabNavigator = () => {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: '#666',
         tabBarStyle: { backgroundColor: '#f8f9fa', height: 55},
-        tabBarBadgeStyle:{ backgroundColor: "orange", color: "black"}
+        tabBarBadgeStyle:{ backgroundColor: "#03045e", color: "white"}
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />

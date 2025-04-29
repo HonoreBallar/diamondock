@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
 import { useProducts } from "../context/ProductContext";
@@ -12,28 +12,47 @@ export default function DetailSellerScreen({route, navigation}){
     const {seller} = route.params;
     const [sellers, setSellers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const fetchSellers = async () => {
+        setLoading(true);
+        try {
+            // Simulate an API call to fetch products based on the category
+            const response = await getRequest(`/seller/${seller.token}`);
+            setSellers(response?.data?.products ?? []);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const onRefresh = async() => {
+        setRefreshing(true);
+        await fetchSellers();
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 1500);
+    }
 
     useEffect(() => {
-        const fetchSellers = async () => {
-            setLoading(true);
-            try {
-                // Simulate an API call to fetch products based on the category
-                // const response = await getRequest(`/seller/${seller.token}`);
-                // setSellers(response?.data?.products ?? []);
-                setSellers([]);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchSellers();
-
     }, [seller]);
 
     return (
-        <ScrollView style={{flex: 1,backgroundColor: 'white'}}>
+        <ScrollView 
+            style={{flex: 1,backgroundColor: 'white'}}
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    colors={[colors.black]}
+                    progressBackgroundColor={'white'}
+                    progressViewOffset={100}
+                />
+            }
+
+        >
             <View style={{flexDirection:'row', justifyContent: 'space-between', padding: 15, height: 55, backgroundColor: 'white', marginTop: 40}}>
                 <View style={{flexDirection: "row", alignItems: 'center'}}>
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
@@ -54,18 +73,7 @@ export default function DetailSellerScreen({route, navigation}){
                             <Text style={{fontSize: 25}}>💼 </Text>
                             <Text style={{fontSize: 22, fontWeight: 'bold',marginTop: 5, color: colors.primary}}>{seller?.name ?? 'Vendeur'}</Text>
                         </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
-                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text style={{fontSize: 25}}>📱 </Text>
-                                <Text style={{fontSize: 17, fontWeight: 'bold',marginTop: 5, color: colors.gray}}>{seller?.phone ?? 'Vendeur'}</Text>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Text style={{fontSize: 25}}>📌 </Text>
-                                <Text style={{fontSize: 17, fontWeight: 'bold',marginTop: 5, color: colors.gray}}>{seller?.address ?? 'Vendeur'}</Text>
-                            </View>
-                        </View>
-                        {/* <Text style={{fontSize: 22, fontWeight: 'bold',marginBottom: 5, color: colors.primary}}>Categorie : {category.name ?? 'N/A'}</Text> */}
-                        {/* <Text style={{color: '#555555'}}>{category?.nb_products ?? '0'} produit(s) disponible</Text> */}
+                        
                         <Text style={{color: '#555555'}}>{seller?.nb_products ?? '0'} produit(s) disponible</Text>
                     </View>
                     <View style={{margin: 10}}>

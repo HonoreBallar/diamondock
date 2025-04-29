@@ -1,14 +1,35 @@
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Header from "../components/Header";
 import Title from "../components/Title";
 import colors from "../utils/colors";
 import { useProducts } from "../context/ProductContext";
+import { useState } from "react";
+import { wait } from "../utils/utils";
 
 export default function DigitalMallScreen({navigation}){
-    const {sellers} = useProducts();
+    const {sellers, fetchSellers} = useProducts();
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = async() => {
+        await wait(5000);
+        setRefreshing(true);
+        await fetchSellers();
+        setRefreshing(false);
+    }
+
     return(
-        <ScrollView style={{flex: 1, paddingTop: 40}}>
+        <ScrollView 
+        style={{flex: 1, paddingTop: 40}}
+        refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={[colors.primary]}
+                progressBackgroundColor={'#f9f9f9'}
+                progressViewOffset={50}
+            />
+        }
+        >
             <View style={{padding: 15, backgroundColor: '#f9f9f9', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, elevation: 1}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <FontAwesome5 name="chevron-circle-left" size={28} color="#000" style={{marginTop: 15}}/>

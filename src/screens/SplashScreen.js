@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import { Animated, View } from "react-native";
+import Constants from 'expo-constants';
+import { Animated, Text, View } from "react-native";
 
 export default function SplashScreen(){
 
@@ -24,9 +25,19 @@ export default function SplashScreen(){
 
     return(
         <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center'}}>
-            <Animated.Text style={{ opacity: fadeAnim, fontSize: 44, color: 'orange', fontWeight: 'bold' }}>
+            <Animated.Image
+                source={require('../assets/icon.png')}
+                style={{
+                    width: 200,
+                    height: 200,
+                    opacity: fadeAnim,
+                }}
+                resizeMode='contain'
+            />
+            {/* <Animated.Text style={{ opacity: fadeAnim, fontSize: 44, color: 'orange', fontWeight: 'bold' }}>
                 DIAMONDOCK
-            </Animated.Text>
+            </Animated.Text> */}
+            <Text style={{position:'absolute', bottom: 15 , color: '#999', alignSelf: 'center'}}>Version : {Constants?.expoConfig.version} © Diamondock</Text>
         </View>
     )
 }

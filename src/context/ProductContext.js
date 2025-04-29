@@ -27,29 +27,33 @@ export const ProductProvider = ({children})=>{
         // }
 
     ]);
-    const [loading, setLoading] = useState(true);
+
+    const fetchSellers = async () => {
+        try {
+            const dataSeller = await getRequest('/seller/all');
+            setSellers(dataSeller?.data ?? []);
+        } catch (error) {
+            console.error('Erreur lors du chargement des produits des vendeurs :', error);
+        }
+    };
+
+    const fetchProducts = async () => {
+        try {
+            const dataProduct = await getRequest('/product/all');
+            setProducts(dataProduct?.data ?? []);
+        } catch (error) {
+            console.error('Erreur lors du chargement des produits:', error);
+        }
+    };
 
     // Charger les produits depuis l'API
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const dataProduct = await getRequest('/product/all');
-                setProducts(dataProduct?.data ?? []);
-                const dataSeller = await getRequest('/seller/all');
-                setSellers(dataSeller?.data ?? []);
-                setLoading(false);
-            } catch (error) {
-                console.error('Erreur lors du chargement des produits:', error);
-                setLoading(false);
-            }finally{
-                setLoading(false);
-            }
-        };
+        fetchSellers();
         fetchProducts();
     }, []);
 
     return (
-        <ProductContext.Provider value={{ products, sellers, loading }}>
+        <ProductContext.Provider value={{ products, sellers, fetchProducts, fetchSellers }}>
             {children}
         </ProductContext.Provider>
     );
