@@ -36,11 +36,11 @@ export default function DigitalMallScreen({navigation}){
                 </TouchableOpacity>
                 <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary, marginTop: 15, textAlign: 'center'}}>Digitall Mall</Text>
             </View>
-            <View style={{margin: 10, marginTop: 5, marginBottom: 20}}>
+            <View style={{margin: 10, marginTop: 5, marginBottom: 40}}>
                 <Title title="Nos Vendeurs" />
                 <FlatList
                     data={sellers}
-                    keyExtractor={(item) => item.toString()}
+                    keyExtractor={(item, index) => index.toString()}
                     numColumns={2}
                     scrollEnabled={false}
                     showsHorizontalScrollIndicator={false}

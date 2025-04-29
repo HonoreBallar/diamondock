@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Constants from 'expo-constants';
-import { Animated, Text, View } from "react-native";
+import { ActivityIndicator, Animated, Text, View } from "react-native";
 
 export default function SplashScreen(){
 
@@ -34,9 +34,7 @@ export default function SplashScreen(){
                 }}
                 resizeMode='contain'
             />
-            {/* <Animated.Text style={{ opacity: fadeAnim, fontSize: 44, color: 'orange', fontWeight: 'bold' }}>
-                DIAMONDOCK
-            </Animated.Text> */}
+            <ActivityIndicator size="large" color="#000000" style={{marginTop: 40}} />
             <Text style={{position:'absolute', bottom: 15 , color: '#999', alignSelf: 'center'}}>Version : {Constants?.expoConfig.version} © Diamondock</Text>
         </View>
     )
