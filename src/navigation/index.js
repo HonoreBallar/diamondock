@@ -7,8 +7,6 @@ export default function RootNavigator(){
     
     const {loading} = useRootContext();
 
-    // return (<SplashScreen/>);
-    
     return (
         loading ? <SplashScreen /> : <StackNavigator/>
     );

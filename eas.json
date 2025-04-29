@@ -12,13 +12,13 @@
       "distribution": "internal"
     },
     "production": {
-      // "android": {
-      //   "buildType": "apk"
-      // },
-      // "ios": {
-      //   "simulator": true
-      // }
-      "distribution": "store"
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
+      // "distribution": "store"
     }
   },
   "submit": {

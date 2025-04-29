@@ -1,4 +1,4 @@
-import { CardStyleInterpolators } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
 import PaymentScreen from '../screens/PaymentScreen';
 import DetailProductScreen from '../screens/DetailProductScreen';
@@ -14,9 +14,8 @@ import MethodPaymentScreen from '../screens/MethodPaymentScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import DetailSellerScreen from '../screens/DetailSellerScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const StackNavigator = () => {
   
