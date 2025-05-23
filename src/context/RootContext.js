@@ -26,7 +26,7 @@ export const RootProvider = ({children})=>{
             if(auth){
                 setAuth(JSON.parse(auth));
             }
-            console.log(auth, starter, loading);
+            // console.log(auth, starter, loading);
             await wait(2000);
             setLoading(false);
         }
@@ -127,7 +127,7 @@ export const RootProvider = ({children})=>{
             //     return;
             // }
             // await updateAuthState({isLoggedIn: true, user: response.data});
-            console.log(datas);
+            // console.log(datas);
             await updateAuthState({isLoggedIn: true});
             showMessage({
 

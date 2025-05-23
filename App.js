@@ -12,8 +12,9 @@ export default function App() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
             <StatusBar
-              backgroundColor="white"
-              barStyle="light-content"
+              // backgroundColor="white"
+              // barStyle="light-content"
+              style='auto'
             />
             <RootNavigator />
         </NavigationContainer>
