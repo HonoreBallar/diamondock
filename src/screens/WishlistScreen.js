@@ -18,7 +18,7 @@ export default function WishlistScreen({navigation}){
                         <View style={{width: 100, height: 100, borderRadius: 50, backgroundColor: 'white', elevation: 2, justifyContent: 'center', alignItems: 'center'}}>
                             <FontAwesome5 name="heartbeat" size={48} color={colors.primary}/>
                         </View>
-                        <Text style={{marginTop: 20, fontSize: 19, color: '#999', fontWeight: '400'}}>Aucun produit dans votre liste d'envie</Text>
+                        <Text style={{marginTop: 20, fontSize: 18, color: '#999', fontWeight: '400'}}>Aucun produit dans votre liste d'envie</Text>
                     </View>
                 ) : (
                     <>

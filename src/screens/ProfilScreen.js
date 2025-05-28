@@ -5,6 +5,7 @@ import Title from "../components/Title";
 import colors from "../utils/colors";
 import { useRootContext } from "../context/RootContext";
 import { useState } from "react";
+import ProfilLine from "../components/ProfilLine";
 
 export default function ProfilScreen({navigation}){
     const {logout} = useRootContext();
@@ -33,78 +34,22 @@ export default function ProfilScreen({navigation}){
             <View style={{margin: 15}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Image source={require('../assets/sneaker.jpg')} style={{height: 100, width: 100, borderRadius: 50}}/>
-                    <Text style={{fontSize: 22, fontWeight: '500', marginLeft: 10}}>Amounan Honoré</Text>
+                    <Text style={{fontSize: 22, fontWeight: '500', marginLeft: 10, width: '100%'}}>Amounan Honoré</Text>
                 </View>
                 <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, marginBottom: 10, borderWidth: 0.1}}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('EditProfilScreen')}  style={{padding: 15, marginBottom: 5}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"user-tie"} size={19} color="orange" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>Information personnelle</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000"/>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>navigation.navigate('AddressScreen')}  style={{padding: 15, marginBottom: 10}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"map-marker-alt"} size={20} color="blue" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>Mes adresses</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000" />
-                        </View>
-                    </TouchableOpacity>
+                    <ProfilLine icon="user-tie" iconColor={"orange"} title="Information personnelle" onPress={()=>navigation.navigate('EditProfilScreen')}/>
+                    <ProfilLine icon="map-marker-alt" iconColor={"blue"} title="Mes adresses" onPress={()=>navigation.navigate('AddressScreen')}/>
                 </View>
                 <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('OrderScreen')}  style={{padding: 15, marginBottom: 5}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"shopping-cart"} size={20} color="#8cbdef" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>Mes commandes</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000"/>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>navigation.navigate('MethodPaymentScreen')}  style={{padding: 15, marginBottom: 5}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"wallet"} size={20} color="#bf73ef" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>Methode de paiement</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000"/>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>alert('')}  style={{padding: 15, marginBottom: 10}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"comment-dots"} size={20} color="#43e6e5" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>Mes avis</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000"/>
-                        </View>
-                    </TouchableOpacity>
+                    <ProfilLine icon="shopping-cart" iconColor={"#8cbdef"} title="Mes commandes" onPress={()=>navigation.navigate('OrderScreen')}/>
+                    <ProfilLine icon="wallet" iconColor={"#bf73ef"} title="Methode de paiement" onPress={()=>navigation.navigate('MethodPaymentScreen')}/>
+                    <ProfilLine icon="comment-dots" iconColor={"#43e6e5"} title="Mes avis" onPress={()=>alert('Mes avis')}/>
                 </View>
-                <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
-                    <TouchableOpacity onPress={()=>alert('terms')}  style={{padding: 15, marginBottom: 5}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"scroll"} size={20} color="#8cbdef" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>Termes et conditions</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000"/>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>alert('')}  style={{padding: 15, marginBottom: 5}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <FontAwesome5 name={"warehouse"} size={20} color="#bf73ef" style={{marginTop: 2}}/>
-                                <Text style={{fontSize: 20, marginLeft: 5,}}>A propos de nous</Text>
-                            </View>
-                            <FontAwesome5 name="angle-right" size={22} color="#000"/>
-                        </View>
-                    </TouchableOpacity>
+                <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 10, borderWidth: 0.1}}>
+                    <ProfilLine icon="scroll" iconColor={"#8cbdef"} title="Termes et conditions" onPress={()=>alert('Conditions')}/>
+                    <ProfilLine icon="warehouse" iconColor={"#bf73ef"} title="A propos de nous" onPress={()=>alert('A propos')}/>
                 </View>
-                <TouchableOpacity onPress={handleLogout} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10, marginTop: 20 }}>
+                <TouchableOpacity onPress={handleLogout} style={{backgroundColor: colors.primary, padding: 10,borderRadius:10, marginBottom: 10, marginTop: 20 }}>
                     <View style={{flexDirection: 'row',justifyContent: "center", alignItems: 'center'}}>
                         {loading ? 
                         (<ActivityIndicator size={20} color="white" style={{marginTop: 2, marginRight: 5}}/>):
