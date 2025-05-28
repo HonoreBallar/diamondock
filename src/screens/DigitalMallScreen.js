@@ -19,7 +19,7 @@ export default function DigitalMallScreen({navigation}){
 
     return(
         <ScrollView 
-        style={{flex: 1, paddingTop: 40}}
+        style={{flex: 1, paddingTop: 40, marginBottom: 20}}
         refreshControl={
             <RefreshControl
                 refreshing={refreshing}

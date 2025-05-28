@@ -86,7 +86,7 @@ export const WishlistProvider = ({children})=>{
     };
 
     return (
-        <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist, clearWishlist, isProductInWishlist }}>
+        <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist, clearWishlist, isProductInWishlist, clearWishlist }}>
             {children}
             <FlashMessage
                 animated={true}

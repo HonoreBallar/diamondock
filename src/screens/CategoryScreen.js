@@ -7,21 +7,23 @@ import Title from "../components/Title";
 export default function CategoryScreen({navigation}){
     const {categories} = useCategories();
     return(
-        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header />
-            <Title title="Toutes les categories" />
-            <View style={{marginHorizontal: 13, marginVertical: 15}}>
-                <FlatList
-                    data={categories}
-                    scrollEnabled={false}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => (
-                        <CategoryCard category={item} navigation={navigation}/>
-                    )}
-                    ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
-                />
-            </View>
-        </ScrollView>
+            <ScrollView>
+                <Title title="Toutes les categories" />
+                <View style={{marginHorizontal: 13, marginVertical: 15}}>
+                    <FlatList
+                        data={categories}
+                        scrollEnabled={false}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={({ item }) => (
+                            <CategoryCard category={item} navigation={navigation}/>
+                        )}
+                        ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+                    />
+                </View>
+            </ScrollView>
+        </View>
     );
 }
