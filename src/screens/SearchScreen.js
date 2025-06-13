@@ -15,7 +15,7 @@ export default function SearchScreen({ navigation }) {
     setSearchText(text);
     if (text.length > 0) {
       const filtered = products.filter(item => 
-        item.name.toLowerCase().includes(text.toLowerCase())
+        item?.name.toLowerCase().includes(text.toLowerCase())
       );
       setFilteredProducts(filtered);
     } else {
@@ -44,7 +44,7 @@ export default function SearchScreen({ navigation }) {
       <View style={{marginVertical: 15}}>
           <View style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
             <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 3, marginLeft: 15}}/>
-            <TextInput keyboardType="default" placeholder="Rechercher un produit ..." value={searchText} maxLength={10} onChangeText={(text)=>handleSearchChange(text)}   style={{width: '78%', padding: 10}}/>
+            <TextInput autoFocus={true} keyboardType="default" placeholder="Rechercher un produit ..." value={searchText} maxLength={10} onChangeText={(text)=>handleSearchChange(text)}   style={{width: '78%', padding: 10}}/>
             {searchText.length > 0 && (
               <TouchableOpacity onPress={handleSearch} style={{}}>
                 <FontAwesome5 name="times" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
