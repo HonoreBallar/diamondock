@@ -51,14 +51,16 @@ export default function WishlistCard({navigation, product}){
                             <Text style={{color: 'red', fontSize: 12, fontWeight: '600'}}>Supprimer de mes favoris</Text>
                         )}
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#03045e', padding: 8, borderRadius: 18}}>
-                        {loadingCart ?(
-                            <ActivityIndicator size={15} color="white" />
-                        ):(
-                            <FontAwesome5 name="cart-plus" size={15} color="white" />
-                        )
-                        }
-                    </TouchableOpacity>
+                    {product?.remaining_stock != 0 &&(
+                        <TouchableOpacity onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#03045e', padding: 8, borderRadius: 18}}>
+                            {loadingCart ?(
+                                <ActivityIndicator size={15} color="white" />
+                            ):(
+                                <FontAwesome5 name="cart-plus" size={15} color="white" />
+                            )
+                            }
+                        </TouchableOpacity>
+                    ) }
                 </View>
             </View>
         </View>

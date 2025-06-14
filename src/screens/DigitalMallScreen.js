@@ -3,12 +3,12 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Header from "../components/Header";
 import Title from "../components/Title";
 import colors from "../utils/colors";
-import { useProducts } from "../context/ProductContext";
 import { useState } from "react";
 import { wait } from "../utils/utils";
+import { useSellers } from "../context/SellerContext";
 
 export default function DigitalMallScreen({navigation}){
-    const {sellers, fetchSellers} = useProducts();
+    const {sellers, fetchSellers} = useSellers();
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = async() => {
         await wait(5000);

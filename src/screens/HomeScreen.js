@@ -1,14 +1,23 @@
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
 import { useCategories } from "../context/CategoryContext";
 import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
+import { useEffect, useState } from "react";
 
 export default function HomeScreen({navigation}){
     const {categories} = useCategories();
     const {products} = useProducts();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (products.length > 0 && categories.length > 0) {
+            setLoading(false);
+        }
+    }, 
+    [products, categories]);
 
     return(
         <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -22,20 +31,26 @@ export default function HomeScreen({navigation}){
                                 <Text style={{color: '#03045e', textAlign: 'right', fontSize: 12}}>Voir plus</Text>
                             </TouchableOpacity>
                         </View>
-                        <FlatList
-                            data={categories}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity onPress={()=>navigation.navigate('CategoryDetailScreen',{category: item})} style={{marginRight: 10, marginBottom: 10, padding: 5 }}>
-                                    <View style={{width: 80, height: 80, borderRadius: 40, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderWidth: 0.5, borderColor: '#ccc'}}>
-                                        <Image source={{uri: item?.image}} style={{width: 80, height: 80, borderRadius: 40}} resizeMode="cover"/>
-                                    </View>
-                                    <Text style={{fontSize: 14, fontWeight: '400',textAlign: 'center'}}>{item.name || 'Categorie'} ({item.nb_products || 0})</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
+                        {loading ? (
+                            <ActivityIndicator size="large" color={colors.primary} style={{marginTop: 20}} />
+                        ) : (
+                            <FlatList
+                                data={categories}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity onPress={()=>navigation.navigate('CategoryDetailScreen',{category: item})} style={{marginRight: 10, marginBottom: 10, padding: 5 }}>
+                                        <View style={{width: 80, height: 80, borderRadius: 40, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderWidth: 0.5, borderColor: '#ccc'}}>
+                                            <Image source={{uri: item?.image}} style={{width: 80, height: 80, borderRadius: 40}} resizeMode="cover"/>
+                                        </View>
+                                        <Text style={{fontSize: 14, fontWeight: '400',textAlign: 'center'}}>{item.name || 'Categorie'} ({item.nb_products || 0})</Text>
+                                    </TouchableOpacity>
+                                )}
+                                initialNumToRender={2}
+                                maxToRenderPerBatch={2}
+                            />
+                        )}
                     </View>
                     <View style={{margin: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
@@ -49,6 +64,8 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <ProductCard key={item.token} product={item} navigation={navigation}/>
                         )}
+                        initialNumToRender={2}
+                        maxToRenderPerBatch={2}
                         />
                     </View>
 
@@ -64,6 +81,8 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <ProductCard key={item.token} product={item} navigation={navigation}/>
                         )}
+                        initialNumToRender={2}
+                        maxToRenderPerBatch={2}
                         />
                     </View>
 
@@ -79,6 +98,8 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <ProductCard key={item.token} product={item} navigation={navigation}/>
                         )}
+                        initialNumToRender={2}
+                        maxToRenderPerBatch={2}
                         />
                     </View>
 
