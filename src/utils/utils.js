@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //formater le montant fr
 export const formatAmount = (amount) => {
     if (amount === null) return null;
-    return amount.toLocaleString('fr-FR', { style: 'currency', currency: 'XOF' });
+    return amount.toLocaleString('fr-FR');
 };
 
 export const setItemInStorage = async (key, value) => {
@@ -28,4 +28,9 @@ export const getItemFromStorage = async (key) => {
 
 export const wait = (ms)=>{
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export const ratio = (width, height) => {
+  if (width === 0 || height === 0) return 0;
+  return Math.round(width / height);
 }

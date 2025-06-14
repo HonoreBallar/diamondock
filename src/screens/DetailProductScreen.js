@@ -1,146 +1,235 @@
-import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
+import { getRequest } from "../utils/api";
+import Header from "../components/Header";
+import { formatAmount, ratio } from "../utils/utils";
+import { ProgressBar } from "react-native-paper";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 
-export default function DetailProductScreen({navigation}){
+export default function DetailProductScreen({navigation, route}){
 
+    const {product} = route.params;
+    const {addToCart} = useCart();
     const [quantity, setQuantity] = useState('1');
-    const photos = [
-        'https://britannia-jewellery.co.uk/wp-content/uploads/C11257-B-scaled.jpg',
-        'https://assets.hermes.com/is/image/hermesproduct/escape-sneaker--221932ZHI2-worn-1-0-0-1000-1000_g.jpg',
-        'https://th.bing.com/th/id/OIP.us5WsxB02ZjayYeO-SFxkwHaLG?w=1203&h=1803&rs=1&pid=ImgDetMain',
-        
-    ]
+    const [mainProduct, setMainProduct] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [ratio, setRatio] = useState(0);
+    const [photos, setPhotos] = useState([]);
+    const [loadingWishlist, setLoadingWishlist] = useState(false);
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
+    const {isProductInWishlist, addToWishlist} = useWishlist();
+
+
+    useEffect(()=>{
+        async function loadProducts() {
+            setLoading(true);
+            try {
+                const response = await getRequest('/product/'+product?.token);
+                const datas = response.data ?? []
+                if (!datas?.images || datas?.images.length === 0) {
+                    let defaultImage = datas?.main_image;
+                    setPhotos([{url: defaultImage}]);
+                }else{
+                    setPhotos(datas.images);
+                }
+                setMainProduct(datas);
+                setRatio(datas?.remaining_stock / datas?.total_stock);
+                setLoading(false);
+            } catch (error) {
+                console.error('Erreur lors du chargement des produits :', error);
+            }
+            finally {
+                setLoading(false);
+            }
+        }
+        loadProducts();
+    }, [product?.token]);
+
+    const addToCartHandler = async () => {
+        setIsAddedToCart(true);
+        setTimeout(async () => {
+            await addToCart(mainProduct, parseInt(quantity));
+            setQuantity('1');
+            setIsAddedToCart(false);
+        },50);
+    }
+    const handleAddProductToWishlist = async () => {
+        setLoadingWishlist(true);
+        setTimeout(async () => {
+            await addToWishlist(mainProduct);
+            setLoadingWishlist(false);
+        }, 50);
+    }
+
     return(
         <View style={{flex: 1}}>
-            <StatusBar translucent backgroundColor="transparent" />
-            <ScrollView style={{flex: 1, marginBottom: 80}}>
-                <View>
-                    <Swiper
-                        style={{height: 350}}
-                        showsButtons={false}
-                        autoplay={true}
-                        loop={false}
-                        activeDotColor={colors.primary}
-                        dotStyle={styles.dot}
-                        activeDotStyle={styles.activeDot}
-                    >
-
-                        {photos.map((image, index) => (
-                            <View key={index} style={styles.slide}>
-                                <Image
-                                    source={{uri: image}}
-                                    style={styles.image}
-                                    resizeMode="cover"
-                                />
-                            </View>
-                        ))}
-                    </Swiper>
-                    <View style={{paddingTop: 50, position: 'absolute',paddingHorizontal: 15, justifyContent: 'space-between', width: '100%', flexDirection: 'row', alignItems: 'center'}}>
-                        <TouchableOpacity onPress={()=>navigation.goBack()}>
-                            <FontAwesome5 name="arrow-left" size={20} color="white"/>
-                        </TouchableOpacity>
-                        <FlottingCart navigation={navigation}/>
+            {loading ? (
+                <>
+                    <Header />
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <ActivityIndicator size={50} color={colors.primary} />
+                        <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>Chargement...</Text>
                     </View>
-                </View>
-                <View style={{margin: 13}}>
-                    <Text style={{fontSize: 17, marginBottom: 8}} numberOfLines={2}>Aprilla colliers chaine pour Homme Femme  60 cm</Text>
-                    <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>12 000 FCFA</Text>
-                    <Text style={{fontSize: 14, marginBottom: 8, lineHeight: 22}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.
-                        Integer vitae tortor id lectus tincidunt sodales. Vestibulum
-                        tincidunt nisl in ex malesuada, eget ullamcorper orci facilisis. Curabitur ac purus lorem. Nullam in orci nunc. Maecenas dictum, ex sed lobortis tincidunt, turpis risus consequat sapien, a congue mauris ex et libero.
-                    </Text>
-                    <Text style={{fontWeight: '600', fontSize: 25}}>Détails</Text>
-                    <Text style={{fontSize: 14, marginBottom: 8, lineHeight: 22}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.
-                        Integer vitae tortor id lectus tincidunt sodales. Vestibulum
-                        tincidunt nisl in ex malesuada, eget ullamcorper orci facilisis. Curabitur ac purus lorem. Nullam in orci nunc. Maecenas dictum, ex sed lobortis tincidunt, turpis risus consequat sapien, a congue mauris ex et libero.
-                    </Text>
-                    <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Livraison</Text>
-                    <View>
-                        <View  style={{flexDirection: 'row', backgroundColor: '#f9f9f9', borderRadius: 8, padding: 5, alignItems: 'center', borderWidth: 0.5, borderColor: colors.primary, marginBottom: 10}}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:6, width: '100%'}}>
-                                <Text style={{ fontWeight: '500', fontSize: 19}}>Standard</Text>
-                                <Text style={{backgroundColor: '#f5f8ff', padding: 5, borderRadius: 5, color: colors.primary}}>5-7 jours</Text>
-                                <Text style={{fontWeight: '700', fontSize: 18}}>1 500 F CFA</Text>
+                </>
+            ) : (
+                <>
+                    <StatusBar translucent backgroundColor="transparent" />
+                    <ScrollView style={{flex: 1, marginBottom: 80}}>
+                        <View>
+                            <Swiper
+                                style={{height: 350}}
+                                showsButtons={false}
+                                autoplay={true}
+                                loop={false}
+                                activeDotColor={colors.primary}
+                                dotStyle={styles.dot}
+                                activeDotStyle={styles.activeDot}
+                            >
+        
+                                {/* {Object.values(mainProduct?.images).map((image, index) => (
+                                    <View key={index} style={styles.slide}>
+                                        <Image
+                                            source={{uri: image}}
+                                            style={styles.image}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                ))} */}
+                                {photos.map((image, index) => (
+                                    <View key={index} style={styles.slide}>
+                                        <Image
+                                            source={{uri: image.url}}
+                                            style={styles.image}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                ))}
+                            </Swiper>
+                            <View style={{paddingTop: 50, position: 'absolute',paddingHorizontal: 15, justifyContent: 'space-between', width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                                <TouchableOpacity onPress={()=>navigation.goBack()}>
+                                    <FontAwesome5 name="arrow-left" size={20} color="white"/>
+                                </TouchableOpacity>
+                                <FlottingCart navigation={navigation}/>
                             </View>
                         </View>
-                        <View  style={{flexDirection: 'row', backgroundColor: '#f9f9f9', borderRadius: 8, padding: 5, alignItems: 'center', borderWidth: 0.5, borderColor: colors.primary, marginBottom: 10}}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:6, width: '100%'}}>
-                                <Text style={{ fontWeight: '500', fontSize: 19}}>Express</Text>
-                                <Text style={{backgroundColor: '#f5f8ff', padding: 5, borderRadius: 5, color: colors.primary}}>1-2 jours</Text>
-                                <Text style={{fontWeight: '700', fontSize: 18}}>8 00 F CFA</Text>
+                        <View style={{margin: 13}}>
+                            <Text style={{fontSize: 17, marginBottom: 8}} numberOfLines={2}>{mainProduct?.name}</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
+                            
+                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 5}}>Description</Text>
+                            <Text style={{fontSize: 14, marginBottom: 8}}>
+                                {mainProduct?.description || 'Aucune description disponible pour ce produit.'}
+                            </Text>
+                            {ratio === 0 ? (
+                                <Text style={{color: 'red', fontWeight: '600', fontSize: 16, marginBottom: 5}}>Ce produit est actuellement en rupture de stock.</Text>
+                            ) :(
+                                <View style={{marginBottom: 10}}>
+                                    <Text style={{fontWeight: '300', fontSize: 16, marginBottom: 5}}>{mainProduct?.remaining_stock || 0} article (s) resrtant(s)</Text>
+                                    <ProgressBar progress={ratio} color={colors.primary} />
+                                </View>
+                            )}
+                            {/* <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Livraison</Text> */}
+                            {/* <View>
+                                <View  style={{flexDirection: 'row', backgroundColor: '#f9f9f9', borderRadius: 8, padding: 5, alignItems: 'center', borderWidth: 0.5, borderColor: colors.primary, marginBottom: 10}}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:6, width: '100%'}}>
+                                        <Text style={{ fontWeight: '500', fontSize: 19}}>Standard</Text>
+                                        <Text style={{backgroundColor: '#f5f8ff', padding: 5, borderRadius: 5, color: colors.primary}}>5-7 jours</Text>
+                                        <Text style={{fontWeight: '700', fontSize: 18}}>1 500 F CFA</Text>
+                                    </View>
+                                </View>
+                                <View  style={{flexDirection: 'row', backgroundColor: '#f9f9f9', borderRadius: 8, padding: 5, alignItems: 'center', borderWidth: 0.5, borderColor: colors.primary, marginBottom: 10}}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:6, width: '100%'}}>
+                                        <Text style={{ fontWeight: '500', fontSize: 19}}>Express</Text>
+                                        <Text style={{backgroundColor: '#f5f8ff', padding: 5, borderRadius: 5, color: colors.primary}}>1-2 jours</Text>
+                                        <Text style={{fontWeight: '700', fontSize: 18}}>8 00 F CFA</Text>
+                                    </View>
+                                </View>
+                            </View> */}
+                            <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Avis clients</Text>
+                            <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontSize: 20, marginBottom: 3}}>⭐</Text>
+                                        {/* <FontAwesome5 name="star" size={20} color="#fec727"/> */}
+                                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
+                                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
+                                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900)</Text>
+                                        </View>
+                                    </View>
+                                    <FontAwesome5 name="chevron-right" size={20} color="#000"/>
+                                </View>
                             </View>
+                            {/* <View>
+                                <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+                                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text>⭐⭐⭐⭐</Text>
+                                            <FontAwesome5 name="star" size={12} color="#fec727" style={{marginTop: 2}}/>
+                                        </View>
+                                    </View>
+                                    <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
+                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
+                                </View>
+                                <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+                                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text>⭐⭐⭐⭐⭐</Text>
+                                        </View>
+                                    </View>
+                                    <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
+                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
+                                </View>
+                            </View> */}
                         </View>
-                    </View>
-                    <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Avis clients</Text>
-                    <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
+                    </ScrollView>
+                    <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: 20, marginBottom: 3}}>⭐</Text>
-                                {/* <FontAwesome5 name="star" size={20} color="#fec727"/> */}
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
-                                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
-                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900)</Text>
-                                </View>
+                            <TouchableOpacity onPress={()=>handleAddProductToWishlist(mainProduct)}>
+                                {loadingWishlist ? (
+                                    <ActivityIndicator size={22} color="black" />
+                                ): (
+                                    isProductInWishlist(mainProduct.token) ? (
+                                        <Text style={{fontSize: 24}}>❤️</Text>
+                                    ):(
+                                        <FontAwesome5 name="heart" size={24} color="red" />
+                                    )
+                                )}
+                            </TouchableOpacity>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around', width: "50%", borderRadius: 5, padding: 5}}>
+                                <TouchableOpacity 
+                                onPress={() => setQuantity((prev) => (parseInt(prev) > 1 ? `${parseInt(prev) - 1}` : prev))}
+                                style={{borderWidth: 0.5, width: '25%', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center'}}>
+                                    <FontAwesome5 name="minus" size={18} color="#000"/>
+                                </TouchableOpacity>
+                                <TextInput value={quantity} onChangeText={(text)=>setQuantity(text)} keyboardType="numeric" style={{borderWidth: 0.5, width:'50%', fontSize: 19, borderColor: '#ddd', fontWeight: '600'}} textAlign="center"/>
+                                <TouchableOpacity
+                                onPress={() => setQuantity((prev) => `${parseInt(prev) + 1}`)}
+                                style={{borderWidth: 0.5, width: '25%', borderTopRightRadius: 5, borderBottomRightRadius: 5, borderColor: '#ddd',justifyContent: 'center', alignItems: 'center'}}>
+                                    <FontAwesome5 name="plus" size={18} color="#000"/>
+                                </TouchableOpacity>
                             </View>
-                            {/* <FontAwesome5 name="chevron-right" size={20} color="#000"/> */}
+                            { mainProduct?.remaining_stock === 0 ? (
+                                <TouchableOpacity disabled={true} style={{backgroundColor: colors.gray, padding: 9, borderRadius: 8, alignItems: 'center'}}>
+                                    <Text style={{color: 'white'}}> En Rupture de stock</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity disabled={isAddedToCart} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
+                                    { isAddedToCart ? <ActivityIndicator size="small" color="white" /> :<FontAwesome5 name="cart-plus" size={20} color="white"/>}
+                                    <Text style={{color: 'white', marginLeft: 5}}>Ajouter au panier</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </View>
-                    <View>
-                        <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Text>⭐⭐⭐⭐</Text>
-                                    <FontAwesome5 name="star" size={12} color="#fec727" style={{marginTop: 2}}/>
-                                </View>
-                            </View>
-                            <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
-                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
-                        </View>
-                        <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-                                <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Text>⭐⭐⭐⭐⭐</Text>
-                                </View>
-                            </View>
-                            <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
-                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
-                        </View>
-                    </View>
-                </View>
-            </ScrollView>
-            <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <TouchableOpacity>
-                        <FontAwesome5 name="heart" size={25} color="#000"/>
-                    </TouchableOpacity>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around', width: "50%", borderRadius: 5, padding: 5}}>
-                        <TouchableOpacity 
-                        onPress={() => setQuantity((prev) => (parseInt(prev) > 1 ? `${parseInt(prev) - 1}` : prev))}
-                        style={{borderWidth: 0.5, width: '25%', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center'}}>
-                            <FontAwesome5 name="minus" size={18} color="#000"/>
-                        </TouchableOpacity>
-                        <TextInput value={quantity} onChangeText={(text)=>setQuantity(text)} keyboardType="numeric" style={{borderWidth: 0.5, width:'50%', fontSize: 19, borderColor: '#ddd', fontWeight: '600'}} textAlign="center"/>
-                        <TouchableOpacity
-                        onPress={() => setQuantity((prev) => `${parseInt(prev) + 1}`)}
-                        style={{borderWidth: 0.5, width: '25%', borderTopRightRadius: 5, borderBottomRightRadius: 5, borderColor: '#ddd',justifyContent: 'center', alignItems: 'center'}}>
-                            <FontAwesome5 name="plus" size={18} color="#000"/>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity style={{flexDirection: 'row', backgroundColor: "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
-                        <FontAwesome5 name="cart-plus" size={20} color="white"/>
-                        <Text style={{color: 'white', marginLeft: 5}}>Ajouter au panier</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                </>
+            )}
         </View>
     )
 }
