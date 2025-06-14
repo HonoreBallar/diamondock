@@ -6,11 +6,11 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
 import { getRequest } from "../utils/api";
-import Header from "../components/Header";
 import { formatAmount, ratio } from "../utils/utils";
 import { ProgressBar } from "react-native-paper";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
+import HeaderLogo from "../components/HeaderLogo";
 
 export default function DetailProductScreen({navigation, route}){
 
@@ -71,7 +71,7 @@ export default function DetailProductScreen({navigation, route}){
         <View style={{flex: 1}}>
             {loading ? (
                 <>
-                    <Header />
+                    <HeaderLogo />
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <ActivityIndicator size={50} color={colors.primary} />
                         <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>Chargement...</Text>
@@ -91,16 +91,6 @@ export default function DetailProductScreen({navigation, route}){
                                 dotStyle={styles.dot}
                                 activeDotStyle={styles.activeDot}
                             >
-        
-                                {/* {Object.values(mainProduct?.images).map((image, index) => (
-                                    <View key={index} style={styles.slide}>
-                                        <Image
-                                            source={{uri: image}}
-                                            style={styles.image}
-                                            resizeMode="cover"
-                                        />
-                                    </View>
-                                ))} */}
                                 {photos.map((image, index) => (
                                     <View key={index} style={styles.slide}>
                                         <Image

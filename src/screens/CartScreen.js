@@ -10,7 +10,7 @@ import { formatAmount } from "../utils/utils";
 
 export default function CartScreen({navigation, }){
 
-    const { cart, loading, clearCart, getTotal} = useCart();
+    const { cart, loading, clearCart, getTotal, currency} = useCart();
     const [loadingCart, setLoadingCart] = useState(false);
 
     const handleClearCart = () => {
@@ -58,10 +58,10 @@ export default function CartScreen({navigation, }){
                                 }
                                 <View style={{backgroundColor: colors.tertiary, borderRadius: 10, padding: 5, marginTop: 5, elevation: 1}}>
                                     <View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 10, paddingHorizontal: 15, alignItems: 'center', height: 50}}>
-                                        <Text style={{color: '#c3c3c3', fontSize: 18}}>Total :</Text>
-                                        <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}> {formatAmount(getTotal() || 0)}</Text>
+                                        <Text style={{color: '#c3c3c3', fontSize: 18}}>Total : {currency}</Text>
+                                        <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary}}> {formatAmount(getTotal() || 0)} {currency}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={()=>navigation.navigate('PaymentScreen')} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10 }}>
+                                    <TouchableOpacity onPress={()=>navigation.navigate('OrderStepOne')} style={{backgroundColor: colors.primary, padding: 12,borderRadius:10, marginBottom: 10 }}>
                                         <Text style={{color: 'white', fontWeight: 'bold',  textAlign: 'center'}}>Valider ma commande</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={()=>handleClearCart()}>

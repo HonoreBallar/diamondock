@@ -7,6 +7,7 @@ const CartContext = createContext();
 export const CartProvider = ({children}) =>{
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currency, setCurrency] = useState(null);
 
     //Charger les produits du panier depuis AsyncStorage au démarrage
     useEffect(() => {
@@ -29,6 +30,19 @@ export const CartProvider = ({children}) =>{
 
     //Ajouter un produit au panier
     const addToCart = (product, nbOfProduct = 1) => {
+
+        if (currency && product?.currency !== currency) {
+            showMessage({
+                message: "Vous ne pouvez ajouter que des produits avec la même devise.",
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+            return;
+        }
+
+        if (!currency) setCurrency(product?.currency);
+
         const existingProductIndex = cart.findIndex((item) => item.token === product.token);
         let updatedCart;
         
@@ -116,10 +130,10 @@ export const CartProvider = ({children}) =>{
         token: item.token,
         quantity: item.quantity,
         reduction_rate: null
-    }))
+    }));
 
     return (
-        <CartContext.Provider value={{ cart, loading, addToCart, removeFromCart, clearCart, getTotal, incrementQuantity, decrementQuantity, productListInCart, productInCart }}>
+        <CartContext.Provider value={{ cart, currency, addToCart, removeFromCart, clearCart, getTotal, incrementQuantity, decrementQuantity, productListInCart, productInCart }}>
             {children}
             <FlashMessage
                 animated={true}

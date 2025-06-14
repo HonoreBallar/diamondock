@@ -14,6 +14,7 @@ export default function App() {
             <StatusBar
               backgroundColor="white"
               barStyle="light-content"
+              // style='auto'
             />
             <RootNavigator />
         </NavigationContainer>

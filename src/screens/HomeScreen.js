@@ -64,7 +64,7 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <ProductCard key={item.token} product={item} navigation={navigation}/>
                         )}
-                        initialNumToRender={2}
+                        initialNumToRender={1}
                         maxToRenderPerBatch={2}
                         />
                     </View>
@@ -81,7 +81,7 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <ProductCard key={item.token} product={item} navigation={navigation}/>
                         )}
-                        initialNumToRender={2}
+                        initialNumToRender={1}
                         maxToRenderPerBatch={2}
                         />
                     </View>
@@ -98,7 +98,7 @@ export default function HomeScreen({navigation}){
                         renderItem={({ item }) => (
                             <ProductCard key={item.token} product={item} navigation={navigation}/>
                         )}
-                        initialNumToRender={2}
+                        initialNumToRender={1}
                         maxToRenderPerBatch={2}
                         />
                     </View>
