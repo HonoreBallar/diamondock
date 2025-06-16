@@ -129,7 +129,6 @@ export const CartProvider = ({children}) =>{
     const productListInCart = cart.map(item=>({
         token: item.token,
         quantity: item.quantity,
-        reduction_rate: null
     }));
 
     return (

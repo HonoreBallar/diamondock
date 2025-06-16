@@ -1,5 +1,5 @@
 import { CategoryProvider } from "./CategoryContext";
-// import { OrderProvider } from "./OrderContext";
+import { OrderProvider } from "./OrderContext";
 import { ProductProvider } from "./ProductContext";
 import { RootProvider } from "./RootContext";
 // import { SearchProvider } from "./SearchContext";
@@ -12,7 +12,7 @@ export const AppProvider = ({children}) =>{
         <RootProvider>
             <CartProvider>
                 <SellerProvider>
-                    {/* <OrderProvider> */}
+                    <OrderProvider>
                         {/* <SearchProvider> */}
                             <ProductProvider>
                                 <WishlistProvider>
@@ -22,7 +22,7 @@ export const AppProvider = ({children}) =>{
                                 </WishlistProvider>
                             </ProductProvider>
                         {/* </SearchProvider> */}
-                    {/* </OrderProvider> */}
+                    </OrderProvider>
                 </SellerProvider>
             </CartProvider>
         </RootProvider>
