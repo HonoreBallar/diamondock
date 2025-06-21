@@ -1,7 +1,7 @@
 import { Text, TextInput, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function Input({label, icon, value ='', keyboardType='default', placeholder, isRequired = false, onChangeText, maxLength = 100, editable = true}){
+export default function Input({label, icon, value ='', keyboardType='default', placeholder, isRequired = false, onChangeText, maxLength = 100, editable = true, secureTextEntry= false}){
     return (
         <View>
             <View style={{flexDirection: 'row'}}>
@@ -11,12 +11,13 @@ export default function Input({label, icon, value ='', keyboardType='default', p
             <View style={{flexDirection: 'row', borderWidth: 1, borderColor: '#ccc', borderRadius: 15, alignContent: 'center', marginBottom: 10}}>
                 <FontAwesome5 name={icon} size={20} color='#333' style={{marginLeft: 10, marginTop: 7}}/>
                 <TextInput
-                keyboardType={keyboardType} placeholder={placeholder}
-                onChangeText={onChangeText}
-                maxLength={maxLength}
-                value={value}
-                style={{flex: 1, marginLeft: 5, fontSize: 15, paddingHorizontal: 10, height: 40}}
-                editable={editable}
+                    keyboardType={keyboardType} placeholder={placeholder}
+                    onChangeText={onChangeText}
+                    maxLength={maxLength}
+                    value={value}
+                    style={{flex: 1, marginLeft: 5, fontSize: 15, paddingHorizontal: 10, height: 40}}
+                    editable={editable}
+                    secureTextEntry={secureTextEntry}
                 />
             </View>
         </View>

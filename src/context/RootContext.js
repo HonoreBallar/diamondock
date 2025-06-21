@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import axios from 'axios';
 import { getItemFromStorage, setItemInStorage, wait } from "../utils/utils";
-import { postRequest } from "../utils/api";
+import { getRequest, postRequest } from "../utils/api";
 
 const RootContext = createContext();
 export const RootProvider = ({children})=>{
@@ -11,6 +11,7 @@ export const RootProvider = ({children})=>{
         is_started: false,
     });
     const [loading, setLoading] = useState(true);
+    const [countries, setCountries] = useState([]);
     const [auth, setAuth] = useState({
         isLoggedIn: false,
         user: null
@@ -26,12 +27,12 @@ export const RootProvider = ({children})=>{
             if(auth){
                 setAuth(JSON.parse(auth));
             }
-            // console.log(auth, starter, loading);
             await wait(2000);
             setLoading(false);
         }
 
         _();
+        getCountries();
     },[]);
 
     const updateStarterState = async (payload = {})=>{
@@ -64,18 +65,18 @@ export const RootProvider = ({children})=>{
 
     const registerUser = async (datas)=>{
         try {
-            const response = await postRequest('/client/store', datas);
+            const response = await postRequest('/customer/register', datas);
             if(response?.status === false){
                 showMessage({
-                    message: response?.message,
+                    message: response?.error,
                     type: "danger",
                     icon: { icon: "danger"},
                     duration: 2000,
                 });
                 return;
             }
-            await updateStarterState({is_started: true});
-            await updateAuthState({isLoggedIn: true, user: response.data});
+            // await updateStarterState({is_started: true});
+            await updateAuthState({isLoggedIn: true, user: response?.data});
             showMessage({
                 message: "Compte créé avec succès",
                 type: "success",
@@ -116,19 +117,16 @@ export const RootProvider = ({children})=>{
 
     const loginUser = async (datas={})=>{
         try {
-            // const response = await postRequest('/client/login', datas);
-            // if(response.status === false){
-            //     showMessage({
-            //         message: response?.message,
-            //         type: "danger",
-            //         icon: { icon: "danger"},
-            //         duration: 2000,
-            //     });
-            //     return;
-            // }
-            // await updateAuthState({isLoggedIn: true, user: response.data});
-            // console.log(datas);
-            await updateAuthState({isLoggedIn: true});
+            const response = await postRequest('/auth/login', datas);
+            if(response.status === false){
+                showMessage({
+                    message: response?.error,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+                return;
+            }
             showMessage({
 
                 message: "Connexion réussie",
@@ -136,6 +134,7 @@ export const RootProvider = ({children})=>{
                 icon: { icon: "success"},
                 duration: 2000,
             });
+            await updateAuthState({isLoggedIn: true, user: response.data});
         } catch (error) {
             if(error.response){
                 showMessage({
@@ -156,8 +155,31 @@ export const RootProvider = ({children})=>{
 
     }
 
+    const getCountries = async()=>{
+        try {
+            const response = await getRequest('/setting/countries');
+            
+            if(response?.status === false){
+                showMessage({
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+            }
+            setCountries(response?.data);
+        } catch (error) {
+            showMessage({
+                message: "Erreur réseau "+ error.message,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }
+    }
+
     return (
-        <RootContext.Provider value={{starter, auth, loading, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser}}>
+        <RootContext.Provider value={{starter, auth, loading, countries, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries}}>
             {children}
             <FlashMessage
                 animated={true}

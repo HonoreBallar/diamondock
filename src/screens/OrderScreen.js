@@ -1,7 +1,7 @@
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
 import Title from "../components/Title";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useRootContext } from "../context/RootContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
@@ -11,18 +11,33 @@ import { wait } from "../utils/utils";
 export default function OrderScreen({navigation}){
     const {auth} = useRootContext();
     const [filteredOrders, setFilteredOrders] = useState([]);
-    const [activeFilter, setActiveFilter] = useState("tous");
-    const [searchText, setSearchText] = useState("0300000000");
+    const [orders, setOrders] = useState([]);
+    const [activeFilter, setActiveFilter] = useState("En attente de validation");
+    const [searchText, setSearchText] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const orderStatus = [
+        'En attente de validation',
+        'Validé',
+        'Annulé',
+        'Livré',
+    ]
+
+    useEffect(()=>{
+        if(auth?.isLoggedIn){
+            const _ = auth?.user?.phone;
+            setSearchText(_.replace('+225', ''));
+        }
+    },[]);
 
     // Fonction de filtrage
     const filterOrders = (status) => {
         setActiveFilter(status);
-        if (status === "tous") {
-            setFilteredOrders(filteredOrders);
-        } else {
-            setFilteredOrders(filteredOrders.filter(order => order.status === status));
-        }
+        // if (status === "En attente de validation") {
+        //     setFilteredOrders(filteredOrders);
+        // } else {
+        // }
+        setFilteredOrders(orders.filter(order => order.status_label == status));
     };
 
     const handleSearch = async () => {
@@ -40,9 +55,17 @@ export default function OrderScreen({navigation}){
         const phone = '+225' + searchText;
 
         try {
-            const response = await getRequest(`/order/all/${phone}`, auth.token);
-            console.log('Response', response.data);
-            setFilteredOrders(response?.data || []);
+            const response = await getRequest(`/order/all/${phone}`);
+            if(response?.status === false){
+                showMessage({
+                    message: response?.error,
+                    type: "danger",
+                    icon: { icon: "danger", position: "left" },
+                    duration: 2000,
+                });
+            }
+            setOrders(response?.data || []);
+            setFilteredOrders(orders.filter(order => order.status_label == 'En attente de validation'));
             setLoading(false);
             
         } catch (error) {
@@ -60,74 +83,76 @@ export default function OrderScreen({navigation}){
     }
 
     return(
-        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header/>
-            <Title title="Mes commandes" />
-            <View>
-                <View style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
-                    <TextInput keyboardType="numeric" placeholder="0142216384" value={searchText} maxLength={10} onChangeText={(text)=>setSearchText(text)}   style={{width: '85%', padding: 10}}/>
-                    <TouchableOpacity onPress={handleSearch} style={{}}>
-                        {
-                            loading ? (
-                                <ActivityIndicator size="small" color="#000" style={{marginTop: 5, marginLeft: 15}}/>
-                            ) : (
-                                <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
-                            )
-                        }
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View>
-                <View style={styles.buttonContainer}>
-                    {["tous", "en attente", "livré", "annulé"].map((status) => (
-                        <TouchableOpacity
-                            key={status}
-                            style={[
-                                styles.button,
-                                activeFilter === status ? styles.activeButton : null, // Change l'apparence du bouton actif
-                            ]}
-                            onPress={() => filterOrders(status)}
-                        >
-                            <Text
-                                style={[
-                                    styles.buttonText,
-                                    activeFilter === status ? styles.activeButtonText : null,
-                                ]}
-                            >
-                                {status}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                <FlatList
-                    data={filteredOrders}
-                    scrollEnabled={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    style={{ marginTop: 40 }}
-                    renderItem={({ item }) => (
-                        <View style={{borderWidth: 0.3, borderColor: '#ccc', padding: 10, marginBottom: 10, borderRadius: 5, margin: 5, backgroundColor: '#f9f9f9'}}>
-                            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Commande #{item.order_number}</Text>
-                            <Text style={{ backgroundColor: item?.status_color,padding: 2, borderRadius: 5, alignSelf: 'flex-start', marginVertical: 5 }}>{item?.status_label}</Text>
-                            <Text style={{ color: '#666' }}>Prix : ${item?.price}</Text>
-                            <View style={{flexDirection: 'row', marginTop: 5}}>
-                                <FontAwesome5 name="clock" size={12} color="#666" style={{marginTop: 5, marginRight: 5}}/>
-                                <Text style={{ color: '#666' }}>{item?.order_date}</Text>
-                            </View>
-                        </View>
-                    )}
-                    ListEmptyComponent={<Text style={{ textAlign: 'center', marginTop: 20 }}>Aucune commande trouvée</Text>}
-                    showsVerticalScrollIndicator={false}
-                />
-                {auth.isLoggedIn === false && (
-                    <View style={{marginTop: 20, marginBottom: 20}}>
-                        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                            <Text style={{textAlign: 'center', marginBottom: 10, fontWeight: 'bold', textDecorationLine: 'underline'}}>Connecter à votre compte pour passer vos commandes</Text>
+            <ScrollView>
+                <Title title="Mes commandes" />
+                <View>
+                    <View style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
+                        <TextInput keyboardType="numeric" placeholder="0142216384" value={searchText} maxLength={10} onChangeText={(text)=>setSearchText(text)}   style={{width: '85%', padding: 10}}/>
+                        <TouchableOpacity onPress={handleSearch} style={{}}>
+                            {
+                                loading ? (
+                                    <ActivityIndicator size="small" color="#000" style={{marginTop: 5, marginLeft: 15}}/>
+                                ) : (
+                                    <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
+                                )
+                            }
                         </TouchableOpacity>
                     </View>
-                )}
-            </View>
-        </ScrollView>
+                </View>
+                <View>
+                    <View style={styles.buttonContainer}>
+                        {orderStatus.map((status) => (
+                            <TouchableOpacity
+                                key={status}
+                                style={[
+                                    styles.button,
+                                    activeFilter === status ? styles.activeButton : null, // Change l'apparence du bouton actif
+                                ]}
+                                onPress={() => filterOrders(status)}
+                            >
+                                <Text
+                                    style={[
+                                        styles.buttonText,
+                                        activeFilter === status ? styles.activeButtonText : null,
+                                    ]}
+                                >
+                                    {status}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+
+                    <FlatList
+                        data={filteredOrders}
+                        scrollEnabled={false}
+                        keyExtractor={(item, index) => index.toString()}
+                        style={{ marginTop: 20, marginBottom: 20 }}
+                        renderItem={({ item }) => (
+                            <View style={{borderWidth: 0.3, borderColor: '#ccc', padding: 10, marginBottom: 10, borderRadius: 5, margin: 5, backgroundColor: '#f9f9f9'}}>
+                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Commande #{item.order_number}</Text>
+                                <Text style={{ backgroundColor: item?.status_color,padding: 2, borderRadius: 5, alignSelf: 'flex-start', marginVertical: 5 }}>{item?.status_label}</Text>
+                                <Text style={{ color: '#666' }}>Prix : ${item?.price}</Text>
+                                <View style={{flexDirection: 'row', marginTop: 5}}>
+                                    <FontAwesome5 name="clock" size={12} color="#666" style={{marginTop: 5, marginRight: 5}}/>
+                                    <Text style={{ color: '#666' }}>{item?.order_date}</Text>
+                                </View>
+                            </View>
+                        )}
+                        ListEmptyComponent={<Text style={{ textAlign: 'center', marginTop: 20 }}>Aucune commande trouvée</Text>}
+                        showsVerticalScrollIndicator={false}
+                    />
+                    {auth.isLoggedIn === false && (
+                        <View style={{marginTop: 20, marginBottom: 20}}>
+                            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                                <Text style={{textAlign: 'center', marginBottom: 10, fontWeight: 'bold', textDecorationLine: 'underline'}}>Connecter à votre compte pour passer vos commandes</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                </View>
+            </ScrollView>
+        </View>
     );
 }
 

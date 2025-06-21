@@ -11,7 +11,7 @@ export default function LoginScreen({navigation}){
 
     const {auth, loginUser} = useRootContext();
     const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
 
     // Vérifier si l'utilisateur est déjà connecté
@@ -22,24 +22,22 @@ export default function LoginScreen({navigation}){
     }, [auth.isLoggedIn]);
 
     const handleLoginUser = async () => {
-        // if(email === '' || password === ''){
-        //     showMessage({
-        //         message: "Veuillez remplir tous les champs",
-        //         type: "danger",
-        //     });
-        //     return;
-        // }
-        // if(!email.includes('@')){
-        //     showMessage({
-        //         message: "Veuillez entrer un email valide",
-        //         type: "danger",
-        //     });
-        //     return;
-        // }
+        if(phone === '' || password === ''){
+            showMessage({
+                message: "Veuillez remplir tous les champs",
+                type: "danger",
+            });
+            return;
+        }
         setLoading(true);
         await wait(1000);
-        await loginUser(email, password);
-        // navigation.navigate('Main');
+        const datas ={
+            identify: '+225' +phone,
+            password: password,
+            role: 'customer'
+        }
+        await loginUser(datas);
+        navigation.navigate('Main');
         setLoading(false);
     }
 
@@ -55,12 +53,12 @@ export default function LoginScreen({navigation}){
                 
                 <View>
                     <Input
-                        label="Email"
-                        icon="user-tie"
-                        placeholder="Entrez votre email"
-                        keyboardType="email-address"
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
+                        label="Téléphone"
+                        icon="phone"
+                        placeholder="Entrez votre téléphone"
+                        keyboardType="numeric"
+                        value={phone}
+                        onChangeText={setPhone}
                     />
                     <Input
                         label="Mot de passe"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderLogo from "../components/HeaderLogo";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
@@ -9,17 +9,33 @@ import colors from "../utils/colors";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useCart } from "../context/CartContext";
 import { formatAmount } from "../utils/utils";
+import { useRootContext } from "../context/RootContext";
 
 export default function OrderStepOne({navigation}) {
     const { cart, getTotal, productListInCart, currency } = useCart();
+    const {auth} = useRootContext();
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    
+    console.log(auth);
     const [phone, setPhone] = useState('');
     const [firstname, setFirstname] = useState('');
     const [lastname, setLasttname] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
+
+    useEffect(()=>{
+        if(auth.isLoggedIn){
+            const _=auth?.user?.phone;
+            
+            setPhone(_.replace('+225',''));
+            setFirstname(auth.user.firstname);
+            setLasttname(auth.user.lastname);
+            setEmail(auth.user.email);
+            setAddress(auth.user.address);
+
+        }
+
+    },[]);
 
 
     const handleNext = () => {
