@@ -34,3 +34,10 @@ export const ratio = (width, height) => {
   if (width === 0 || height === 0) return 0;
   return Math.round(width / height);
 }
+
+export const formatDateToEnglish = (date) => {
+
+    const [day, month, year] = date.split('/');
+
+    return `${year}-${month}-${day}`;
+};

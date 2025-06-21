@@ -59,8 +59,8 @@ export default function ProductCard({navigation, product}){
                     {
                         product?.remaining_stock === 0 ? (
                             <>
-                                <Text style={{fontSize: 12, color: colors.gray, marginTop: 3, marginBottom: 6}}>Rupture de stock</Text>
-                                <TouchableOpacity disabled={true} style={{backgroundColor: colors.gray, borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{fontSize: 12, color: colors.gray, marginTop: 3, marginBottom: 8}}>Rupture de stock</Text>
+                                <TouchableOpacity disabled={true} style={{backgroundColor: "#b3b9cb", borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                                     {loading ? (
                                         <ActivityIndicator size="small" color={colors.border} />
                                     ):(

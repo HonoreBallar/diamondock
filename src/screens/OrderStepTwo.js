@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Keyboard, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { use, useState } from "react";
+import { Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
@@ -8,10 +8,15 @@ import { RadioButton } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { formatDateToEnglish } from "../utils/utils";
+import { useCart } from "../context/CartContext";
 
 export default function OrderStepTwo({ navigation, route }) {
 
     const {modePayment, fetchOrder} = useOrders();
+    const {clearCart} = useCart();
     const {datas} = route.params;
     const [address, setAddress] = useState('');
     const [delivery, setDelivery] = useState('');
@@ -21,6 +26,29 @@ export default function OrderStepTwo({ navigation, route }) {
     const [payment, setPayment] = useState('cash');
     const [selectedPayment, setSelectedPayment] = useState();
     const [visible, setVisible] = useState(false);
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [selectedDate, setSelectedDate] = useState('');
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        setSelectedDate(date.toLocaleDateString('fr-FR')); // Format date to DD/MM/YYYY
+        hideDatePicker();
+    };
+
+    const getDateOneDaysLater = () => {
+        const today = new Date();
+        const nextDay = new Date(today);
+        nextDay.setDate(today.getDate() + 1);
+        return nextDay;
+    }
 
     const relay_point = "Cocody Riviéra Faya";
 
@@ -45,66 +73,81 @@ export default function OrderStepTwo({ navigation, route }) {
 
     const handleSubmit = () => {
 
+        if (delivery.trim() === '' && checked === 'at_home') {
+            showMessage({
+                message: "Veuillez entrer une adresse de livraison",
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
+        if (selectedDate === '' && checked === 'at_home') {
+            showMessage({
+                message: "Veuillez sélectionner une date de livraison",
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
+
         const order = {
             ...datas,
             delivery:{
                 method: checked,
                 address: checked == "relay_point" ? relay_point : delivery,
-                // date: selectedDate != '' ? formatDateToEnglish(selectedDate) : null,
-                data: '2025-04-19'
+                date: selectedDate != '' ? formatDateToEnglish(selectedDate) : null,
             },
-            payment_method: {
+            payment: {
                 method: payment,
                 option: selectedPayment
             }
         }
-        console.log(order);
-        return;
-        
+                
         setTimeout(async () => {
             setLoading(true);
             try {
                 const response = await fetchOrder(order);
-                console.log(response);
-                const responseData = response.data;
-                // if (responseData.status) {
-                //     clearCart();
-                //     if (responseData.data.payment_method == 'cash') {
-                //         showMessage({
-                //             message: "Commande créée avec succès",
-                //             type: "success",
-                //             icon: { icon: "success", position: "left" },
-                //             duration: 2000,
-                //         });
-                //         clearCart(false);
-                //         navigation.navigate('Main');
-                //         setLoading(false);
-                //     } else {
-                //         Linking.openURL(responseData?.data?.payment_url)
-                //             .then(() => {
-                //                 showMessage({
-                //                     message: "Paiement en cours de validation...",
-                //                     type: "success",
-                //                     icon: { icon: "success", position: "left" },
-                //                     duration: 2000,
-                //                 });
-                //                 navigation.navigate('Main');
-                //                 setLoading(false);
-                //             })
-                //             .catch((error) => {
-                //                 console.error('Erreur lors du chargement dans le navigateur', error);
-                //                 setLoading(false);
-                //             });
-                //     }
-                // } else {
-                //     showMessage({
-                //         message: "Une erreur s'est produite",
-                //         type: "danger",
-                //         icon: { icon: "danger", position: "left" },
-                //         duration: 2000,
-                //     });
-                //     setLoading(false);
-                // }
+                const responseData = response?.data;
+                if (response.status) {
+                    clearCart();
+                    if (responseData?.payment_method == 'cash') {
+                        showMessage({
+                            message: "Commande créée avec succès",
+                            type: "success",
+                            icon: { icon: "success", position: "left" },
+                            duration: 2000,
+                        });
+                        clearCart(false);
+                        navigation.navigate('Main');
+                        setLoading(false);
+                    } else {
+                        Linking.openURL(responseData?.payment_url)
+                            .then(() => {
+                                showMessage({
+                                    message: "Paiement en cours de validation...",
+                                    type: "success",
+                                    icon: { icon: "success", position: "left" },
+                                    duration: 2000,
+                                });
+                                navigation.navigate('Main');
+                                setLoading(false);
+                            })
+                            .catch((error) => {
+                                console.error('Erreur lors du chargement dans le navigateur', error);
+                                setLoading(false);
+                            });
+                    }
+                } else {
+                    showMessage({
+                        message: "Une erreur s'est produite",
+                        type: "danger",
+                        icon: { icon: "danger", position: "left" },
+                        duration: 2000,
+                    });
+                    setLoading(false);
+                }
             } catch (error) {
                 showMessage({
                     message: "Erreur " + error.message,
@@ -165,6 +208,18 @@ export default function OrderStepTwo({ navigation, route }) {
                                 onChangeText={setDelivery}
                                 isRequired={true}
                             />
+                             <View>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text style={{fontSize: 15,marginBottom: 8,fontWeight: 'bold',}}>Date de livraison</Text>
+                                    {visible && <Text style={{color: 'red'}}> *</Text>}
+                                </View>
+                                <TouchableOpacity onPress={showDatePicker} style={{borderWidth: 1, borderColor: "#c5c5c5", padding: 13, borderRadius: 15, marginBottom: 10}}>
+                                    <View style={{flexDirection: 'row', justifyContent: ''}}>
+                                        <FontAwesome5 name="calendar" size={18} color="black" style={{fontSize: 18, marginRight: 5,}} />
+                                        <Text style={{}}>{selectedDate != '' ? selectedDate.toLocaleString() : "Selectionner une date"}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                             <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>Mode de paiement</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8}}>
                                 <TouchableOpacity onPress={handleCash} style={{flexDirection: 'row'}}>
@@ -213,11 +268,20 @@ export default function OrderStepTwo({ navigation, route }) {
                             )}
                             <Btn
                                 label="Suivant"
-                                title="Suivant"
-                                loading={loading}
+                                loader={loading}
+                                disabled={loading}
                                 action={handleSubmit}
                             />
                         </View>
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            format="DD-MM-YYYY"
+                            placeholder="Selectionner une date"
+                            minimumDate={getDateOneDaysLater()}
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
                     </ScrollView>
                 </View>
             </TouchableWithoutFeedback>

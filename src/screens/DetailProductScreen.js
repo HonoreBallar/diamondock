@@ -11,6 +11,7 @@ import { ProgressBar } from "react-native-paper";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
 import HeaderLogo from "../components/HeaderLogo";
+import RenderHTML from "react-native-render-html";
 
 export default function DetailProductScreen({navigation, route}){
 
@@ -112,10 +113,11 @@ export default function DetailProductScreen({navigation, route}){
                             <Text style={{fontSize: 17, marginBottom: 8}} numberOfLines={2}>{mainProduct?.name}</Text>
                             <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
                             
-                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 5}}>Description</Text>
-                            <Text style={{fontSize: 14, marginBottom: 8}}>
+                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>Description</Text>
+                            <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
+                            {/* <Text style={{fontSize: 14, marginBottom: 8}}>
                                 {mainProduct?.description || 'Aucune description disponible pour ce produit.'}
-                            </Text>
+                            </Text> */}
                             {ratio === 0 ? (
                                 <Text style={{color: 'red', fontWeight: '600', fontSize: 16, marginBottom: 5}}>Ce produit est actuellement en rupture de stock.</Text>
                             ) :(
