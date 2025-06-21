@@ -50,7 +50,7 @@ export default function ProfilScreen({navigation}){
                 <View style={{margin: 15}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image source={require('../assets/sneaker.jpg')} style={{height: 100, width: 100, borderRadius: 50}}/>
-                        <Text style={{fontSize: 22, fontWeight: '500', marginLeft: 10, width: '100%'}}>Amounan Honoré</Text>
+                        <Text style={{fontSize: 22, fontWeight: '500', marginLeft: 10, width: '100%'}}>{auth?.user?.firstname} {auth?.user?.lastname}</Text>
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, marginBottom: 10, borderWidth: 0.1}}>
                         <ProfilLine icon="user-tie" iconColor={"orange"} title="Information personnelle" onPress={()=>navigation.navigate('EditProfilScreen')}/>

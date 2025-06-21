@@ -36,8 +36,23 @@ export default function LoginScreen({navigation}){
             password: password,
             role: 'customer'
         }
-        await loginUser(datas);
-        navigation.navigate('Main');
+        const response = await loginUser(datas);
+        if(response.status === false){
+            showMessage({
+                message: response?.error,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }else{
+            showMessage({
+                message: "Connexion réussie avec succès!",
+                type: "success",
+                icon: { icon: "success"},
+                duration: 2000,
+            });
+            navigation.navigate('Main');
+        }
         setLoading(false);
     }
 

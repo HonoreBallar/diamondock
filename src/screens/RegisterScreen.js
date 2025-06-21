@@ -45,15 +45,14 @@ export default function RegisterScreen({navigation}){
             setLoading(true);
             try {
                 const response = await registerUser(datas);
-                const responseData = response?.data;
-                if (response.status) {
+                if (response?.status) {
                     showMessage({
                         message: "Compte crée avec succès",
                         type: "success",
                         icon: { icon: "success", position: "left" },
                         duration: 2000,
                     });
-                    navigation.navigate('Main');
+                    navigation.navigate('LoginScreen');
                 } else {
                     showMessage({
                         message: "Une erreur s'est produite",
@@ -115,6 +114,7 @@ export default function RegisterScreen({navigation}){
                                 placeholder="Entrez votre téléphone"
                                 keyboardType="numeric"
                                 value={phone}
+                                maxLength={10}
                                 onChangeText={setPhone}
                                 isRequired={true}
                             />

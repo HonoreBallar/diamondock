@@ -27,6 +27,7 @@ export const RootProvider = ({children})=>{
             if(auth){
                 setAuth(JSON.parse(auth));
             }
+            console.log(auth)
             await wait(2000);
             setLoading(false);
         }
@@ -75,14 +76,13 @@ export const RootProvider = ({children})=>{
                 });
                 return;
             }
-            // await updateStarterState({is_started: true});
-            await updateAuthState({isLoggedIn: true, user: response?.data});
-            showMessage({
-                message: "Compte créé avec succès",
-                type: "success",
-                icon: { icon: "success"},
-                duration: 2000,
-            });
+            // await updateAuthState({isLoggedIn: true, user: response?.data});
+            // showMessage({
+            //     message: "Compte créé avec succès",
+            //     type: "success",
+            //     icon: { icon: "success"},
+            //     duration: 2000,
+            // });
         } catch (error) {
             showMessage({
                 message: "Erreur réseau "+ error.message,
@@ -95,7 +95,7 @@ export const RootProvider = ({children})=>{
 
     const editUser = async (datas={}) => {
         try {
-            const response = await postRequest('/client/edit/'+ auth.user._key, datas);
+            const response = await postRequest('/account/update', datas);
             await updateAuthState({user: response.data});
             showMessage({
                 message: "Modification du profil reussie",
@@ -105,7 +105,6 @@ export const RootProvider = ({children})=>{
             });
             return response;
         } catch (error) {
-            console.log(error);
             showMessage({
                 message: "Erreur réseau "+ error.message,
                 type: "danger",
@@ -118,23 +117,10 @@ export const RootProvider = ({children})=>{
     const loginUser = async (datas={})=>{
         try {
             const response = await postRequest('/auth/login', datas);
-            if(response.status === false){
-                showMessage({
-                    message: response?.error,
-                    type: "danger",
-                    icon: { icon: "danger"},
-                    duration: 2000,
-                });
-                return;
+            if(response.status){
+                await updateAuthState({isLoggedIn: true, user: response.data});
             }
-            showMessage({
-
-                message: "Connexion réussie",
-                type: "success",
-                icon: { icon: "success"},
-                duration: 2000,
-            });
-            await updateAuthState({isLoggedIn: true, user: response.data});
+            return response;
         } catch (error) {
             if(error.response){
                 showMessage({
