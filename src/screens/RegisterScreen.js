@@ -45,6 +45,8 @@ export default function RegisterScreen({navigation}){
             setLoading(true);
             try {
                 const response = await registerUser(datas);
+                console.log(response);
+                return;
                 if (response?.status) {
                     showMessage({
                         message: "Compte crée avec succès",
@@ -55,7 +57,7 @@ export default function RegisterScreen({navigation}){
                     navigation.navigate('LoginScreen');
                 } else {
                     showMessage({
-                        message: "Une erreur s'est produite",
+                        message: error?.message,
                         type: "danger",
                         icon: { icon: "danger", position: "left" },
                         duration: 2000,

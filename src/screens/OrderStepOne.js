@@ -16,10 +16,9 @@ export default function OrderStepOne({navigation}) {
     const {auth} = useRootContext();
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    console.log(auth);
     const [phone, setPhone] = useState('');
     const [firstname, setFirstname] = useState('');
-    const [lastname, setLasttname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
 
@@ -29,7 +28,7 @@ export default function OrderStepOne({navigation}) {
             
             setPhone(_.replace('+225',''));
             setFirstname(auth.user.firstname);
-            setLasttname(auth.user.lastname);
+            setLastname(auth.user.lastname);
             setEmail(auth.user.email);
             setAddress(auth.user.address);
 
@@ -108,7 +107,7 @@ export default function OrderStepOne({navigation}) {
                                 icon="user-tie"
                                 placeholder="Entrez votre prénoms"
                                 value={lastname}
-                                onChangeText={setLasttname}
+                                onChangeText={setLastname}
                             />
                             <Input
                                 label="Email"

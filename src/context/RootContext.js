@@ -67,15 +67,15 @@ export const RootProvider = ({children})=>{
     const registerUser = async (datas)=>{
         try {
             const response = await postRequest('/customer/register', datas);
-            if(response?.status === false){
-                showMessage({
-                    message: response?.error,
-                    type: "danger",
-                    icon: { icon: "danger"},
-                    duration: 2000,
-                });
-                return;
-            }
+            // if(response?.status === false){
+            //     showMessage({
+            //         message: response?.error,
+            //         type: "danger",
+            //         icon: { icon: "danger"},
+            //         duration: 2000,
+            //     });
+            //     return;
+            // }
             // await updateAuthState({isLoggedIn: true, user: response?.data});
             // showMessage({
             //     message: "Compte créé avec succès",
@@ -83,6 +83,7 @@ export const RootProvider = ({children})=>{
             //     icon: { icon: "success"},
             //     duration: 2000,
             // });
+            return response;
         } catch (error) {
             showMessage({
                 message: "Erreur réseau "+ error.message,
@@ -96,13 +97,9 @@ export const RootProvider = ({children})=>{
     const editUser = async (datas={}) => {
         try {
             const response = await postRequest('/account/update', datas);
-            await updateAuthState({user: response.data});
-            showMessage({
-                message: "Modification du profil reussie",
-                type: "success",
-                icon: { icon: "success"},
-                duration: 2000,
-            });
+            if(response?.status){
+                await updateAuthState({user: response?.data});
+            }
             return response;
         } catch (error) {
             showMessage({
