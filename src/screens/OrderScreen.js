@@ -75,7 +75,6 @@ export default function OrderScreen({navigation}){
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,
             });
-            console.log('Error searching order', error);
             setLoading(false);
         }finally{
             setLoading(false);

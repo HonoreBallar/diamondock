@@ -45,8 +45,6 @@ export default function RegisterScreen({navigation}){
             setLoading(true);
             try {
                 const response = await registerUser(datas);
-                console.log(response);
-                return;
                 if (response?.status) {
                     showMessage({
                         message: "Compte crée avec succès",
