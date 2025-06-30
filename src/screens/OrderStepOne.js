@@ -10,10 +10,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useCart } from "../context/CartContext";
 import { formatAmount } from "../utils/utils";
 import { useRootContext } from "../context/RootContext";
+import SingleDropdownSelect from "../components/SingleDropdownSelect";
 
 export default function OrderStepOne({navigation}) {
     const { cart, getTotal, productListInCart, currency } = useCart();
-    const {auth} = useRootContext();
+    const {auth, countries} = useRootContext();
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [phone, setPhone] = useState('');
@@ -21,6 +22,8 @@ export default function OrderStepOne({navigation}) {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
+    const [country, setCountry] = useState("");
+
 
     useEffect(()=>{
         if(auth.isLoggedIn){
@@ -48,7 +51,7 @@ export default function OrderStepOne({navigation}) {
             return;
         }
 
-        const completePhone =  '+225'+ phone;
+        const completePhone =  country+ phone;
         const customer = {
             firstname: firstname,
             lastname: lastname,
@@ -85,6 +88,13 @@ export default function OrderStepOne({navigation}) {
                         <HeaderLogo />
                         <Title title="Étape 1 : Informations de contact" />
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
+                            <View>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Pays</Text>
+                                    <Text style={{color: 'red'}}>*</Text>
+                                </View>
+                                <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/>
+                            </View>
                             <Input
                                 label="Téléphone"
                                 icon="phone"
