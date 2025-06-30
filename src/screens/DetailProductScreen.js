@@ -40,7 +40,7 @@ export default function DetailProductScreen({navigation, route}){
                     setPhotos(datas.images);
                 }
                 setMainProduct(datas);
-                setRatio(datas?.remaining_stock / datas?.total_stock);
+                setRatio(datas?.remaining_stock,datas?.total_stock);
                 setLoading(false);
             } catch (error) {
                 console.error('Erreur lors du chargement des produits :', error);
@@ -110,7 +110,8 @@ export default function DetailProductScreen({navigation, route}){
                             </View>
                         </View>
                         <View style={{margin: 13}}>
-                            <Text style={{fontSize: 17, marginBottom: 8}} numberOfLines={2}>{mainProduct?.name}</Text>
+                            <Text style={{fontSize: 17, marginBottom: 3}} numberOfLines={2}>{mainProduct?.name}</Text>
+                            <Text style={{fontSize: 17, marginBottom: 8, color: '#ccc'}} numberOfLines={2}>{mainProduct?.title}</Text>
                             <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
                             
                             <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>Description</Text>
@@ -151,7 +152,7 @@ export default function DetailProductScreen({navigation, route}){
                                         {/* <FontAwesome5 name="star" size={20} color="#fec727"/> */}
                                         <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
                                             <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
-                                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>(900)</Text>
+                                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>({mainProduct?.comment ? mainProduct?.comment : "Pas d'avis"})</Text>
                                         </View>
                                     </View>
                                     <FontAwesome5 name="chevron-right" size={20} color="#000"/>
@@ -195,17 +196,17 @@ export default function DetailProductScreen({navigation, route}){
                                     )
                                 )}
                             </TouchableOpacity>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-around', width: "50%", borderRadius: 5, padding: 5}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around', width: "40%", borderRadius: 5, padding: 5}}>
                                 <TouchableOpacity 
                                 onPress={() => setQuantity((prev) => (parseInt(prev) > 1 ? `${parseInt(prev) - 1}` : prev))}
                                 style={{borderWidth: 0.5, width: '25%', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center'}}>
-                                    <FontAwesome5 name="minus" size={18} color="#000"/>
+                                    <FontAwesome5 name="minus" size={12} color="#000"/>
                                 </TouchableOpacity>
                                 <TextInput value={quantity} onChangeText={(text)=>setQuantity(text)} keyboardType="numeric" style={{borderWidth: 0.5, width:'50%', fontSize: 19, borderColor: '#ddd', fontWeight: '600'}} textAlign="center"/>
                                 <TouchableOpacity
                                 onPress={() => setQuantity((prev) => `${parseInt(prev) + 1}`)}
                                 style={{borderWidth: 0.5, width: '25%', borderTopRightRadius: 5, borderBottomRightRadius: 5, borderColor: '#ddd',justifyContent: 'center', alignItems: 'center'}}>
-                                    <FontAwesome5 name="plus" size={18} color="#000"/>
+                                    <FontAwesome5 name="plus" size={12} color="#000"/>
                                 </TouchableOpacity>
                             </View>
                             { mainProduct?.remaining_stock === 0 ? (

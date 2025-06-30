@@ -7,6 +7,7 @@ import FlashMessage, { showMessage } from 'react-native-flash-message';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useRootContext } from "../context/RootContext";
 import { Picker } from "@react-native-picker/picker";
+import SingleDropdownSelect from "../components/SingleDropdownSelect";
 
 export default function RegisterScreen({navigation}){
 
@@ -18,8 +19,8 @@ export default function RegisterScreen({navigation}){
     const [password, setPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
-    const [country, setCountry] = useState(110);
-    const [loading, setLoading] = useState(false)
+    const [country, setCountry] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = () => {
         if(!firstname || !lastname || !password || !phone || !address || !country){
@@ -87,7 +88,7 @@ export default function RegisterScreen({navigation}){
                 keyboardShouldPersistTaps="handled"
                 >
                     <HeaderSimple title="Inscription" />
-                    <View style={{marginTop: 20, marginHorizontal: 15}}>
+                    <View style={{marginTop: 20, marginHorizontal: 15, marginBottom: 40}}>
                         <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
                         <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous inscrire pour continuer</Text>
                         
@@ -108,6 +109,13 @@ export default function RegisterScreen({navigation}){
                                 onChangeText={setLastname}
                                 isRequired={true}
                             />
+                            <View>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Pays</Text>
+                                    <Text style={{color: 'red'}}>*</Text>
+                                </View>
+                                <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/>
+                            </View>
                             <Input
                                 label="Téléphone"
                                 icon="phone"
@@ -118,42 +126,9 @@ export default function RegisterScreen({navigation}){
                                 onChangeText={setPhone}
                                 isRequired={true}
                             />
-                            <View>
-                                <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 4, marginRight: 3}}>Pays</Text>
-                                <View style={{
-                                    borderWidth: 1,
-                                    borderColor: '#ccc',
-                                    borderRadius: 18,
-                                    marginBottom: 15,
-                                    marginTop: 6,
-                                    overflow: 'hidden'
-                                }}>
-                                    <Picker
-                                        selectedValue={country}
-                                        onValueChange={(itemValue, itemIndex) =>
-                                            setCountry(itemValue)
-                                        }
-                                        style={{
-                                            // height: 48,
-                                            margin: 0,
-                                            padding: 2,
-                                            // width: 200,
-                                            // borderRadius: 10,
-                                        }}
-                                    >
-                                        {countries.map((count, index) => (
-                                            <Picker.Item 
-                                                key={index}
-                                                label={count?.name} 
-                                                value={count?.id} 
-                                            />
-                                        ))}
-                                    </Picker>
-                                </View>
-                            </View>
                             <Input
                                 label="Adresse"
-                                icon="phone"
+                                icon="map"
                                 placeholder="Entrez votre adresse"
                                 value={address}
                                 onChangeText={setAddress}
