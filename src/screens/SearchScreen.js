@@ -29,7 +29,7 @@ export default function SearchScreen({ navigation }) {
   }
   
   return (
-    <View style={{ flex: 1, marginTop: 30, marginHorizontal: 5, backgroundColor: "#fff"  }}>
+    <View style={{ flex: 1, marginHorizontal: 5, backgroundColor: "#fff"  }}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginHorizontal: 10}}>
         <View style={{flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight: 10}}>

@@ -9,7 +9,7 @@ export default function Header(){
 
     return (
         <View>
-            <View style={{flexDirection: 'row',justifyContent:'space-between' ,paddingHorizontal: 15, height: 60, marginTop: 40, alignItems: 'center'}}>
+            <View style={{flexDirection: 'row',justifyContent:'space-between' ,paddingHorizontal: 15, height: 60, alignItems: 'center'}}>
                 <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
                     <Image source={require('../assets/logo.png')} style={{width: 190, height: "100%"}} resizeMode='contain'/>
                 </TouchableOpacity>

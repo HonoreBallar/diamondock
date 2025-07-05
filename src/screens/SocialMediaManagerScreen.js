@@ -5,7 +5,7 @@ import colors from "../utils/colors";
 
 export default function SocialMediaManager({navigation}){
     return(
-        <ScrollView style={{flex: 1, marginTop: 40}}>
+        <ScrollView style={{flex: 1}}>
             <View style={{padding: 15, backgroundColor: '#f9f9f9', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, elevation: 1}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
                     <FontAwesome5 name="chevron-circle-left" size={28} color="#000"/>

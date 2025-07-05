@@ -6,6 +6,7 @@ import { useCategories } from "../context/CategoryContext";
 import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
+import CategoryItem from "../components/CategoryItem";
 
 export default function HomeScreen({navigation}){
     const {categories} = useCategories();
@@ -40,12 +41,7 @@ export default function HomeScreen({navigation}){
                                 showsHorizontalScrollIndicator={false}
                                 keyExtractor={(item, index) => index.toString()}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={()=>navigation.navigate('CategoryDetailScreen',{category: item})} style={{marginRight: 10, marginBottom: 10, padding: 5 }}>
-                                        <View style={{width: 80, height: 80, borderRadius: 40, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderWidth: 0.5, borderColor: '#ccc'}}>
-                                            <Image source={{uri: item?.image}} style={{width: 80, height: 80, borderRadius: 40}} resizeMode="cover"/>
-                                        </View>
-                                        <Text style={{fontSize: 14, fontWeight: '400',textAlign: 'center'}}>{item.name || 'Categorie'} ({item.nb_products || 0})</Text>
-                                    </TouchableOpacity>
+                                    <CategoryItem key={item?.token} category={item} navigation={navigation} />
                                 )}
                                 initialNumToRender={2}
                                 maxToRenderPerBatch={2}

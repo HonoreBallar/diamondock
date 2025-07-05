@@ -1,4 +1,4 @@
-import { ActivityIndicator, Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Button, Image, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
@@ -80,7 +80,16 @@ export default function DetailProductScreen({navigation, route}){
                 </>
             ) : (
                 <>
-                    <StatusBar translucent backgroundColor="transparent" />
+                    <StatusBar translucent style="dark" />
+                    <View style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        // height: Platform.OS === 'android' ? 2 : 44,
+                        backgroundColor: 'black',
+                        zIndex: 1,
+                    }} />
                     <ScrollView style={{flex: 1, marginBottom: 80}}>
                         <View>
                             <Swiper
@@ -102,15 +111,15 @@ export default function DetailProductScreen({navigation, route}){
                                     </View>
                                 ))}
                             </Swiper>
-                            <View style={{paddingTop: 50, position: 'absolute',paddingHorizontal: 15, justifyContent: 'space-between', width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={{paddingTop: 20, position: 'absolute',paddingHorizontal: 15, justifyContent: 'space-between', width: '100%', flexDirection: 'row', alignItems: 'center'}}>
                                 <TouchableOpacity onPress={()=>navigation.goBack()}>
-                                    <FontAwesome5 name="arrow-left" size={20} color="white"/>
+                                    <FontAwesome5 name="chevron-circle-left" size={25} color="#f29f03"/>
                                 </TouchableOpacity>
                                 <FlottingCart navigation={navigation}/>
                             </View>
                         </View>
                         <View style={{margin: 13}}>
-                            <Text style={{fontSize: 17, marginBottom: 3}} numberOfLines={2}>{mainProduct?.name}</Text>
+                            <Text style={{fontSize: 17, marginBottom: 3, fontWeight: '500'}} numberOfLines={2}>{mainProduct?.name}</Text>
                             <Text style={{fontSize: 17, marginBottom: 8, color: '#ccc'}} numberOfLines={2}>{mainProduct?.title}</Text>
                             <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
                             
@@ -196,7 +205,7 @@ export default function DetailProductScreen({navigation, route}){
                                     )
                                 )}
                             </TouchableOpacity>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-around', width: "40%", borderRadius: 5, padding: 5}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around', width: "50%", borderRadius: 5, padding: 5}}>
                                 <TouchableOpacity 
                                 onPress={() => setQuantity((prev) => (parseInt(prev) > 1 ? `${parseInt(prev) - 1}` : prev))}
                                 style={{borderWidth: 0.5, width: '25%', borderTopLeftRadius: 5, borderBottomLeftRadius: 5, borderColor: '#ddd', justifyContent: 'center', alignItems: 'center'}}>
@@ -216,7 +225,7 @@ export default function DetailProductScreen({navigation, route}){
                             ) : (
                                 <TouchableOpacity disabled={isAddedToCart} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
                                     { isAddedToCart ? <ActivityIndicator size="small" color="white" /> :<FontAwesome5 name="cart-plus" size={20} color="white"/>}
-                                    <Text style={{color: 'white', marginLeft: 5}}>Ajouter au panier</Text>
+                                    <Text style={{color: 'white', marginLeft: 8}}>Ajouter</Text>
                                 </TouchableOpacity>
                             )}
                         </View>

@@ -34,7 +34,7 @@ export default function CategoryDetailScreen({route, navigation}){
 
     return (
         <ScrollView style={{flex: 1,backgroundColor: 'white'}}>
-            <View style={{flexDirection:'row', justifyContent: 'space-between', padding: 15, height: 55, backgroundColor: 'white', marginTop: 40}}>
+            <View style={{flexDirection:'row', justifyContent: 'space-between', padding: 15, height: 55, backgroundColor: 'white'}}>
                 <View style={{flexDirection: "row", alignItems: 'center'}}>
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
                         <FontAwesome5 name="arrow-left" size={20} color={colors.primary} style={{marginTop: 4, marginLeft: 5}}/>

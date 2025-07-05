@@ -2,12 +2,12 @@ import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-na
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import colors from '../utils/colors';
 import { formatAmount, ratio } from '../utils/utils';
 import { ProgressBar } from 'react-native-paper';
 
-export default function ProductCard({navigation, product}){
+const ProductCard = ({navigation, product})=>{
     const {addToCart} = useCart();
     const {addToWishlist, isProductInWishlist} = useWishlist();
     const [loading, setLoading] = useState(false);
@@ -101,3 +101,5 @@ export default function ProductCard({navigation, product}){
         </TouchableOpacity>
     );
 }
+
+export default React.memo(ProductCard);
