@@ -19,7 +19,7 @@ export default function DigitalMallScreen({navigation}){
 
     return(
         <ScrollView 
-        style={{flex: 1, marginBottom: 20}}
+        style={{flex: 1, marginBottom: 10}}
         refreshControl={
             <RefreshControl
                 refreshing={refreshing}
@@ -36,7 +36,7 @@ export default function DigitalMallScreen({navigation}){
                 </TouchableOpacity>
                 <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary, marginTop: 15, textAlign: 'center'}}>Digitall Mall</Text>
             </View>
-            <View style={{margin: 10, marginTop: 5, marginBottom: 40}}>
+            <View style={{margin: 10, marginTop: 5, marginBottom: 20}}>
                 <Title title="Nos Vendeurs" />
                 <FlatList
                     data={sellers}

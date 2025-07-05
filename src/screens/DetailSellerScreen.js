@@ -53,12 +53,11 @@ export default function DetailSellerScreen({route, navigation}){
             }
 
         >
-            <View style={{flexDirection:'row', justifyContent: 'space-between', padding: 15, height: 55, backgroundColor: 'white', marginTop: 40}}>
+            <View style={{flexDirection:'row', justifyContent: 'space-between', padding: 15, height: 55, backgroundColor: 'white'}}>
                 <View style={{flexDirection: "row", alignItems: 'center'}}>
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
                         <FontAwesome5 name="arrow-left" size={20} color={colors.primary} style={{marginTop: 4, marginLeft: 5}}/>
                     </TouchableOpacity>
-                    {/* <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>Categorie {category.name ?? 'N/A'}</Text> */}
                     <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>Vendeur {seller?.name ?? 'N/A'}</Text>
                 </View>
                 <FlottingCart navigation={navigation}/>

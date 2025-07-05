@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
 import { getRequest } from "../utils/api";
-import { formatAmount, ratio } from "../utils/utils";
+import { formatAmount, ratio, renderStars } from "../utils/utils";
 import { ProgressBar } from "react-native-paper";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
@@ -40,7 +40,7 @@ export default function DetailProductScreen({navigation, route}){
                     setPhotos(datas.images);
                 }
                 setMainProduct(datas);
-                setRatio(datas?.remaining_stock,datas?.total_stock);
+                setRatio(datas?.remaining_stock/datas?.total_stock);
                 setLoading(false);
             } catch (error) {
                 console.error('Erreur lors du chargement des produits :', error);
@@ -121,15 +121,19 @@ export default function DetailProductScreen({navigation, route}){
                         <View style={{margin: 13}}>
                             <Text style={{fontSize: 17, marginBottom: 3, fontWeight: '500'}} numberOfLines={2}>{mainProduct?.name}</Text>
                             <Text style={{fontSize: 17, marginBottom: 8, color: '#ccc'}} numberOfLines={2}>{mainProduct?.title}</Text>
-                            <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
-                            
+                            <View style={{flexDirection: 'row', }}>
+                                <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
+                                { product?.reduction_rate != null && (
+                                    <Text style={{fontSize: 20, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through', marginLeft: 5}}>{formatAmount(product?.base_price || 0)} {product?.currency}</Text>
+                                ) }  
+                            </View>
                             <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>Description</Text>
                             <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
                             {/* <Text style={{fontSize: 14, marginBottom: 8}}>
                                 {mainProduct?.description || 'Aucune description disponible pour ce produit.'}
                             </Text> */}
                             {ratio === 0 ? (
-                                <Text style={{color: 'red', fontWeight: '600', fontSize: 16, marginBottom: 5}}>Ce produit est actuellement en rupture de stock.</Text>
+                                <Text style={{color: 'red', fontWeight: '400', fontSize: 16, marginBottom: 5}}>Ce produit est actuellement en rupture de stock.</Text>
                             ) :(
                                 <View style={{marginBottom: 10}}>
                                     <Text style={{fontWeight: '300', fontSize: 16, marginBottom: 5}}>{mainProduct?.remaining_stock || 0} article (s) resrtant(s)</Text>
@@ -153,19 +157,18 @@ export default function DetailProductScreen({navigation, route}){
                                     </View>
                                 </View>
                             </View> */}
-                            <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Avis clients</Text>
+                            <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>Avis clients</Text>
                             <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <TouchableOpacity onPress={()=>navigation.navigate('RateDetailProduct',{product: product})} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontSize: 20, marginBottom: 3}}>⭐</Text>
-                                        {/* <FontAwesome5 name="star" size={20} color="#fec727"/> */}
+                                        {renderStars(mainProduct?.note || 0)}
                                         <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
-                                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>4.8</Text>
+                                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{mainProduct?.note} / 5</Text>
                                             <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>({mainProduct?.comment ? mainProduct?.comment : "Pas d'avis"})</Text>
                                         </View>
                                     </View>
                                     <FontAwesome5 name="chevron-right" size={20} color="#000"/>
-                                </View>
+                                </TouchableOpacity>
                             </View>
                             {/* <View>
                                 <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>

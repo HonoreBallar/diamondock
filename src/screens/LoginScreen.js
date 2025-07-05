@@ -68,7 +68,7 @@ export default function LoginScreen({navigation}){
         >
             <HeaderSimple  title='Connexion'/>
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{marginTop: 20, marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
+                <View style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
                     <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
                     <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous connecter pour continuer</Text>
                     

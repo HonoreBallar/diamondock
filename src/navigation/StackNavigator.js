@@ -17,6 +17,7 @@ import DetailSellerScreen from '../screens/DetailSellerScreen';
 import SearchScreen from '../screens/SearchScreen';
 import OrderStepOne from '../screens/OrderStepOne';
 import OrderStepTwo from '../screens/OrderStepTwo';
+import RateDetailProduct from '../screens/RateDetailProduct';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,7 @@ const StackNavigator = () => {
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name="DetailSellerScreen" component={DetailSellerScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="RateDetailProduct" component={RateDetailProduct} options={{ headerShown: false }} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }} />
      
       <Stack.Screen name="OrderStepOne" component={OrderStepOne} options={{ headerShown: false }} />

@@ -12,7 +12,7 @@ const ProductCard = ({navigation, product})=>{
     const {addToWishlist, isProductInWishlist} = useWishlist();
     const [loading, setLoading] = useState(false);
     const [loadingWishlist, setLoadingWishlist] = useState(false);
-    const monRatio = ratio(product?.remaining_stock, product?.total_stock);
+    const monRatio = product?.remaining_stock/product?.total_stock;
 
     const handleAddToCart = async (product) => {
         setLoading(true);
@@ -36,29 +36,33 @@ const ProductCard = ({navigation, product})=>{
 
     return (
         <TouchableOpacity onPress={handlePress}>
-            <View style={{backgroundColor: '#f7f7f7', width: 150, height: 260, borderRadius: 10, marginRight: 10, padding: 8}}>
+            <View style={{backgroundColor: '#f7f7f7', width: 150, height: 250, borderRadius: 10, marginRight: 10, padding: 8}}>
                 <View style={{alignSelf: 'center',marginTop: 10, height: 120, width: 130, backgroundColor: 'white', borderRadius: 10}}>
                     <Image source={product?.main_image ? {uri: product?.main_image} : require('../assets/icon.png')} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }}/>
-                    <View style={{marginTop: -115, alignItems: 'flex-end'}}>
-                        <TouchableOpacity onPress={()=>handleAddToWishlist(product)} style={{backgroundColor: '#fff', borderRadius: 15, width:30, height:30, justifyContent: 'center', alignItems: 'center'}}>
-                            {loadingWishlist ? (
-                                <ActivityIndicator size="small" color={colors.primary} />
-                            ) : (
-                                isProductInWishlist(product.token) ? (
-                                    <Text>❤️</Text>
-                                ):(
-                                    <FontAwesome5 name="heart" size={15} color="red" />
-                                )
+                    <View style={{marginTop: -115, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        {product?.reduction_rate && product?.reduction_rate != null ? (
+                            <View style={{backgroundColor: "#dd5813", borderRadius: 5, paddingHorizontal: 6, paddingVertical: 2, marginLeft: 2}}>
+                                <Text style={{color: '#fff', fontSize: 12}}>{product?.reduction_rate} %</Text>
+                            </View>
+                        ): (<View style={{width: 20}}/>)}
+                        <View style={{}}>
+                            <TouchableOpacity onPress={()=>handleAddToWishlist(product)} style={{backgroundColor: '#fff', borderRadius: 15, width:30, height:30, justifyContent: 'center', alignItems: 'center'}}>
+                                {loadingWishlist ? (
+                                    <ActivityIndicator size="small" color={colors.primary} />
+                                ) : (
+                                    isProductInWishlist(product.token) ? (
+                                        <Text>❤️</Text>
+                                    ):(
+                                        <FontAwesome5 name="heart" size={15} color="red" />
+                                    )
 
-                            )}
-                        </TouchableOpacity>
+                                )}
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
                 <View style={{margin: 10}}>
                     <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product})}><Text style={{fontSize: 15, fontWeight: '500', color: colors.gray, marginTop: 1}} numberOfLines={1}>{product?.name || 'nom produit'}</Text></TouchableOpacity>
-                    { product?.reduction_rate != null && (
-                        <Text style={{fontSize: 12, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through'}}>{formatAmount(product?.base_price || 0)} {product?.currency}</Text>
-                    ) }  
                     <Text style={{fontSize: 15, color: '#000', marginTop: 1, fontWeight: '800',}}>{ formatAmount(product?.price || 0)} {product?.currency}</Text>
                     {
                         product?.remaining_stock === 0 ? (

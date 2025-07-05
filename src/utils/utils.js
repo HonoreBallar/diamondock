@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 //formater le montant fr
 export const formatAmount = (amount) => {
     if (amount === null) return null;
@@ -32,7 +34,7 @@ export const wait = (ms)=>{
 
 export const ratio = (width, height) => {
   if (width === 0 || height === 0) return 0;
-  return Math.round(width / height);
+  return (width / height).toFixed(1);
 }
 
 export const formatDateToEnglish = (date) => {
@@ -40,4 +42,22 @@ export const formatDateToEnglish = (date) => {
     const [day, month, year] = date.split('/');
 
     return `${year}-${month}-${day}`;
+};
+
+export const renderStars = (note) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+        if (note >= i) {
+            stars.push(<FontAwesome5 key={i} name="star" size={17} color="#fec727" />);
+        } else if (note >= i - 0.5) {
+            stars.push(<FontAwesome5 key={i} name="star-half-alt" size={17} color="#fec727" />);
+        } else {
+            stars.push(<FontAwesome5 key={i} name="star" size={17} color="#ccc" />);
+        }
+    }
+    return (
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {stars}
+        </View>
+    );
 };
