@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#f4f4f4",
-        // alignContent: 'center',
+        alignContent: 'center',
         justifyContent: 'center',
         paddingHorizontal: 5,
         paddingVertical: 5,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         width: '80',
     },
     activeButton: {
-        backgroundColor: "blue", // Couleur du bouton actif
+        backgroundColor: "#dd5813", // Couleur du bouton actif
     },
     buttonText: {
         color: "#ccc",

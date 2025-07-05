@@ -12,6 +12,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDateToEnglish } from "../utils/utils";
 import { useCart } from "../context/CartContext";
+import SingleDropdownSelect from "../components/SingleDropdownSelect";
 
 export default function OrderStepTwo({ navigation, route }) {
 
@@ -168,6 +169,7 @@ export default function OrderStepTwo({ navigation, route }) {
         setIsExpanded(!isExpanded);
     };
 
+
     return (
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'white' }}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -243,27 +245,16 @@ export default function OrderStepTwo({ navigation, route }) {
                             </View>
                             {visible && (
                                 <View style={{
-                                    borderWidth: 1,
                                     borderColor: '#ccc',
-                                    borderRadius: 18,
                                     marginBottom: 15,
-                                    marginTop: 6,
-                                    overflow: 'hidden'
                                 }}>
-                                    <Picker
-                                        selectedValue={selectedPayment}
-                                        onValueChange={(itemValue, itemIndex) =>
-                                            setSelectedPayment(itemValue)
-                                        }
-                                    >
-                                        {modePayment.map((payment, index) => (
-                                            <Picker.Item 
-                                                key={index}
-                                                label={payment} 
-                                                value={payment} 
-                                            />
-                                        ))}
-                                    </Picker>
+                                    <View>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Mode de paiement</Text>
+                                            <Text style={{color: 'red'}}>*</Text>
+                                        </View>
+                                        <SingleDropdownSelect items={modePayment} iconSelect="wallet" onSelectHandler={(_)=>setSelectedPayment(_?.name)}/>
+                                    </View>
                                 </View>
                             )}
                             <Btn

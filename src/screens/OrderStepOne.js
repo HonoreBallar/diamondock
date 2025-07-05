@@ -11,6 +11,7 @@ import { useCart } from "../context/CartContext";
 import { formatAmount } from "../utils/utils";
 import { useRootContext } from "../context/RootContext";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
+import PhoneInput from "react-native-phone-number-input";
 
 export default function OrderStepOne({navigation}) {
     const { cart, getTotal, productListInCart, currency } = useCart();
@@ -22,7 +23,6 @@ export default function OrderStepOne({navigation}) {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
-    const [country, setCountry] = useState("");
 
 
     useEffect(()=>{
@@ -41,7 +41,7 @@ export default function OrderStepOne({navigation}) {
 
 
     const handleNext = () => {
-        if (phone.trim() === '' || phone.length < 10) {
+        if (phone.trim() === '') {
             showMessage({
                 message: "Veuillez entrer un numéro de téléphone valide",
                 type: "danger",
@@ -51,7 +51,8 @@ export default function OrderStepOne({navigation}) {
             return;
         }
 
-        const completePhone =  country+ phone;
+        // const completePhone =  country+ phone;
+        console.log(phone);
         const customer = {
             firstname: firstname,
             lastname: lastname,
@@ -90,21 +91,37 @@ export default function OrderStepOne({navigation}) {
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <View>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Pays</Text>
+                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
                                     <Text style={{color: 'red'}}>*</Text>
                                 </View>
-                                <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/>
                             </View>
-                            <Input
-                                label="Téléphone"
-                                icon="phone"
-                                placeholder="Entrez votre téléphone"
-                                keyboardType="numeric"
-                                value={phone}
-                                onChangeText={setPhone}
-                                isRequired={true}
-                                maxLength={10}
-                            />
+                            <View>
+                                <PhoneInput
+                                    value={phone}
+                                    defaultCode="CI"
+                                    layout="second"
+                                    onChangeText={setPhone}
+                                    placeholder="Entrez votre numéro"
+                                    containerStyle={{
+                                        width: "100%",
+                                        borderRadius: 15,
+                                        marginBottom: 12,
+                                        height: 43,
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        paddingLeft: 0,
+                                        backgroundColor: '#fff',
+                                        flexDirection: "row"
+                                    }}
+
+                                    textContainerStyle={{
+                                        flex: 0.9,
+                                        backgroundColor: '#fff',
+                                        paddingVertical: 0,
+                                        paddingLeft: 0
+                                    }}
+                                />
+                            </View>
                             <Input
                                 label="Nom"
                                 icon="user-tie"
