@@ -3,15 +3,17 @@ import HeaderSimple from '../components/HeaderSimple';
 import Input from "../components/Input";
 import Btn from "../components/Btn";
 import { useRootContext } from "../context/RootContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { wait } from "../utils/utils";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
+import PhoneInput from "react-native-phone-number-input";
 
 export default function LoginScreen({navigation}){
 
     const {countries} = useRootContext();
 
+    const phoneInput = useRef(null);
     const [country, setCountry] = useState('');
     const {auth, loginUser} = useRootContext();
     const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ export default function LoginScreen({navigation}){
     }, [auth.isLoggedIn]);
 
     const handleLoginUser = async () => {
-        if(phone === '' || password === '' || country === ''){
+        if(phone === '' || password === ''){
             showMessage({
                 message: "Veuillez remplir tous les champs",
                 type: "danger",
@@ -34,9 +36,14 @@ export default function LoginScreen({navigation}){
             return;
         }
         setLoading(true);
-        await wait(1000);
+        await wait(300);
+
+        const code = phoneInput.current?.getCallingCode();
+        
+        const completePhone =  `+${code}${phone}`;
+
         const datas ={
-            identify: '+225' +phone,
+            identify: completePhone,
             password: password,
             role: 'customer'
         }
@@ -75,20 +82,38 @@ export default function LoginScreen({navigation}){
                     <View>
                         <View>
                             <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Pays</Text>
+                                <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
                                 <Text style={{color: 'red'}}>*</Text>
                             </View>
-                            <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/>
+                            <View>
+                                <PhoneInput
+                                    ref={phoneInput}
+                                    value={phone}
+                                    defaultCode="CI"
+                                    layout="second"
+                                    onChangeText={setPhone}
+                                    placeholder="Entrez votre numéro"
+                                    containerStyle={{
+                                        width: "100%",
+                                        borderRadius: 15,
+                                        marginBottom: 12,
+                                        height: 43,
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        paddingLeft: 0,
+                                        backgroundColor: '#fff',
+                                        flexDirection: "row"
+                                    }}
+
+                                    textContainerStyle={{
+                                        flex: 0.9,
+                                        backgroundColor: '#fff',
+                                        paddingVertical: 0,
+                                        paddingLeft: 0
+                                    }}
+                                />
+                            </View>
                         </View>
-                        <Input
-                            label="Téléphone"
-                            icon="phone"
-                            placeholder="Entrez votre téléphone"
-                            keyboardType="numeric"
-                            value={phone}
-                            isRequired={true}
-                            onChangeText={setPhone}
-                        />
                         <Input
                             label="Mot de passe"
                             icon="lock"
@@ -100,7 +125,7 @@ export default function LoginScreen({navigation}){
                         />
                     </View>
                     <View style={{marginTop: 20}}>
-                        <Btn label={"Connexion"} loader={loading === true ? true : false} action={handleLoginUser} />
+                        <Btn label={"Connexion"} loader={loading? true : false} disabled={loading ? true: false} action={handleLoginUser} />
                     </View>
                     <View>
                         <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>

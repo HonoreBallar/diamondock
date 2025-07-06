@@ -12,9 +12,11 @@ import { formatAmount } from "../utils/utils";
 import { useRootContext } from "../context/RootContext";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import PhoneInput from "react-native-phone-number-input";
+import { useRef } from "react";
 
 export default function OrderStepOne({navigation}) {
     const { cart, getTotal, productListInCart, currency } = useCart();
+    const phoneInput = useRef(null);
     const {auth, countries} = useRootContext();
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -51,8 +53,9 @@ export default function OrderStepOne({navigation}) {
             return;
         }
 
-        // const completePhone =  country+ phone;
-        console.log(phone);
+        const code = phoneInput.current?.getCallingCode();
+        
+        const completePhone =  `+${code}${phone}`;
         const customer = {
             firstname: firstname,
             lastname: lastname,
@@ -97,6 +100,7 @@ export default function OrderStepOne({navigation}) {
                             </View>
                             <View>
                                 <PhoneInput
+                                    ref={phoneInput}
                                     value={phone}
                                     defaultCode="CI"
                                     layout="second"

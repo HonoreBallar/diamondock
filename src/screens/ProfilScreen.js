@@ -43,13 +43,13 @@ export default function ProfilScreen({navigation}){
     }
 
     return(
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header />
             <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
                 <Title title="Mon compte" />
                 <View style={{margin: 15}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Image source={require('../assets/sneaker.jpg')} style={{height: 100, width: 100, borderRadius: 50}}/>
+                        <Image source={require('../assets/user.jpeg')} style={{height: 100, width: 100, borderRadius: 50}}/>
                         <Text style={{fontSize: 22, fontWeight: '500', marginLeft: 10, width: '100%'}}>{auth?.user?.firstname} {auth?.user?.lastname}</Text>
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, marginBottom: 10, borderWidth: 0.1}}>

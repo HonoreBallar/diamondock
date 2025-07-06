@@ -223,7 +223,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 </TouchableOpacity>
                             </View>
                             <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>Mode de paiement</Text>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
                                 <TouchableOpacity onPress={handleCash} style={{flexDirection: 'row'}}>
                                     <RadioButton
                                         value="cash"

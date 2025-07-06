@@ -8,12 +8,10 @@ const HeaderSimple = ({ title }) => {
 
   return (
     <View style={styles.header}>
-      {/* Flèche de retour à gauche */}
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <FontAwesome5 name="chevron-circle-left" size={22} color="#000"/>
+        <FontAwesome5 name="chevron-circle-left" size={22} color="#f29f03"/>
       </TouchableOpacity>
 
-      {/* Texte centré */}
       <Text style={styles.title}>{title}</Text>
     </View>
   );

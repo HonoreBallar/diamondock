@@ -61,7 +61,7 @@ export default function EditProfilScreen({navigation}){
 
             if(response?.status){
                 showMessage({
-                    message: "Modification du profil reussie bbbb",
+                    message: "Modification du profil reussie",
                     type: "success",
                     icon: { icon: "success"},
                     duration: 2000,
@@ -70,7 +70,7 @@ export default function EditProfilScreen({navigation}){
             }
         }catch (error) {
             showMessage({
-                message: "Erreurl " + error.message,
+                message: "Erreur " + error.message,
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,
@@ -89,7 +89,7 @@ export default function EditProfilScreen({navigation}){
             <HeaderSimple title="Modifier mon profil" />
             <View style={{margin: 15}}>
                 <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
-                    <Image source={require('../assets/sneaker.jpg')} style={{height: 100, width: 100, borderRadius: 50}}/>
+                    <Image source={require('../assets/user.jpeg')} style={{height: 100, width: 100, borderRadius: 50}}/>
                 </View>
                 <View>
                     <Input label={"Nom"} icon="user-tie" placeholder="Nom" value={firstname} onChangeText={setFirstname} isRequired={true}/>

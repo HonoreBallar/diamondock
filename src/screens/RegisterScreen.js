@@ -2,17 +2,20 @@ import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import HeaderSimple from "../components/HeaderSimple";
 import Input from "../components/Input";
 import Btn from "../components/Btn";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useRootContext } from "../context/RootContext";
 import { Picker } from "@react-native-picker/picker";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
+import PhoneInput from "react-native-phone-number-input";
+import { getIdFromCode } from "../utils/utils";
 
 export default function RegisterScreen({navigation}){
 
     const {registerUser, countries} = useRootContext();
 
+    const phoneInput = useRef(null);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
@@ -23,7 +26,7 @@ export default function RegisterScreen({navigation}){
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = () => {
-        if(!firstname || !lastname || !password || !phone || !address || !country){
+        if(!firstname || !lastname || !password || !phone || !address){
             showMessage({
                 message: "Veuillez remplir tous les champs obligatoires.",
                 type: "danger",
@@ -33,6 +36,12 @@ export default function RegisterScreen({navigation}){
             return;
         }
 
+        const code = phoneInput.current?.getCallingCode();
+
+        const callingCode = phoneInput.current?.getCallingCode();
+        
+        const country_code_id = getIdFromCode(`+${callingCode}`, countries);
+
         setTimeout(async () => {
             const datas = {
                 firstname: firstname,
@@ -40,7 +49,7 @@ export default function RegisterScreen({navigation}){
                 email: email,
                 phone: phone,
                 address: address,
-                country_id: country,
+                country_id: country_code_id,
                 password: password
             }
             setLoading(true);
@@ -56,16 +65,16 @@ export default function RegisterScreen({navigation}){
                     navigation.navigate('LoginScreen');
                 } else {
                     showMessage({
-                        message: error?.message,
+                        message: response?.error,
                         type: "danger",
                         icon: { icon: "danger", position: "left" },
-                        duration: 2000,
+                        duration: 4000,
                     });
                     setLoading(false);
                 }
             } catch (error) {
                 showMessage({
-                    message: "Erreur " + error.message,
+                    message: "Erreur " + error?.message,
                     type: "danger",
                     icon: { icon: "danger", position: "left" },
                     duration: 2000,
@@ -77,7 +86,6 @@ export default function RegisterScreen({navigation}){
             }
         }, 100);
 
-        // navigation.navigate('LoginScreen');
     }
 
     return(
@@ -88,7 +96,7 @@ export default function RegisterScreen({navigation}){
                 keyboardShouldPersistTaps="handled"
                 >
                     <HeaderSimple title="Inscription" />
-                    <View style={{marginTop: 20, marginHorizontal: 15, marginBottom: 40}}>
+                    <View style={{marginTop: 20, marginHorizontal: 15, marginBottom: 40,borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
                         <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
                         <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous inscrire pour continuer</Text>
                         
@@ -111,12 +119,38 @@ export default function RegisterScreen({navigation}){
                             />
                             <View>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Pays</Text>
+                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
                                     <Text style={{color: 'red'}}>*</Text>
                                 </View>
-                                <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/>
+                                <PhoneInput
+                                    ref={phoneInput}
+                                    value={phone}
+                                    defaultCode="CI"
+                                    layout="second"
+                                    onChangeText={setPhone}
+                                    placeholder="Entrez votre numéro"
+                                    containerStyle={{
+                                        width: "100%",
+                                        borderRadius: 15,
+                                        marginBottom: 12,
+                                        height: 43,
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        paddingLeft: 0,
+                                        backgroundColor: '#fff',
+                                        flexDirection: "row"
+                                    }}
+
+                                    textContainerStyle={{
+                                        flex: 0.9,
+                                        backgroundColor: '#fff',
+                                        paddingVertical: 0,
+                                        paddingLeft: 0
+                                    }}
+                                />
+                                {/* <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/> */}
                             </View>
-                            <Input
+                            {/* <Input
                                 label="Téléphone"
                                 icon="phone"
                                 placeholder="Entrez votre téléphone"
@@ -125,7 +159,7 @@ export default function RegisterScreen({navigation}){
                                 maxLength={10}
                                 onChangeText={setPhone}
                                 isRequired={true}
-                            />
+                            /> */}
                             <Input
                                 label="Adresse"
                                 icon="map"
@@ -134,14 +168,14 @@ export default function RegisterScreen({navigation}){
                                 onChangeText={setAddress}
                                 isRequired={true}
                             />
-                            <Input
+                            {/* <Input
                                 label="Email"
                                 icon="envelope"
                                 placeholder="Entrez votre email"
                                 keyboardType="email-address"
                                 value={email}
                                 onChangeText={setEmail}
-                            />
+                            /> */}
                             <Input
                                 label="Mot de passe"
                                 icon="lock"

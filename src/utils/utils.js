@@ -1,6 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+
+
 //formater le montant fr
 export const formatAmount = (amount) => {
     if (amount === null) return null;
@@ -61,3 +64,13 @@ export const renderStars = (note) => {
         </View>
     );
 };
+
+
+export const  getIdFromCode = (codeParam, data)=> {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].code == codeParam) {
+      return data[i].id;
+    }
+  }
+  return null; // Return null if no matching code is found
+}

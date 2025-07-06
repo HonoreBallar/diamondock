@@ -65,7 +65,7 @@ export default function DigitalMallScreen({ navigation }) {
                 elevation: 1
             }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <FontAwesome5 name="chevron-circle-left" size={28} color="#000" style={{ marginTop: 15 }} />
+                    <FontAwesome5 name="chevron-circle-left" size={28} color="#f29f03" style={{ marginTop: 15 }} />
                 </TouchableOpacity>
                 <Text style={{
                     fontSize: 25,

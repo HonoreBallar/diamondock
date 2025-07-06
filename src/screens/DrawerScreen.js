@@ -9,7 +9,7 @@ export default function DrawerScreen({navigation}){
         <View style={{flex: 1, backgroundColor: 'white'}}>
             <View style={{padding: 15, backgroundColor: '#f9f9f9', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, elevation: 1}}>
                 <TouchableOpacity onPress={()=>navigation.goBack()}>
-                    <FontAwesome5 name="chevron-circle-left" size={28} color="#000" style={{marginTop: 15}}/>
+                    <FontAwesome5 name="chevron-circle-left" size={28} color="#f29f03" style={{marginTop: 15}}/>
                 </TouchableOpacity>
                 <Image source={require('../assets/logo.png')} style={{width: 150, height: 60, alignSelf: 'center'}} resizeMode='contain'/>
                 {/* <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary, marginTop: 15, textAlign: 'center'}}>Diamondock</Text> */}
