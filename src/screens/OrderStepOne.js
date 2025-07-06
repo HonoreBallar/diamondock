@@ -16,31 +16,30 @@ import { useRef } from "react";
 
 export default function OrderStepOne({navigation}) {
     const { cart, getTotal, productListInCart, currency } = useCart();
-    const phoneInput = useRef(null);
     const {auth, countries} = useRootContext();
+    const phoneInput = useRef(null);
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [phone, setPhone] = useState('');
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
-    const [email, setEmail] = useState('');
+    // const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
 
 
     useEffect(()=>{
-        if(auth.isLoggedIn){
-            const _=auth?.user?.phone;
-            
-            setPhone(_.replace('+225',''));
-            setFirstname(auth.user.firstname);
-            setLastname(auth.user.lastname);
-            setEmail(auth.user.email);
+        if(auth.isLoggedIn && auth.user){
+            // console.log(auth.user.phone)
+            setPhone("0758557153");
+            setFirstname(auth?.user?.firstname);
+            setLastname(auth?.user?.lastname);
+            // setEmail(auth.user.email);
             setAddress(auth.user.address);
-
         }
+        console.log(phone);
+    },[auth?.user]);
 
-    },[]);
-
+    console.log(phone)
 
     const handleNext = () => {
         if (phone.trim() === '') {
@@ -60,7 +59,7 @@ export default function OrderStepOne({navigation}) {
             firstname: firstname,
             lastname: lastname,
             phone: completePhone,
-            email: email,
+            // email: email,
             address: address,
         }
 
@@ -101,6 +100,7 @@ export default function OrderStepOne({navigation}) {
                             <View>
                                 <PhoneInput
                                     ref={phoneInput}
+                                    defaultValue={phone}
                                     value={phone}
                                     defaultCode="CI"
                                     layout="second"
@@ -140,14 +140,14 @@ export default function OrderStepOne({navigation}) {
                                 value={lastname}
                                 onChangeText={setLastname}
                             />
-                            <Input
+                            {/* <Input
                                 label="Email"
                                 icon="envelope"
                                 placeholder="Entrez votre email"
                                 keyboardType="email-address"
                                 value={email}
                                 onChangeText={setEmail}
-                            />
+                            /> */}
                             <Input
                                 label="Adresse"
                                 icon="map-marker-alt"
@@ -155,7 +155,7 @@ export default function OrderStepOne({navigation}) {
                                 value={address}
                                 onChangeText={setAddress}
                             />
-                            <View style={{borderWidth: 1 , borderColor: '#ccc', borderRadius: 10}}>
+                            <View style={{borderWidth: 1 , borderColor: '#ccc', borderRadius: 10, marginTop: 10}}>
                                 <TouchableOpacity onPress={toggleExpanded} style={{flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
                                     <Text style={{color: colors.primary, fontSize: 15}}>Resumé de commande</Text>
                                     <FontAwesome5 name={isExpanded ? 'chevron-up' : 'chevron-down'} size={15} color="black" style={{}}/>

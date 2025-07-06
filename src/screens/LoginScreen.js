@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import HeaderSimple from '../components/HeaderSimple';
 import Input from "../components/Input";
 import Btn from "../components/Btn";
@@ -36,7 +36,7 @@ export default function LoginScreen({navigation}){
             return;
         }
         setLoading(true);
-        await wait(300);
+        await wait(200);
 
         const code = phoneInput.current?.getCallingCode();
         
@@ -70,71 +70,76 @@ export default function LoginScreen({navigation}){
 
 
     return(
-        <ScrollView style={{flex: 1, backgroundColor: 'white'}}
-        contentContainerStyle={{ flexGrow: 1 }}
-        >
-            <HeaderSimple  title='Connexion'/>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
-                    <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
-                    <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous connecter pour continuer</Text>
-                    
-                    <View>
-                        <View>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
-                                <Text style={{color: 'red'}}>*</Text>
-                            </View>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style={{flex: 1}}>
+                <ScrollView style={{flex: 1, backgroundColor: 'white'}}
+                contentContainerStyle={{ flexGrow: 1 }}
+                >
+                    <HeaderSimple  title='Connexion'/>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
+                            <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
+                            <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous connecter pour continuer</Text>
+                            
                             <View>
-                                <PhoneInput
-                                    ref={phoneInput}
-                                    value={phone}
-                                    defaultCode="CI"
-                                    layout="second"
-                                    onChangeText={setPhone}
-                                    placeholder="Entrez votre numéro"
-                                    containerStyle={{
-                                        width: "100%",
-                                        borderRadius: 15,
-                                        marginBottom: 12,
-                                        height: 43,
-                                        borderWidth: 1,
-                                        borderColor: '#ccc',
-                                        paddingLeft: 0,
-                                        backgroundColor: '#fff',
-                                        flexDirection: "row"
-                                    }}
+                                <View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
+                                        <Text style={{color: 'red'}}>*</Text>
+                                    </View>
+                                    <View>
+                                        <PhoneInput
+                                            ref={phoneInput}
+                                            value={phone}
+                                            defaultCode="CI"
+                                            layout="second"
+                                            onChangeText={setPhone}
+                                            placeholder="Entrez votre numéro"
+                                            containerStyle={{
+                                                width: "100%",
+                                                borderRadius: 15,
+                                                marginBottom: 12,
+                                                height: 43,
+                                                borderWidth: 1,
+                                                borderColor: '#ccc',
+                                                paddingLeft: 0,
+                                                backgroundColor: '#fff',
+                                                flexDirection: "row"
+                                            }}
 
-                                    textContainerStyle={{
-                                        flex: 0.9,
-                                        backgroundColor: '#fff',
-                                        paddingVertical: 0,
-                                        paddingLeft: 0
-                                    }}
+                                            textContainerStyle={{
+                                                flex: 0.9,
+                                                backgroundColor: '#fff',
+                                                paddingVertical: 0,
+                                                paddingLeft: 0
+                                            }}
+                                        />
+                                    </View>
+                                </View>
+                                <Input
+                                    label="Mot de passe"
+                                    icon="lock"
+                                    placeholder="Entrez votre mot de passe"
+                                    secureTextEntry={true}
+                                    value={password}
+                                    isRequired={true}
+                                    onChangeText={setPassword}
+                                    showEyeIcon={true}
                                 />
                             </View>
+                            <View style={{marginTop: 20}}>
+                                <Btn label={"Connexion"} loader={loading? true : false} disabled={loading ? true: false} action={handleLoginUser} />
+                            </View>
+                            <View>
+                                <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>
+                                    Vous n'avez pas de compte ? 
+                                    <Text onPress={() => navigation.navigate('RegisterScreen')} style={{color: 'blue'}}> Inscrivez-vous</Text>
+                                </Text>
+                            </View>
                         </View>
-                        <Input
-                            label="Mot de passe"
-                            icon="lock"
-                            placeholder="Entrez votre mot de passe"
-                            secureTextEntry={true}
-                            value={password}
-                            isRequired={true}
-                            onChangeText={setPassword}
-                        />
                     </View>
-                    <View style={{marginTop: 20}}>
-                        <Btn label={"Connexion"} loader={loading? true : false} disabled={loading ? true: false} action={handleLoginUser} />
-                    </View>
-                    <View>
-                        <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>
-                            Vous n'avez pas de compte ? 
-                            <Text onPress={() => navigation.navigate('RegisterScreen')} style={{color: 'blue'}}> Inscrivez-vous</Text>
-                        </Text>
-                    </View>
-                </View>
+                </ScrollView>
             </View>
-        </ScrollView>
+        </KeyboardAvoidingView>
     );
 }

@@ -12,14 +12,13 @@ export default function DrawerScreen({navigation}){
                     <FontAwesome5 name="chevron-circle-left" size={28} color="#f29f03" style={{marginTop: 15}}/>
                 </TouchableOpacity>
                 <Image source={require('../assets/logo.png')} style={{width: 150, height: 60, alignSelf: 'center'}} resizeMode='contain'/>
-                {/* <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.primary, marginTop: 15, textAlign: 'center'}}>Diamondock</Text> */}
             </View>
             <View style={{margin: 18, marginTop: 35}}>
                 <CardNavigation icon={'store'} title={'Digital Mall'} navigateTo={"DigitalMallScreen"}/>
-                <CardNavigation icon={'laptop-code'} title={'Social Media Manager'} navigateTo={"SocialMediaManager"} navigation={navigation}/>
-                <CardNavigation icon={'trophy'} title={'Diamond Ares'} navigateTo={"DiamondAresScreen"}/>
+                <CardNavigation icon={'laptop-code'} title={'Social Media Manager'} isBuild={true} navigateTo={"SocialMediaManager"} navigation={navigation}/>
+                <CardNavigation icon={'trophy'} title={'Diamond Ares'} isBuild={true} navigateTo={"DiamondAresScreen"}/>
                 <View style={{borderWidth: 1, backgroundColor: '#f9f9f9', marginVertical: 10, borderStyle: 'dashed', marginVertical: 35}}/>
-                <CardNavigation icon={'user-tie'} title={'Devenir Vendeur'}/>
+                <CardNavigation icon={'user-tie'} title={'Devenir Vendeur'} isExternalLink={true} navigateTo={"https://seller-diamondock.nkouadio.com/#signup"}/>
             </View>
             <Text style={{position:'absolute', bottom: 15 , color: '#999', alignSelf: 'center'}}>Version : {Constants?.expoConfig.version} © Diamondock</Text>
         </View>

@@ -1,7 +1,15 @@
-import { Text, TextInput, View } from "react-native";
+import { useState } from "react";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function Input({label, icon, value ='', keyboardType='default', placeholder, isRequired = false, onChangeText, maxLength = 100, editable = true, secureTextEntry= false}){
+export default function Input({label, icon, value ='', keyboardType='default', placeholder, isRequired = false, onChangeText, maxLength = 100, editable = true, secureTextEntry= false, showEyeIcon = false}){
+    
+    const [isPasswordVisible, setIsPasswordVisible] = useState(!secureTextEntry);
+
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
+
     return (
         <View>
             <View style={{flexDirection: 'row'}}>
@@ -17,8 +25,17 @@ export default function Input({label, icon, value ='', keyboardType='default', p
                     value={value}
                     style={{flex: 1, marginLeft: 5, fontSize: 15, paddingHorizontal: 10, height: 40}}
                     editable={editable}
-                    secureTextEntry={secureTextEntry}
+                    secureTextEntry={secureTextEntry && !isPasswordVisible}
                 />
+                {showEyeIcon && secureTextEntry && (
+                    <TouchableOpacity onPress={togglePasswordVisibility} style={{ paddingHorizontal: 10, justifyContent: 'center' }}>
+                        <FontAwesome5
+                            name={isPasswordVisible ? 'eye' : 'eye-slash'}
+                            size={17}
+                            color='#333'
+                        />
+                    </TouchableOpacity>
+                )}
             </View>
         </View>
     );

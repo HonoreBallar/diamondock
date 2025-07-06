@@ -59,7 +59,7 @@ export default function RateDetailProduct({navigation, route}){
                         </View>
                     ) : (
                         <View style={{flex: 1, justifyContent: 'center', marginTop: 30}}>
-                            <Text style={{textAlign: 'center'}}>Aucun disponible pour l'instant </Text>
+                            <Text style={{textAlign: 'center'}}>Aucun commentaire disponible pour l'instant </Text>
                         </View>
                     )
                 }

@@ -15,7 +15,11 @@ export const CartProvider = ({children}) =>{
             try {
                 const cartData = await AsyncStorage.getItem('cart');
                 if (cartData) {
-                    setCart(JSON.parse(cartData));
+                    const _= JSON.parse(cartData);
+                    setCart(_);
+                    if (_.length > 0) {
+                        setCurrency(_[0]?.currency);
+                    }
                 }
                 setLoading(false);
             } catch (error) {
@@ -27,6 +31,7 @@ export const CartProvider = ({children}) =>{
         }
         loadCart();
     }, []);
+
 
     //Ajouter un produit au panier
     const addToCart = (product, nbOfProduct = 1) => {

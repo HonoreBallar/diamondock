@@ -181,7 +181,8 @@ export default function RegisterScreen({navigation}){
                                 icon="lock"
                                 placeholder="Entrez votre mot de passe"
                                 value={password}
-                                // secureTextEntry={true}
+                                secureTextEntry={true}
+                                showEyeIcon={true}
                                 onChangeText={setPassword}
                                 isRequired={true}
                             />

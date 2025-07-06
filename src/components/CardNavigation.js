@@ -1,10 +1,21 @@
 import { Linking, Text, TouchableOpacity, View } from "react-native";
 import colors from "../utils/colors";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { useNavigation } from "@react-navigation/native";
 
-export default function CardNavigation({icon, title, navigateTo, isExternalLink = false}){
+export default function CardNavigation({icon, title, navigateTo, isExternalLink = false, isBuild = false}) {
     const navigation = useNavigation();
+
+    const handleBuild = ()=>{
+        showMessage({
+            message: "En cours de construction",
+            type: "info",
+            icon: { icon: "info", position: "left" },
+            duration: 2000,
+        });
+        return;
+    }
 
     const handlePress = async ()=>{
         if(isExternalLink){
@@ -17,7 +28,7 @@ export default function CardNavigation({icon, title, navigateTo, isExternalLink 
         }
     }
     return(
-        <TouchableOpacity onPress={handlePress}  style={{backgroundColor: '#e5ebfc', borderRadius: 15, padding: 15, marginBottom: 15, borderWidth: 0.1}}>
+        <TouchableOpacity onPress={isBuild ? handleBuild : handlePress}  style={{backgroundColor: '#e5ebfc', borderRadius: 15, padding: 15, marginBottom: 15, borderWidth: 0.1}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                 <View style={{flexDirection: 'row'}}>
                     <FontAwesome5 name={icon} size={18} color="#ffa100" style={{}}/>
