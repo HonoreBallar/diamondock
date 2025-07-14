@@ -20,7 +20,7 @@ export default function OrderStepOne({navigation}) {
     const phoneInput = useRef(null);
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [phone, setPhone] = useState('');
+    const [phone, setPhone] = useState(auth?.user?.phone || '');
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     // const [email, setEmail] = useState('');
@@ -30,16 +30,13 @@ export default function OrderStepOne({navigation}) {
     useEffect(()=>{
         if(auth.isLoggedIn && auth.user){
             // console.log(auth.user.phone)
-            setPhone("0758557153");
+            setPhone("+2250758557153");
             setFirstname(auth?.user?.firstname);
             setLastname(auth?.user?.lastname);
             // setEmail(auth.user.email);
             setAddress(auth.user.address);
         }
-        console.log(phone);
     },[auth?.user]);
-
-    console.log(phone)
 
     const handleNext = () => {
         if (phone.trim() === '') {
@@ -100,7 +97,6 @@ export default function OrderStepOne({navigation}) {
                             <View>
                                 <PhoneInput
                                     ref={phoneInput}
-                                    defaultValue={phone}
                                     value={phone}
                                     defaultCode="CI"
                                     layout="second"

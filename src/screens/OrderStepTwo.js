@@ -25,7 +25,7 @@ export default function OrderStepTwo({ navigation, route }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [checked, setChecked] = useState('at_home');
     const [payment, setPayment] = useState('cash');
-    const [selectedPayment, setSelectedPayment] = useState();
+    const [selectedPayment, setSelectedPayment] = useState('');
     const [visible, setVisible] = useState(false);
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -55,10 +55,12 @@ export default function OrderStepTwo({ navigation, route }) {
 
     const handleHome = ()=>{
         setChecked('at_home');
+        setDelivery('')
     }
 
     const handleRelayPoint = () => {
         setChecked('relay_point');
+        setDelivery(relay_point)
     }
 
     const handleCash = ()=>{
@@ -73,8 +75,10 @@ export default function OrderStepTwo({ navigation, route }) {
 
 
     const handleSubmit = () => {
+        // console.log(delivery, checked);
+        // return;
 
-        if (delivery.trim() === '' && checked === 'at_home') {
+        if (delivery.trim() === '') {
             showMessage({
                 message: "Veuillez entrer une adresse de livraison",
                 type: "danger",
@@ -83,7 +87,7 @@ export default function OrderStepTwo({ navigation, route }) {
             });
             return;
         }
-        if (selectedDate === '' && checked === 'at_home') {
+        if (selectedDate === '') {
             showMessage({
                 message: "Veuillez sélectionner une date de livraison",
                 type: "danger",
@@ -92,7 +96,15 @@ export default function OrderStepTwo({ navigation, route }) {
             });
             return;
         }
-
+        if(payment === 'online' && selectedPayment.trim() === ''){
+             showMessage({
+                message: "Veuillez sélectionner un moyen de paiement",
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
         const order = {
             ...datas,
             delivery:{
@@ -209,6 +221,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 value={delivery}
                                 onChangeText={setDelivery}
                                 isRequired={true}
+                                editable={checked == 'at_home'  ? true : false}
                             />
                              <View>
                                 <View style={{flexDirection: 'row'}}>

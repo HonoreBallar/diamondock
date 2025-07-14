@@ -162,8 +162,8 @@ export default function DetailProductScreen({navigation, route}){
                                 <TouchableOpacity onPress={()=>navigation.navigate('RateDetailProduct',{product: product})} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <View style={{flexDirection: 'row'}}>
                                         {renderStars(mainProduct?.note || 0)}
-                                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
-                                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{mainProduct?.note} / 5</Text>
+                                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 6}}>
+                                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{mainProduct?.note || 0} / 5</Text>
                                             <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>({mainProduct?.comment ? mainProduct?.comment : "Pas d'avis"})</Text>
                                         </View>
                                     </View>

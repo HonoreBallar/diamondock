@@ -42,7 +42,7 @@ export default function WishlistCard({navigation, product}){
                     <Text style={{fontSize: 17, fontWeight: 'bold', marginBottom: 5, width: '55%', color: '#03045e'}} numberOfLines={1}>{product?.name || 'nom produit'}</Text>
                 </TouchableOpacity>
                 <Text style={{fontSize: 12, fontWeight: 'bold', marginBottom: 5, color: '#555555', width: "80%"}} numberOfLines={1}>Categorie : {product?.category || 'category'} </Text>
-                <Text style={{fontSize: 15, color: '#03045e', fontWeight: 'bold'}}>Prix: {formatAmount(product?.price || 0)}</Text>
+                <Text style={{fontSize: 15, color: '#03045e', fontWeight: 'bold'}}>Prix: {formatAmount(product?.price || 0)} {product?.currency}</Text>
                 <View style={{flexDirection: 'row', justifyContent:'space-between', width: '70%', marginTop: 3, }}>
                     <TouchableOpacity onPress={()=>handleRemoveFromWishlist(product.token)} style={{marginTop: 10}}>
                         {loadingWishlist ? (

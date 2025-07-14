@@ -32,7 +32,7 @@ export default function CartCard({navigation, product}){
         setTimeout(async () => {
             await incrementQuantity(productId);
             setLoadingMinus(false);
-        }, 400);
+        }, 100);
     }
 
     const handleDecrement = (productId) => {
@@ -40,7 +40,7 @@ export default function CartCard({navigation, product}){
         setTimeout(async () => {
             await decrementQuantity(productId);
             setLoadingButton(false);
-        }, 400);
+        }, 100);
     }
 
     return (
