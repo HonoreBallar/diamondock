@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Header from '../components/Header';
 import Title from '../components/Title';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -7,19 +7,22 @@ import HeaderSimple from '../components/HeaderSimple';
 import Btn from '../components/Btn';
 import { useRootContext } from '../context/RootContext';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import PhoneInput from 'react-native-phone-number-input';
 
 export default function EditProfilScreen({navigation}){
 
     const {editUser} = useRootContext();
     const {auth} = useRootContext();
 
+    const phoneInput = useRef(null);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
+    const [phone, setPhone] = useState(auth?.user?.phone_detail?.number || '');
+    const [countryCode, setCountryCode] = useState(auth?.user?.phone_detail?.slug || 'CI');
 
     if(!auth?.isLoggedIn){
         navigation.navigate('LoginScreen');
@@ -40,13 +43,17 @@ export default function EditProfilScreen({navigation}){
     const handleUpdate = async () =>{
         setLoading(true);
         try {
+            const code = phoneInput.current?.getCallingCode();
+        
+            const completePhone =  `+${code}${phone}`;
+
             const datas = {
                 token: auth?.user?.token,
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
                 address: address,
-                phone: '+225' + phone,
+                phone: completePhone,
             }
             const response = await editUser(datas);
             if(response.status === false){
@@ -85,23 +92,63 @@ export default function EditProfilScreen({navigation}){
 
 
     return(
-        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-            <HeaderSimple title="Modifier mon profil" />
-            <View style={{margin: 15}}>
-                <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
-                    <Image source={require('../assets/user.jpeg')} style={{height: 100, width: 100, borderRadius: 50}}/>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'white' }}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={{flex: 1}}>
+                    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+                        <HeaderSimple title="Modifier mon profil" />
+                        <View style={{margin: 15}}>
+                            <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+                                <Image source={require('../assets/user.jpeg')} style={{height: 100, width: 100, borderRadius: 50}}/>
+                            </View>
+                            <View>
+                                <Input label={"Nom"} icon="user-tie" placeholder="Nom" value={firstname} onChangeText={setFirstname} isRequired={true}/>
+                                <Input label={"Prénoms"} icon="user-tie" placeholder="Prénoms" value={lastname} onChangeText={setLastname} isRequired={true}/>
+                                <View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
+                                        <Text style={{color: 'red'}}>*</Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <PhoneInput
+                                        ref={phoneInput}
+                                        value={phone}
+                                        defaultCode={countryCode}
+                                        layout="second"
+                                        onChangeText={setPhone}
+                                        placeholder="Entrez votre numéro"
+                                        containerStyle={{
+                                            width: "100%",
+                                            borderRadius: 15,
+                                            marginBottom: 12,
+                                            height: 43,
+                                            borderWidth: 1,
+                                            borderColor: '#ccc',
+                                            paddingLeft: 0,
+                                            backgroundColor: '#fff',
+                                            flexDirection: "row"
+                                        }}
+    
+                                        textContainerStyle={{
+                                            flex: 0.9,
+                                            backgroundColor: '#fff',
+                                            paddingVertical: 0,
+                                            paddingLeft: 0
+                                        }}
+                                    />
+                                </View>
+                                {/* <Input label={"Téléphone"} icon="phone" placeholder="Téléphone" keyboardType="numeric" value={phone} onChangeText={setPhone} isRequired={true}/> */}
+                                <Input label={"Adresse"} icon="map" placeholder="Adresse" keyboardType="text" value={address} onChangeText={setAddress}/>
+                                <Input label={"Email"} icon="envelope" placeholder="Email" keyboardType="email-address" value={email} onChangeText={setEmail}/>
+                            </View>
+                            <View style={{marginTop: 30}}>
+                                <Btn label="Enregistrer" loader={loading} action={handleUpdate}/>
+                            </View>
+                        </View>
+                    </ScrollView>
                 </View>
-                <View>
-                    <Input label={"Nom"} icon="user-tie" placeholder="Nom" value={firstname} onChangeText={setFirstname} isRequired={true}/>
-                    <Input label={"Prénoms"} icon="user-tie" placeholder="Prénoms" value={lastname} onChangeText={setLastname} isRequired={true}/>
-                    <Input label={"Téléphone"} icon="phone" placeholder="Téléphone" keyboardType="numeric" value={phone} onChangeText={setPhone} isRequired={true}/>
-                    <Input label={"Adresse"} icon="map" placeholder="Adresse" keyboardType="text" value={address} onChangeText={setAddress}/>
-                    <Input label={"Email"} icon="envelope" placeholder="Email" keyboardType="email-address" value={email} onChangeText={setEmail}/>
-                </View>
-                <View style={{marginTop: 30}}>
-                    <Btn label="Enregistrer" loader={loading} action={handleUpdate}/>
-                </View>
-            </View>
-        </ScrollView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 }

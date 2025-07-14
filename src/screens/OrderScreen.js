@@ -1,20 +1,26 @@
 import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
 import Title from "../components/Title";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useRootContext } from "../context/RootContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { getRequest } from "../utils/api";
 import { wait } from "../utils/utils";
+import PhoneInput from "react-native-phone-number-input";
 
 export default function OrderScreen({navigation}){
     const {auth} = useRootContext();
+
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeFilter, setActiveFilter] = useState("En attente");
     const [searchText, setSearchText] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const phoneInput = useRef(null);
+    const [phone, setPhone] = useState(auth?.user?.phone_detail?.number || '');
+    const [countryCode, setCountryCode] = useState(auth?.user?.phone_detail?.slug || 'CI');
 
     const orderStatus = [
         'En attente',
@@ -22,13 +28,6 @@ export default function OrderScreen({navigation}){
         'Annulé',
         'Livré',
     ]
-
-    useEffect(()=>{
-        if(auth?.isLoggedIn){
-            const _ = auth?.user?.phone;
-            setSearchText(_.replace('+225', ''));
-        }
-    },[]);
 
     // Fonction de filtrage
     const filterOrders = (status) => {
@@ -41,7 +40,7 @@ export default function OrderScreen({navigation}){
     };
 
     const handleSearch = async () => {
-        if(searchText.trim()=== '' || searchText.length < 10){
+        if(phone.trim()=== ''){
             showMessage({
                 message: "Veuillez entrer un numéro de commande valide",
                 type: "danger",
@@ -52,10 +51,13 @@ export default function OrderScreen({navigation}){
         }
         await wait(500);
         setLoading(true);
-        const phone = '+225' + searchText;
+
+        const code = phoneInput.current?.getCallingCode();
+        
+        const completePhone =  `+${code}${phone}`;
 
         try {
-            const response = await getRequest(`/order/all/${phone}`);
+            const response = await getRequest(`/order/all/${completePhone}`);
             if(response?.status === false){
                 showMessage({
                     message: response?.error,
@@ -86,19 +88,48 @@ export default function OrderScreen({navigation}){
             <Header/>
             <ScrollView>
                 <Title title="Mes commandes" />
-                <View>
-                    <View style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
-                        <TextInput keyboardType="numeric" placeholder="0142216384" value={searchText} maxLength={10} onChangeText={(text)=>setSearchText(text)}   style={{width: '85%', padding: 10}}/>
-                        <TouchableOpacity onPress={handleSearch} style={{}}>
-                            {
-                                loading ? (
-                                    <ActivityIndicator size="small" color="#000" style={{marginTop: 5, marginLeft: 15}}/>
-                                ) : (
-                                    <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
-                                )
-                            }
-                        </TouchableOpacity>
-                    </View>
+                <View style={{ position: "relative", width: "95%" , marginHorizontal: 10}}>
+                    <PhoneInput
+                        ref={phoneInput}
+                        value={phone}
+                        defaultCode={countryCode}
+                        layout="second"
+                        onChangeText={setPhone}
+                        placeholder="Entrez votre numéro"
+                        containerStyle={{
+                            width: "100%",
+                            borderRadius: 12,
+                            marginBottom: 12,
+                            height: 45,
+                            borderWidth: 1,
+                            borderColor: '#ccc',
+                            backgroundColor: '#fff',
+                        }}
+                        textContainerStyle={{
+                            flex: 0.9,
+                            backgroundColor: '#fff',
+                            paddingVertical: 0,
+                            paddingLeft: 0,
+                            height: 40,
+                        }}
+                    />
+
+                    <TouchableOpacity
+                        style={{
+                            position: 'absolute',
+                            right: 15,
+                            top: 13,
+                        }}
+                        onPress={handleSearch}
+                    >
+                        {
+                            loading ? (
+                                <ActivityIndicator size="small" color="#000" style={{marginLeft: 15}}/>
+                            ) : (
+                                <FontAwesome5 name="search" size={18} color="#000" style={{ marginLeft: 15}}/>
+                            )
+                        }
+                    </TouchableOpacity>
                 </View>
                 <View>
                     <View style={styles.buttonContainer}>
