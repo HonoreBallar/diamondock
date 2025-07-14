@@ -20,17 +20,16 @@ export default function OrderStepOne({navigation}) {
     const phoneInput = useRef(null);
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [phone, setPhone] = useState(auth?.user?.phone || '');
+    const [phone, setPhone] = useState(auth?.user?.phone_detail?.number || '');
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
+    const [countryCode, setCountryCode] = useState(auth?.user?.phone_detail?.slug || 'CI');
     // const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
 
 
     useEffect(()=>{
         if(auth.isLoggedIn && auth.user){
-            // console.log(auth.user.phone)
-            setPhone("+2250758557153");
             setFirstname(auth?.user?.firstname);
             setLastname(auth?.user?.lastname);
             // setEmail(auth.user.email);
@@ -98,7 +97,7 @@ export default function OrderStepOne({navigation}) {
                                 <PhoneInput
                                     ref={phoneInput}
                                     value={phone}
-                                    defaultCode="CI"
+                                    defaultCode={countryCode}
                                     layout="second"
                                     onChangeText={setPhone}
                                     placeholder="Entrez votre numéro"

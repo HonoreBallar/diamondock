@@ -12,12 +12,12 @@ export default function OrderScreen({navigation}){
     const {auth} = useRootContext();
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [orders, setOrders] = useState([]);
-    const [activeFilter, setActiveFilter] = useState("En attente de validation");
+    const [activeFilter, setActiveFilter] = useState("En attente");
     const [searchText, setSearchText] = useState("");
     const [loading, setLoading] = useState(false);
 
     const orderStatus = [
-        'En attente de validation',
+        'En attente',
         'Validé',
         'Annulé',
         'Livré',
@@ -65,7 +65,7 @@ export default function OrderScreen({navigation}){
                 });
             }
             setOrders(response?.data || []);
-            setFilteredOrders(orders.filter(order => order.status_label == 'En attente de validation'));
+            setFilteredOrders(orders.filter(order => order.status_label == 'En attente'));
             setLoading(false);
             
         } catch (error) {
@@ -144,8 +144,8 @@ export default function OrderScreen({navigation}){
                     />
                     {auth.isLoggedIn === false && (
                         <View style={{marginTop: 20, marginBottom: 20}}>
-                            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                                <Text style={{textAlign: 'center', marginBottom: 10, fontWeight: 'bold', textDecorationLine: 'underline'}}>Connecter à votre compte pour passer vos commandes</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')} style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 10, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
+                                <Text style={{textAlign: 'center', fontWeight: '600', fontSize: 16, color: 'blue'}}>Connectez-vous</Text>
                             </TouchableOpacity>
                         </View>
                     )}

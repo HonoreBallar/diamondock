@@ -27,6 +27,7 @@ export const RootProvider = ({children})=>{
             if(auth){
                 setAuth(JSON.parse(auth));
             }
+            // console.log(auth)
             await wait(2000);
             setLoading(false);
         }
@@ -96,7 +97,6 @@ export const RootProvider = ({children})=>{
     const editUser = async (datas={}) => {
         try {
             const response = await postRequest('/account/update', datas);
-            console.log(response);
             if(response?.status){
                 await updateAuthState({user: response?.data});
             }

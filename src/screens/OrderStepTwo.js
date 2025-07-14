@@ -51,7 +51,7 @@ export default function OrderStepTwo({ navigation, route }) {
         return nextDay;
     }
 
-    const relay_point = "Cocody Riviéra Faya";
+    const relay_point = "Cocody Angré Djorobité";
 
     const handleHome = ()=>{
         setChecked('at_home');
@@ -75,8 +75,6 @@ export default function OrderStepTwo({ navigation, route }) {
 
 
     const handleSubmit = () => {
-        // console.log(delivery, checked);
-        // return;
 
         if (delivery.trim() === '') {
             showMessage({
