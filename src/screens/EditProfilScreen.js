@@ -32,7 +32,6 @@ export default function EditProfilScreen({navigation}){
         if(auth?.isLoggedIn){
             const _=auth?.user?.phone;
             
-            setPhone(_.replace('+225',''));
             setFirstname(auth.user.firstname);
             setLastname(auth.user.lastname);
             setEmail(auth.user.email);

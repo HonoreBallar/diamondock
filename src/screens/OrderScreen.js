@@ -8,6 +8,7 @@ import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { getRequest } from "../utils/api";
 import { wait } from "../utils/utils";
 import PhoneInput from "react-native-phone-number-input";
+import colors from "../utils/colors";
 
 export default function OrderScreen({navigation}){
     const {auth} = useRootContext();
@@ -15,7 +16,6 @@ export default function OrderScreen({navigation}){
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [orders, setOrders] = useState([]);
     const [activeFilter, setActiveFilter] = useState("En attente");
-    const [searchText, setSearchText] = useState("");
     const [loading, setLoading] = useState(false);
 
     const phoneInput = useRef(null);
@@ -32,14 +32,38 @@ export default function OrderScreen({navigation}){
     // Fonction de filtrage
     const filterOrders = (status) => {
         setActiveFilter(status);
-        // if (status === "En attente de validation") {
-        //     setFilteredOrders(filteredOrders);
-        // } else {
-        // }
-        setFilteredOrders(orders.filter(order => order.status_label == status));
+        setFilteredOrders(orders.filter(order => order.status_label.toLowerCase().includes(status.toLowerCase())));
     };
 
+    useEffect(()=>{
+       if (auth?.isLoggedIn && auth?.user?.phone) {
+            const fetchOrders = async () => {
+                setLoading(true);
+                try {
+                    const response = await getRequest(`/order/all/${auth?.user?.phone}`);
+                    if (response?.status === true) {
+                        setOrders(response?.data || []);
+                        setFilteredOrders(response?.data || []);
+                    }
+                } catch (err) {
+                    showMessage({
+                        message: "Erreur lors de la recherche de la commande",
+                        type: "danger",
+                        icon: { icon: "danger", position: "left" },
+                        duration: 2000,
+                    });
+                    setLoading(false);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchOrders();
+        }
+    },[auth])
+
     const handleSearch = async () => {
+
         if(phone.trim()=== ''){
             showMessage({
                 message: "Veuillez entrer un numéro de commande valide",
@@ -53,10 +77,13 @@ export default function OrderScreen({navigation}){
         setLoading(true);
 
         const code = phoneInput.current?.getCallingCode();
-        
         const completePhone =  `+${code}${phone}`;
 
         try {
+
+            setOrders([]);
+            setFilteredOrders([]);
+
             const response = await getRequest(`/order/all/${completePhone}`);
             if(response?.status === false){
                 showMessage({
@@ -65,9 +92,17 @@ export default function OrderScreen({navigation}){
                     icon: { icon: "danger", position: "left" },
                     duration: 2000,
                 });
+                
+                setLoading(false);
             }
-            setOrders(response?.data || []);
-            setFilteredOrders(orders.filter(order => order.status_label == 'En attente'));
+
+            const ordersData = response?.data || [];
+            setOrders(ordersData);
+
+            const filteredData = ordersData.filter(order =>
+                order.status_label.toLowerCase().includes('en attente'.toLowerCase())
+            );
+            setFilteredOrders(filteredData);
             setLoading(false);
             
         } catch (error) {
@@ -154,25 +189,50 @@ export default function OrderScreen({navigation}){
                         ))}
                     </View>
 
-                    <FlatList
-                        data={filteredOrders}
-                        scrollEnabled={false}
-                        keyExtractor={(item, index) => index.toString()}
-                        style={{ marginTop: 20, marginBottom: 20 }}
-                        renderItem={({ item }) => (
-                            <View style={{borderWidth: 0.3, borderColor: '#ccc', padding: 10, marginBottom: 10, borderRadius: 5, margin: 5, backgroundColor: '#f9f9f9'}}>
-                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Commande #{item.order_number}</Text>
-                                <Text style={{ backgroundColor: item?.status_color,padding: 2, borderRadius: 5, alignSelf: 'flex-start', marginVertical: 5 }}>{item?.status_label}</Text>
-                                <Text style={{ color: '#666' }}>Prix : ${item?.price}</Text>
-                                <View style={{flexDirection: 'row', marginTop: 5}}>
-                                    <FontAwesome5 name="clock" size={12} color="#666" style={{marginTop: 5, marginRight: 5}}/>
-                                    <Text style={{ color: '#666' }}>{item?.order_date}</Text>
-                                </View>
-                            </View>
-                        )}
-                        ListEmptyComponent={<Text style={{ textAlign: 'center', marginTop: 20 }}>Aucune commande trouvée</Text>}
-                        showsVerticalScrollIndicator={false}
-                    />
+                     {loading ? (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="large" color={colors.primary} />
+                            <Text style={{ marginTop: 10 }}>Chargement des commandes...</Text>
+                        </View>
+                    ) : (
+                        <View style={{margin: 8}}>
+                            <FlatList
+                                data={filteredOrders}
+                                scrollEnabled={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                style={{ marginTop: 10, marginBottom: 20 }}
+                                renderItem={({ item }) => (
+                                    <View style={{borderWidth: 0.3, borderColor: '#ccc', padding: 10, marginBottom: 10, borderRadius: 5, margin: 5, backgroundColor: '#f9f9f9'}}>
+                                        <View style={{flexDirection: 'row', marginTop: 1, justifyContent: 'space-between', marginBottom: 2}}>
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold' }}>Commande #{item.order_number}</Text>
+                                            <Text style={{ backgroundColor: item?.status_color,padding: 2, borderRadius: 5 }}>{item?.status_label}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', marginTop: 1, justifyContent: 'space-between', marginBottom: 2}}>
+                                            <Text style={{ fontSize: 14, color: '#666', width: '50%' }} numberOfLines={2}>{item?.product_name} ({item?.quantity})</Text>
+                                            <Text style={{fontWeight: '600' }}>Prix : {item?.amount} {item?.currency}</Text>
+                                        </View>
+                                        <View style={{flexDirection: 'row', marginTop: 1, justifyContent: 'space-between'}}>
+                                            <View style={{flexDirection: 'row', marginTop: 5}}>
+                                                <FontAwesome5 name="clock" size={12} color="#666" style={{marginTop: 2, marginRight: 5}}/>
+                                                <Text style={{ color: '#666' }}>{item?.order_date}</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row', marginTop: 5}}>
+                                                <FontAwesome5 name="money-bill-wave" size={12} color="#666" style={{marginTop: 2, marginRight: 5}}/>
+                                                <Text style={{ color: '#666' }}>{item?.payment_method === 'online' ? item?.payment_option : 'Cash'}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                )}
+                                ListEmptyComponent={
+                                    filteredOrders.length === 0 ? (
+                                        <Text style={{ textAlign: 'center', marginTop: 20 }}>Aucune commande trouvée</Text>
+                                    ) : null
+                                }
+                                showsVerticalScrollIndicator={false}
+                            />
+                        </View>
+                    )}
+
                     {auth.isLoggedIn === false && (
                         <View style={{marginTop: 20, marginBottom: 20}}>
                             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')} style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 10, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
@@ -213,7 +273,7 @@ const styles = StyleSheet.create({
         color: "#ccc",
         fontWeight: "bold",
         textAlign: 'center',
-        textTransform: 'capitalize'
+        // textTransform: 'capitalize'
     },
     activeButtonText: {
         color: "white", // Couleur du texte du bouton actif
