@@ -1,15 +1,10 @@
 import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, useColorScheme, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function Input({label, icon, value ='', keyboardType='default', placeholder, isRequired = false, onChangeText, maxLength = 100, editable = true, secureTextEntry= false, showEyeIcon = false}){
     
     const [isPasswordVisible, setIsPasswordVisible] = useState(!secureTextEntry);
-
-    const colorScheme = useColorScheme();
-
-    const placeholderColor = colorScheme === 'dark' ? '#aaa' : '#888';
-    const textColor = colorScheme === 'dark' ? '#fff' : '#000';
 
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
@@ -26,11 +21,11 @@ export default function Input({label, icon, value ='', keyboardType='default', p
                 <TextInput
                     keyboardType={keyboardType}
                     placeholder={placeholder}
-                    placeholderTextColor={placeholderColor}
+                    placeholderTextColor="#000"
                     onChangeText={onChangeText}
                     maxLength={maxLength}
                     value={value}
-                    style={{flex: 1, marginLeft: 5, fontSize: 15, paddingHorizontal: 10, height: 40, color: textColor}}
+                    style={{flex: 1, marginLeft: 5, fontSize: 15, paddingHorizontal: 10, height: 40, color: "#000"}}
                     editable={editable}
                     secureTextEntry={secureTextEntry && !isPasswordVisible}
                 />
