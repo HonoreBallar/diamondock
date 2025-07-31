@@ -34,6 +34,9 @@
         "projectId": "bd5e0006-e571-4d8b-b8f1-c441ab99ed8f"
       }
     },
-    "owner": "honore.amounan"
+    "owner": "honore.amounan",
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }

@@ -1,0 +1,53 @@
+{
+  "common": {
+    "appName": "Diamondock",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "price": "Prix",
+    "seeMore": "Voir plus"
+  },
+  "home": {
+    "welcomeTitle": "Bienvenue sur Diamondock !",
+    "welcomeMessage": "Découvrez nos produits exceptionnels pour une expérience de shopping unique avec {{appName}}."
+  },
+  "auth": {
+    "loginTitle": "Connexion",
+    "registerTitle": "Inscription",
+    "emailPlaceholder": "Votre email",
+    "passwordPlaceholder": "Votre mot de passe",
+    "forgotPassword": "Mot de passe oublié ?"
+  },
+  "product": {
+    "categoryLabel": "Catégorie",
+    "remainingStock": "{{count}} articles restants",
+    "outOfStock": "Rupture de stock",
+    "visitProduct": "Visiter le produit"
+  },
+  "cart": {
+    "cartTitle": "Votre Panier",
+    "removeConfirmTitle": "Supprimer du panier",
+    "removeConfirmMessage": "Voulez-vous vraiment supprimer ce produit du panier ?",
+    "productAdded": "Produit ajouté au panier",
+    "productRemoved": "Produit supprimé du panier",
+    "emptyCart": "Votre panier est vide !",
+    "sameCurrencyOnly": "Vous ne pouvez ajouter que des produits avec la même devise."
+  },
+  "wishlist": {
+    "wishlistTitle": "Mes Favoris",
+    "removeConfirmTitle": "Supprimer du favori",
+    "removeConfirmMessage": "Voulez-vous vraiment supprimer ce produit de vos favoris ?",
+    "removeFromWishlist": "Supprimer de mes favoris"
+  },
+  "buttons": {
+    "addToCart": "Ajouter au panier",
+    "search": "Rechercher",
+    "submit": "Soumettre",
+    "register": "S'inscrire",
+    "login": "Se connecter"
+  },
+  "alerts": {
+    "infoBuilding": "En cours de construction"
+  }
+}

@@ -6,25 +6,28 @@ import { RootProvider } from "./RootContext";
 import { CartProvider } from "./CartContext";
 import { WishlistProvider } from "./WishlistContext";
 import { SellerProvider } from "./SellerContext";
+import { LocalizationProvider } from "./LocalizationContext";
 
 export const AppProvider = ({children}) =>{
     return (
         <RootProvider>
-            <CartProvider>
-                <SellerProvider>
-                    <OrderProvider>
-                        {/* <SearchProvider> */}
-                            <ProductProvider>
-                                <WishlistProvider>
-                                    <CategoryProvider>
-                                        {children}
-                                    </CategoryProvider>
-                                </WishlistProvider>
-                            </ProductProvider>
-                        {/* </SearchProvider> */}
-                    </OrderProvider>
-                </SellerProvider>
-            </CartProvider>
+            <LocalizationProvider>
+                <CartProvider>
+                    <SellerProvider>
+                        <OrderProvider>
+                            {/* <SearchProvider> */}
+                                <ProductProvider>
+                                    <WishlistProvider>
+                                        <CategoryProvider>
+                                            {children}
+                                        </CategoryProvider>
+                                    </WishlistProvider>
+                                </ProductProvider>
+                            {/* </SearchProvider> */}
+                        </OrderProvider>
+                    </SellerProvider>
+                </CartProvider>
+            </LocalizationProvider>
         </RootProvider>
     );
 }

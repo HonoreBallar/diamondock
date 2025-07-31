@@ -7,8 +7,10 @@ import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import CategoryItem from "../components/CategoryItem";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function HomeScreen({navigation}){
+    const { t } = useTranslation();
     const {categories} = useCategories();
     const {products} = useProducts();
     const [loading, setLoading] = useState(true);
@@ -27,9 +29,9 @@ export default function HomeScreen({navigation}){
                 <View style={{margin: 15}}>
                     <View>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold', fontSize: 17}}>Catégories</Text>
+                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold', fontSize: 17}}>{t('home.categoriesTitle')}</Text>
                             <TouchableOpacity onPress={()=>navigation.jumpTo('Categories')}>
-                                <Text style={{color: '#03045e', textAlign: 'right', fontSize: 12}}>Voir plus</Text>
+                                <Text style={{color: '#03045e', textAlign: 'right', fontSize: 12}}>{t('common.seeMore')}</Text>
                             </TouchableOpacity>
                         </View>
                         {loading ? (
@@ -50,7 +52,7 @@ export default function HomeScreen({navigation}){
                     </View>
                     <View style={{margin: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
-                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>Nouveautés</Text>
+                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.new')}</Text>
                         </View>
                         <FlatList
                         data={products}
@@ -67,7 +69,7 @@ export default function HomeScreen({navigation}){
 
                     <View style={{margin: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
-                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>Offres du moments</Text>
+                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.limitedTimeOffer')}</Text>
                         </View>
                         <FlatList
                         data={products}
