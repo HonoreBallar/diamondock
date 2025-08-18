@@ -10,12 +10,18 @@ import { useCart } from '../context/CartContext';
 import ProfilScreen from '../screens/ProfilScreen';
 import colors from '../utils/colors';
 import { useRootContext } from '../context/RootContext';
+import { useWishlist } from '../context/WishlistContext';
+import { useTranslation } from '../context/LocalizationContext';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
 
+  const { t } = useTranslation();
+
   const { cart } = useCart();
+
+  const {wishlist} = useWishlist();
 
   const {auth} = useRootContext();
   
@@ -24,19 +30,19 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color }) => {
           let iconName;
-            if (route.name === 'Home') {
+            if (route.name === t('tabs.tab_home')) {
                 iconName = 'home';
             } 
-            else if (route.name === 'Favoris') {
+            else if (route.name === t('tabs.tab_favorites')) {
                 iconName = 'heart';
-            } else if (route.name === 'Panier') {
+            } else if (route.name === t('tabs.tab_cart')) {
                 iconName = 'shopping-cart';
-            } else if (route.name === 'Categories') {
+            } else if (route.name === t('tabs.tab_categories')) {
                 iconName = 'list-alt';
-            } else if (route.name === 'Mon compte') {
+            } else if (route.name === t('tabs.tab_profile')) {
                 iconName = 'user-tie';
             }
-            else if (route.name === 'Commandes') {
+            else if (route.name === t('tabs.tab_orders')) {
                 iconName = 'clipboard-list';
             }
           return <FontAwesome5 name={iconName} size={focused ? 24 : 20 } color={focused? colors.primary: color} />;
@@ -48,14 +54,14 @@ const TabNavigator = () => {
         tabBarBadgeStyle:{ backgroundColor: "#03045e", color: "white"}
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Categories" component={CategoryScreen} />
-      <Tab.Screen name="Panier" component={CartScreen} options={{tabBarBadge: cart.length > 0 ? cart.length : null}}/>
-      <Tab.Screen name="Favoris" component={WishlistScreen} />
+      <Tab.Screen name={t('tabs.tab_home')} component={HomeScreen} />
+      <Tab.Screen name={t('tabs.tab_categories')} component={CategoryScreen} />
+      <Tab.Screen name={t('tabs.tab_cart')} component={CartScreen} options={{tabBarBadge: cart.length > 0 ? cart.length : null}}/>
+      <Tab.Screen name={t('tabs.tab_favorites')} component={WishlistScreen} options={{tabBarBadge: wishlist.length > 0 ? wishlist.length : null}}/>
       {auth.isLoggedIn ? 
-        (<Tab.Screen name="Mon compte" component={ProfilScreen} />)
+        (<Tab.Screen name={t('tabs.tab_profile')} component={ProfilScreen} />)
       :
-        (<Tab.Screen name="Commandes" component={OrderScreen} />)
+        (<Tab.Screen name={t('tabs.tab_orders')} component={OrderScreen} />)
       }
     </Tab.Navigator>
   );

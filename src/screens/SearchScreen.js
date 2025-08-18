@@ -4,8 +4,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import FlottingCart from "../components/FlottingCart";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function SearchScreen({ navigation }) {
+  const { t } = useTranslation();
   const {products} = useProducts();
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,7 +38,7 @@ export default function SearchScreen({ navigation }) {
             <FontAwesome5 name="arrow-left" size={20} color="#000" />
           </TouchableOpacity>
           <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-            Recherche
+            {t('search.searchTitle')}
           </Text>
         </View>
         <FlottingCart navigation={navigation} />
@@ -44,7 +46,7 @@ export default function SearchScreen({ navigation }) {
       <View style={{marginVertical: 15}}>
           <View style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
             <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 3, marginLeft: 15}}/>
-            <TextInput autoFocus={true} keyboardType="default" placeholder="Rechercher un produit ..." value={searchText} maxLength={10} onChangeText={(text)=>handleSearchChange(text)}   style={{width: '78%', padding: 10}}/>
+            <TextInput autoFocus={true} keyboardType="default" placeholder={t('search.searchPlaceholder')} value={searchText} maxLength={10} onChangeText={(text)=>handleSearchChange(text)}   style={{width: '78%', padding: 10}}/>
             {searchText.length > 0 && (
               <TouchableOpacity onPress={handleSearch} style={{}}>
                 <FontAwesome5 name="times" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
@@ -57,13 +59,13 @@ export default function SearchScreen({ navigation }) {
         {filteredProducts.length === 0 && searchText.length === 0 && (
           <View style={{alignItems: 'center', marginTop: 190}}>
             <FontAwesome5 name="search" size={30} color="gray" />
-            <Text style={{fontSize: 16, color: 'gray'}}>Rechercher un produit ...</Text>
+            <Text style={{fontSize: 16, color: 'gray'}}>{t('search.searchPlaceholder')}</Text>
           </View>
         )}
         {filteredProducts.length === 0 && searchText.length > 0 && (
           <View style={{alignItems: 'center', marginTop: 190}}>
             <FontAwesome5 name="grin-beam-sweat" size={30} color="gray" />
-            <Text style={{fontSize: 16, color: 'gray'}}>Aucun produit trouvé pour "{searchText}"</Text>
+            <Text style={{fontSize: 16, color: 'gray'}}>{t('search.noResults')} "{searchText}"</Text>
           </View>
         )}
         {filteredProducts.length > 0 && searchText.length > 0 && (

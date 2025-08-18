@@ -4,8 +4,10 @@ import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 import { formatAmount } from '../utils/utils';
 import colors from '../utils/colors';
+import { useTranslation } from '../context/LocalizationContext';
 
 export default function CartCard({navigation, product}){
+    const {t} = useTranslation();
     const {removeFromCart,incrementQuantity, decrementQuantity} = useCart();
     const [loading, setLoading] = useState(false);
     const [loadingMinus, setLoadingMinus] = useState(false);
@@ -14,11 +16,11 @@ export default function CartCard({navigation, product}){
     const handleRemoveFromCart = (productId) => {
         setLoading(true);
         Alert.alert(
-            'Supprimer du panier',
-            'Voulez-vous vraiment supprimer ce produit du panier?',
+            t('cart.removeConfirmTitle'),
+            t('cart.removeConfirmMessage'),
             [
-                {text: 'Annuler', style: 'cancel', onPress: () => setLoading(false)},
-                {text: 'Supprimer', onPress: async () => {
+                {text: t('cart.cancel'), style: 'cancel', onPress: () => setLoading(false)},
+                {text: t('cart.remove'), onPress: async () => {
                     await removeFromCart(productId);
                     setLoading(false);
                 }}

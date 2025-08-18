@@ -2,8 +2,10 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from '../context/LocalizationContext';
 
 export default function Header(){
+    const { t } = useTranslation();
 
     const navigation = useNavigation();
 
@@ -20,7 +22,7 @@ export default function Header(){
             <View>
                 <TouchableOpacity onPress={()=>navigation.navigate('SearchScreen')} style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
                     <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 5, marginLeft: 15}}/>
-                    <Text style={{marginLeft: 8, fontSize: 16, marginTop: 4,}}>Rechercher un produit ...</Text>
+                    <Text style={{marginLeft: 8, fontSize: 16, marginTop: 4,}}>{t('search.searchPlaceholder')}</Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -8,9 +8,24 @@
     "price": "Prix",
     "seeMore": "Voir plus"
   },
+  "tabs": {
+    "tab_home": "Accueil",
+    "tab_categories": "Catégories",
+    "tab_cart": "Panier",
+    "tab_favorites": "Favoris",
+    "tab_profile": "Mon compte",
+    "tab_orders": "Commandes"
+  },
   "home": {
+    "categoriesTitle": "Catégories",
+    "new": "Nouveaux",
+    "limitedTimeOffer": "Offre spéciale limitée",
+    "bestArticles": "Meilleurs articles",
     "welcomeTitle": "Bienvenue sur Diamondock !",
     "welcomeMessage": "Découvrez nos produits exceptionnels pour une expérience de shopping unique avec {{appName}}."
+  },
+  "categories": {
+    "categoriesTitle": "Toutes les catégories"
   },
   "auth": {
     "loginTitle": "Connexion",
@@ -26,11 +41,16 @@
     "visitProduct": "Visiter le produit"
   },
   "cart": {
-    "cartTitle": "Votre Panier",
+    "cartTitle": "Mon Panier",
     "removeConfirmTitle": "Supprimer du panier",
     "removeConfirmMessage": "Voulez-vous vraiment supprimer ce produit du panier ?",
     "productAdded": "Produit ajouté au panier",
     "productRemoved": "Produit supprimé du panier",
+    "clearCartMessage": "Voulez-vous vraiment vider votre panier ?",
+    "clearCart": "Vider le panier",
+    "cancel": "Annuler",
+    "empty": "Vider",
+    "remove": "Supprimer",
     "emptyCart": "Votre panier est vide !",
     "sameCurrencyOnly": "Vous ne pouvez ajouter que des produits avec la même devise."
   },
@@ -42,10 +62,17 @@
   },
   "buttons": {
     "addToCart": "Ajouter au panier",
+    "validOrder": "Valider la commande",
+    "clearCart": "Vider le panier",
     "search": "Rechercher",
     "submit": "Soumettre",
     "register": "S'inscrire",
     "login": "Se connecter"
+  },
+  "search":{
+    "searchTitle": "Rechercher",
+    "searchPlaceholder": "Rechercher des produits ...",
+    "noResults": "Aucun résultat trouvé"
   },
   "alerts": {
     "infoBuilding": "En cours de construction"

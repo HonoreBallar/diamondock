@@ -30,7 +30,7 @@ export default function HomeScreen({navigation}){
                     <View>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold', fontSize: 17}}>{t('home.categoriesTitle')}</Text>
-                            <TouchableOpacity onPress={()=>navigation.jumpTo('Categories')}>
+                            <TouchableOpacity onPress={()=>navigation.jumpTo(t('tabs.tab_categories'))}>
                                 <Text style={{color: '#03045e', textAlign: 'right', fontSize: 12}}>{t('common.seeMore')}</Text>
                             </TouchableOpacity>
                         </View>
@@ -86,7 +86,7 @@ export default function HomeScreen({navigation}){
 
                     <View style={{margin: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
-                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>Meilleurs articles</Text>
+                            <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.bestArticles')}</Text>
                         </View>
                         <FlatList
                         data={products}

@@ -18,7 +18,7 @@ export default function DrawerScreen({navigation}){
                 <CardNavigation icon={'laptop-code'} title={'Social Media Manager'} isBuild={true} navigateTo={"SocialMediaManager"} navigation={navigation}/>
                 <CardNavigation icon={'trophy'} title={'Diamond Ares'} isBuild={true} navigateTo={"DiamondAresScreen"}/>
                 <View style={{borderWidth: 1, backgroundColor: '#f9f9f9', marginVertical: 10, borderStyle: 'dashed', marginVertical: 35}}/>
-                <CardNavigation icon={'user-tie'} title={'Devenir Vendeur'} isExternalLink={true} navigateTo={"https://seller-diamondock.nkouadio.com/#signup"}/>
+                <CardNavigation icon={'user-tie'} title={'Devenir vendeur'} isExternalLink={true} navigateTo={"https://seller-diamondock.nkouadio.com/#signup"}/>
             </View>
             <Text style={{position:'absolute', bottom: 15 , color: '#999', alignSelf: 'center'}}>Version : {Constants?.expoConfig.version} © Diamondock</Text>
         </View>

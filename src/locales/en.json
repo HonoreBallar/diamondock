@@ -8,12 +8,24 @@
     "price": "Price",
     "seeMore": "See More"
   },
+  "tabs": {
+    "tab_home": "Home",
+    "tab_categories": "Categories",
+    "tab_cart": "Cart",
+    "tab_favorites": "Favorites",
+    "tab_profile": "My Account",
+    "tab_orders": "Orders"
+  },
   "home": {
     "categoriesTitle": "Categories",
     "new": "New",
     "limitedTimeOffer": "Limited Time Offer",
+    "bestArticles": "Best Articles",
     "welcomeTitle": "Welcome to Diamondock!",
     "welcomeMessage": "Discover our exceptional products for a unique shopping experience with {{appName}}."
+  },
+  "categories": {
+    "categoriesTitle": "All Categories"
   },
   "auth": {
     "loginTitle": "Login",
@@ -31,10 +43,15 @@
   "cart": {
     "cartTitle": "Your Cart",
     "removeConfirmTitle": "Remove from Cart",
-    "removeConfirmMessage": "Are you sure you want to remove this product from your cart?",
+    "removeConfirmMessage": "Are you sure you want to remove this product from your cart ?",
     "productAdded": "Product added to cart",
     "productRemoved": "Product removed from cart",
-    "emptyCart": "Your cart is empty!",
+    "clearCartMessage": "Are you sure you want to clear your cart ?",
+    "clearCart": "Clear Cart",
+    "cancel": "Cancel",
+    "empty": "Clear",
+    "remove": "Remove",
+    "emptyCart": "Your cart is empty !",
     "sameCurrencyOnly": "You can only add products with the same currency."
   },
   "wishlist": {
@@ -45,10 +62,17 @@
   },
   "buttons": {
     "addToCart": "Add to Cart",
+    "validOrder": "Place Order",
+    "clearCart": "Empty cart",
     "search": "Search",
     "submit": "Submit",
     "register": "Register",
     "login": "Login"
+  },
+  "search":{
+    "searchTitle": "Search",
+    "searchPlaceholder": "Search for products ...",
+    "noResults": "No results found"
   },
   "alerts": {
     "infoBuilding": "Under construction"
