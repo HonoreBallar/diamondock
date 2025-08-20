@@ -1,7 +1,8 @@
 // src/context/LocalizationContext.js
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { translate } from '../locales/i18n'; // Importe la fonction de traduction
 import { getLocales } from 'expo-localization';
+import { useRootContext } from './RootContext';
 
 const LocalizationContext = createContext(undefined);
 
@@ -13,10 +14,16 @@ const LocalizationContext = createContext(undefined);
  * @returns {JSX.Element} Le fournisseur de contexte de localisation.
  */
 export const LocalizationProvider = ({ children }) => {
-  const deviceLanguage = getLocales()[0].languageCode || 'fr';
-  const [currentLanguage, setCurrentLanguage] = useState(deviceLanguage); // Langue par défaut
+  const { appLanguage, appCurrency } = useRootContext();
+  // const deviceLanguage = appLanguage || 'fr';
+  const [currentLanguage, setCurrentLanguage] = useState(appLanguage || 'fr'); // Langue par défaut
 
-  // Memoize la fonction t pour éviter les re-renders inutiles des composants enfants
+  useEffect(() => {
+    if (appLanguage) {
+      setCurrentLanguage(appLanguage);
+    }
+  }, [appLanguage]);
+
   // si elle est passée comme prop.
   const t = useCallback((key, params) => {
     // Ici, nous préfixons la clé avec la langue actuelle pour appeler la fonction translate.

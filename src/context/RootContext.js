@@ -12,8 +12,8 @@ export const RootProvider = ({children})=>{
     });
     const [loading, setLoading] = useState(true);
     const [countries, setCountries] = useState([]);
-    const [appLanguage, setAppLanguage] = useState('fr');
-    const [appCurrency, setAppCurrency] = useState('XOF');
+    const [appLanguage, setAppLanguage] = useState('');
+    const [appCurrency, setAppCurrency] = useState('');
     const [currencies, setCurrencies] = useState([]);
     const [auth, setAuth] = useState({
         isLoggedIn: false,
@@ -22,8 +22,22 @@ export const RootProvider = ({children})=>{
 
     useEffect(()=>{
         const _ = async()=>{
-            const [starter, auth] = await Promise.all([AsyncStorage.getItem('starter'), AsyncStorage.getItem('auth')]);
+            const [starter, auth, _appLanguage, _appCurrency] = await Promise.all([
+                AsyncStorage.getItem('starter'),
+                AsyncStorage.getItem('auth'),
+                getItemFromStorage('@app_language'),
+                getItemFromStorage('@app_currency'),
+            ]);
 
+            if(_appLanguage){
+                setAppLanguage(_appLanguage);
+            }
+            if(_appCurrency){
+                setAppCurrency(_appCurrency);
+            }
+            
+            console.log('App language:', _appLanguage);
+            console.log('App currency:', _appCurrency);
             if(starter){
                 setStarter(JSON.parse(starter));
             }
