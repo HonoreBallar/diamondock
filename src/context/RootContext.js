@@ -12,6 +12,9 @@ export const RootProvider = ({children})=>{
     });
     const [loading, setLoading] = useState(true);
     const [countries, setCountries] = useState([]);
+    const [appLanguage, setAppLanguage] = useState('fr');
+    const [appCurrency, setAppCurrency] = useState('XOF');
+    const [currencies, setCurrencies] = useState([]);
     const [auth, setAuth] = useState({
         isLoggedIn: false,
         user: null
@@ -34,6 +37,7 @@ export const RootProvider = ({children})=>{
 
         _();
         getCountries();
+        getCurrencies();
     },[]);
 
     const updateStarterState = async (payload = {})=>{
@@ -161,8 +165,30 @@ export const RootProvider = ({children})=>{
         }
     }
 
+    const getCurrencies = async()=>{
+        try {
+            const response = await getRequest('/setting/currencies');
+            if(response?.status === false){
+                showMessage({
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+            }
+            setCurrencies(response?.data);
+        } catch (error) {
+            showMessage({
+                message: "Erreur réseau "+ error.message,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }
+    }
+
     return (
-        <RootContext.Provider value={{starter, auth, loading, countries, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries}}>
+        <RootContext.Provider value={{starter, auth, loading, countries, currencies ,appLanguage, appCurrency, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency}}>
             {children}
             <FlashMessage
                 animated={true}

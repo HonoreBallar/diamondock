@@ -18,15 +18,63 @@ import SearchScreen from '../screens/SearchScreen';
 import OrderStepOne from '../screens/OrderStepOne';
 import OrderStepTwo from '../screens/OrderStepTwo';
 import RateDetailProduct from '../screens/RateDetailProduct';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import { useEffect, useState } from 'react';
 
 const Stack = createStackNavigator();
+const WELCOME_SEEN_KEY = '@welcome_seen';
+import { getItemFromStorage } from '../utils/utils';
+import { ActivityIndicator, Image, View } from 'react-native';
+
 
 const StackNavigator = () => {
+
+  const [initialRoute, setInitialRoute] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const hasSeenWelcome = await getItemFromStorage(WELCOME_SEEN_KEY);
+        if (hasSeenWelcome) {
+          setInitialRoute('Main');
+        } else {
+          setInitialRoute('Welcome');
+        }
+      } catch (e) {
+          console.error("Failed to check if welcome screen was seen", e);
+          // En cas d'erreur, afficher par défaut l'écran de bienvenue
+          console.error("Error checking welcome screen status, defaulting to Welcome");
+          setInitialRoute('Welcome');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkFirstLaunch();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+              source={require('../assets/logo.png')}
+              style={{
+                  width: 200,
+                  marginBottom: 5,
+              }}
+              resizeMode='contain'
+          />
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   
   return (
     <Stack.Navigator 
-    initialRouteName='Main'
+    initialRouteName={initialRoute}
     >
+      <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} options={{ headerShown: false }} />
       <Stack.Screen name="DetailProductScreen" component={DetailProductScreen} options={{ headerShown: false }} />
