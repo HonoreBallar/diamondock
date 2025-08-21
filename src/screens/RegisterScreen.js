@@ -10,8 +10,10 @@ import { Picker } from "@react-native-picker/picker";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import PhoneInput from "react-native-phone-number-input";
 import { getIdFromCode } from "../utils/utils";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function RegisterScreen({navigation}){
+    const {t} = useTranslation();
 
     const {registerUser, countries} = useRootContext();
 
@@ -95,31 +97,31 @@ export default function RegisterScreen({navigation}){
                 contentContainerStyle={{ paddingBottom: 10 }}
                 keyboardShouldPersistTaps="handled"
                 >
-                    <HeaderSimple title="Inscription" />
-                    <View style={{marginTop: 20, marginHorizontal: 15, marginBottom: 40,borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
-                        <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
-                        <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous inscrire pour continuer</Text>
+                    <HeaderSimple title={t('auth.registerTitle')} />
+                    <View style={{marginTop: 20, marginHorizontal: 15, marginBottom: 40,borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9', width: '90%'}}>
+                        <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>{t('auth.welcomeMessage')}</Text>
+                        <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>{t('auth.registerSubtitle')}</Text>
                         
                         <View>
                             <Input
-                                label="Nom"
+                                label={t('input.firstnameTitle')}
                                 icon="user-tie"
-                                placeholder="Entrez votre nom"
+                                placeholder={t('input.firstnamePlaceholder')}
                                 value={firstname}
                                 onChangeText={setFirstname}
                                 isRequired={true}
                             />
                             <Input
-                                label="Prénoms"
+                                label={t('input.lastnameTitle')}
                                 icon="user-tie"
-                                placeholder="Entrez votre nom"
+                                placeholder={t('input.lastnamePlaceholder')}
                                 value={lastname}
                                 onChangeText={setLastname}
                                 isRequired={true}
                             />
                             <View>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
+                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>{t('input.phoneTitle')}</Text>
                                     <Text style={{color: 'red'}}>*</Text>
                                 </View>
                                 <PhoneInput
@@ -128,7 +130,7 @@ export default function RegisterScreen({navigation}){
                                     defaultCode="CI"
                                     layout="second"
                                     onChangeText={setPhone}
-                                    placeholder="Entrez votre numéro"
+                                    placeholder={t('input.phonePlaceholder')}
                                     containerStyle={{
                                         width: "100%",
                                         borderRadius: 15,
@@ -148,38 +150,19 @@ export default function RegisterScreen({navigation}){
                                         paddingLeft: 0
                                     }}
                                 />
-                                {/* <SingleDropdownSelect items={countries} onSelectHandler={(_)=>setCountry(_?.code)}/> */}
                             </View>
-                            {/* <Input
-                                label="Téléphone"
-                                icon="phone"
-                                placeholder="Entrez votre téléphone"
-                                keyboardType="numeric"
-                                value={phone}
-                                maxLength={10}
-                                onChangeText={setPhone}
-                                isRequired={true}
-                            /> */}
                             <Input
-                                label="Adresse"
+                                label={t('input.addressTitle')}
                                 icon="map"
-                                placeholder="Entrez votre adresse"
+                                placeholder={t('input.addressPlaceholder')}
                                 value={address}
                                 onChangeText={setAddress}
                                 isRequired={true}
                             />
-                            {/* <Input
-                                label="Email"
-                                icon="envelope"
-                                placeholder="Entrez votre email"
-                                keyboardType="email-address"
-                                value={email}
-                                onChangeText={setEmail}
-                            /> */}
                             <Input
-                                label="Mot de passe"
+                                label={t('input.passwordTitle')}
                                 icon="lock"
-                                placeholder="Entrez votre mot de passe"
+                                placeholder={t('input.passwordPlaceholder')}
                                 value={password}
                                 secureTextEntry={true}
                                 showEyeIcon={true}
@@ -188,12 +171,12 @@ export default function RegisterScreen({navigation}){
                             />
                         </View>
                         <View style={{marginTop: 20}}>
-                            <Btn label={"S'inscrire"} loader={loading} action={handleSubmit} />
+                            <Btn label={t('buttons.register')} loader={loading} action={handleSubmit} />
                         </View>
                         <View>
                             <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>
-                                Vous avez déjà un compte ? 
-                                <Text onPress={() => navigation.navigate('LoginScreen')} style={{color: 'blue'}}> Connectez-vous</Text>
+                                {t('auth.alreadyHaveAccount')}
+                                <Text onPress={() => navigation.navigate('LoginScreen')} style={{color: 'blue'}}> {t('auth.loginTitle')}</Text>
                             </Text>
                         </View>
                     </View>

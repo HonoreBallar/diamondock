@@ -28,8 +28,13 @@
     "categoriesTitle": "All Categories"
   },
   "auth": {
-    "loginTitle": "Login",
-    "registerTitle": "Register",
+    "loginTitle": "Log In",
+    "welcomeMessage": "Welcome to our application",
+    "welcomeSubtitle": "Please log in to continue",
+    "noAccount": "Don't have an account ?",
+    "alreadyHaveAccount": "Already have an account ?",
+    "registerTitle": "Sign Up",
+    "registerSubtitle": "Please sign up to continue",
     "emailPlaceholder": "Your email",
     "passwordPlaceholder": "Your password",
     "forgotPassword": "Forgot password?"
@@ -54,11 +59,26 @@
     "emptyCart": "Your cart is empty !",
     "sameCurrencyOnly": "You can only add products with the same currency."
   },
+  "order": {
+    "ordersTitle": "My Orders",
+    "login": "Login",
+    "inputPlaceholder": "Enter your phone number",
+    "loadingOrders": "Loading orders...",
+    "noOrders": "No orders found",
+    "statusPending": "Pending",
+    "statusValidated": "Validated",
+    "statusCancelled": "Cancelled",
+    "statusDelivered": "Delivered"
+  },
   "wishlist": {
     "wishlistTitle": "My Favorites",
     "removeConfirmTitle": "Remove from Favorites",
     "removeConfirmMessage": "Are you sure you want to remove this product from your favorites?",
-    "removeFromWishlist": "Remove from Favorites"
+    "removeFromWishlist": "Remove from Favorites",
+    "clearWishlist": "Empty Favorites",
+    "emptyWishlist": "Your favorites list is empty!",
+    "category": "Category",
+    "Price": "Price"
   },
   "buttons": {
     "addToCart": "Add to Cart",
@@ -68,6 +88,20 @@
     "submit": "Submit",
     "register": "Register",
     "login": "Login"
+  },
+  "input":{
+    "phoneTitle": "Phone Number",
+    "phonePlaceholder": "Enter your phone",
+    "emailTitle": "Email",
+    "emailPlaceholder": "Enter your email",
+    "passwordTitle": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "addressTitle": "Address",
+    "addressPlaceholder": "Enter your address",
+    "firstnameTitle": "Firstname",
+    "firstnamePlaceholder": "Enter your name",
+    "lastnameTitle": "Lastname",
+    "lastnamePlaceholder": "Enter your last name"
   },
   "search":{
     "searchTitle": "Search",

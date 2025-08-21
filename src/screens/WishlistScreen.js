@@ -7,8 +7,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
 import { ActivityIndicator } from "react-native-paper";
 import { useState } from "react";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function WishlistScreen({navigation}){
+    const {t} = useTranslation();
     const {wishlist, clearWishlist} = useWishlist();
     const [loadingWishlist, setloadingWishlist] = useState(false);
 
@@ -32,14 +34,14 @@ export default function WishlistScreen({navigation}){
         <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header/>
             <ScrollView>
-                <Title title="Mes favoris" />
+                <Title title={t('wishlist.wishlistTitle')} />
                 <View style={{flex: 1, padding: 15, marginBottom: 10}}>
                     { wishlist.length === 0? (
                         <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 150}}>
                             <View style={{width: 100, height: 100, borderRadius: 50, backgroundColor: 'white', elevation: 2, justifyContent: 'center', alignItems: 'center'}}>
                                 <FontAwesome5 name="heartbeat" size={48} color={colors.primary}/>
                             </View>
-                            <Text style={{marginTop: 20, fontSize: 18, color: '#999', fontWeight: '400'}}>Aucun produit dans votre liste d'envie</Text>
+                            <Text style={{marginTop: 20, fontSize: 18, color: '#999', fontWeight: '400'}}>{t('wishlist.emptyWishlist')}</Text>
                         </View>
                     ) : (
                         <>
@@ -55,7 +57,7 @@ export default function WishlistScreen({navigation}){
                             {loadingWishlist ? (
                                 <ActivityIndicator size="small" color="red" />
                             ): (
-                                <Text style={{color: 'red', fontWeight: '400', textDecorationLine: 'underline', textAlign: 'center'}}>Vider la liste des favoris</Text>
+                                <Text style={{color: 'red', fontWeight: '400', textDecorationLine: 'underline', textAlign: 'center'}}>{t('wishlist.clearWishlist')}</Text>
                             )}
                         </TouchableOpacity>
                         </>

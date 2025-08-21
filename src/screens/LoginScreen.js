@@ -8,8 +8,10 @@ import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { wait } from "../utils/utils";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import PhoneInput from "react-native-phone-number-input";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function LoginScreen({navigation}){
+    const {t} = useTranslation();
 
     const {countries} = useRootContext();
 
@@ -75,16 +77,16 @@ export default function LoginScreen({navigation}){
                 <ScrollView style={{flex: 1, backgroundColor: 'white'}}
                 contentContainerStyle={{ flexGrow: 1 }}
                 >
-                    <HeaderSimple  title='Connexion'/>
+                    <HeaderSimple  title={t('auth.loginTitle')}/>
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                        <View style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
-                            <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>Bienvenue sur notre application</Text>
-                            <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>Veuillez vous connecter pour continuer</Text>
+                        <View style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 20, borderRadius: 10, backgroundColor: '#f9f9f9', width: '85%'}}>
+                            <Text style={{fontSize: 20, fontWeight: '600', marginBottom: 10}}>{t('auth.welcomeMessage')}</Text>
+                            <Text style={{fontSize: 16, fontWeight: '400', marginBottom: 20}}>{t('auth.welcomeSubtitle')}</Text>
                             
                             <View>
                                 <View>
                                     <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
+                                        <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>{t('input.phoneTitle')}</Text>
                                         <Text style={{color: 'red'}}>*</Text>
                                     </View>
                                     <View>
@@ -94,7 +96,7 @@ export default function LoginScreen({navigation}){
                                             defaultCode="CI"
                                             layout="second"
                                             onChangeText={setPhone}
-                                            placeholder="Entrez votre numéro"
+                                            placeholder={t('input.phonePlaceholder')}
                                             containerStyle={{
                                                 width: "100%",
                                                 borderRadius: 15,
@@ -117,9 +119,9 @@ export default function LoginScreen({navigation}){
                                     </View>
                                 </View>
                                 <Input
-                                    label="Mot de passe"
+                                    label={t('input.passwordTitle')}
                                     icon="lock"
-                                    placeholder="Entrez votre mot de passe"
+                                    placeholder={t('input.passwordPlaceholder')}
                                     secureTextEntry={true}
                                     value={password}
                                     isRequired={true}
@@ -128,12 +130,12 @@ export default function LoginScreen({navigation}){
                                 />
                             </View>
                             <View style={{marginTop: 20}}>
-                                <Btn label={"Connexion"} loader={loading? true : false} disabled={loading ? true: false} action={handleLoginUser} />
+                                <Btn label={t('buttons.login')} loader={loading? true : false} disabled={loading ? true: false} action={handleLoginUser} />
                             </View>
                             <View>
                                 <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>
-                                    Vous n'avez pas de compte ? 
-                                    <Text onPress={() => navigation.navigate('RegisterScreen')} style={{color: 'blue'}}> Inscrivez-vous</Text>
+                                    {t('auth.noAccount')}
+                                    <Text onPress={() => navigation.navigate('RegisterScreen')} style={{color: 'blue'}}> {t('auth.registerTitle')}</Text>
                                 </Text>
                             </View>
                         </View>

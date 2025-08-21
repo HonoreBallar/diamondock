@@ -36,8 +36,6 @@ export const RootProvider = ({children})=>{
                 setAppCurrency(_appCurrency);
             }
             
-            console.log('App language:', _appLanguage);
-            console.log('App currency:', _appCurrency);
             if(starter){
                 setStarter(JSON.parse(starter));
             }

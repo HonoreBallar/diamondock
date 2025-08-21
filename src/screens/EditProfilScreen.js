@@ -9,8 +9,10 @@ import { useRootContext } from '../context/RootContext';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { useEffect, useRef, useState } from 'react';
 import PhoneInput from 'react-native-phone-number-input';
+import { useTranslation } from '../context/LocalizationContext';
 
 export default function EditProfilScreen({navigation}){
+    const {t} = useTranslation();
 
     const {editUser} = useRootContext();
     const {auth} = useRootContext();
@@ -137,7 +139,6 @@ export default function EditProfilScreen({navigation}){
                                         }}
                                     />
                                 </View>
-                                {/* <Input label={"Téléphone"} icon="phone" placeholder="Téléphone" keyboardType="numeric" value={phone} onChangeText={setPhone} isRequired={true}/> */}
                                 <Input label={"Adresse"} icon="map" placeholder="Adresse" keyboardType="text" value={address} onChangeText={setAddress}/>
                                 <Input label={"Email"} icon="envelope" placeholder="Email" keyboardType="email-address" value={email} onChangeText={setEmail}/>
                             </View>

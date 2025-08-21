@@ -4,8 +4,10 @@ import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 import { formatAmount } from '../utils/utils';
+import { useTranslation } from '../context/LocalizationContext';
 
 export default function WishlistCard({navigation, product}){
+    const {t} = useTranslation();
     const {removeFromWishlist} = useWishlist();
     const {addToCart} = useCart();
     const [loadingWishlist, setLoadingWishlist] = useState(false);
@@ -41,14 +43,14 @@ export default function WishlistCard({navigation, product}){
                 <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen', {product})}>
                     <Text style={{fontSize: 17, fontWeight: 'bold', marginBottom: 5, width: '55%', color: '#03045e'}} numberOfLines={1}>{product?.name || 'nom produit'}</Text>
                 </TouchableOpacity>
-                <Text style={{fontSize: 12, fontWeight: 'bold', marginBottom: 5, color: '#555555', width: "80%"}} numberOfLines={1}>Categorie : {product?.category || 'category'} </Text>
-                <Text style={{fontSize: 15, color: '#03045e', fontWeight: 'bold'}}>Prix: {formatAmount(product?.price || 0)} {product?.currency}</Text>
+                <Text style={{fontSize: 12, fontWeight: 'bold', marginBottom: 5, color: '#555555', width: "80%"}} numberOfLines={1}>{t('wishlist.category')} : {product?.category || 'category'} </Text>
+                <Text style={{fontSize: 15, color: '#03045e', fontWeight: 'bold'}}>{t('wishlist.Price')}: {formatAmount(product?.price || 0)} {product?.currency}</Text>
                 <View style={{flexDirection: 'row', justifyContent:'space-between', width: '70%', marginTop: 3, }}>
                     <TouchableOpacity onPress={()=>handleRemoveFromWishlist(product.token)} style={{marginTop: 10}}>
                         {loadingWishlist ? (
                             <ActivityIndicator size={22} color="red" />
                         ):(
-                            <Text style={{color: 'red', fontSize: 12, fontWeight: '600'}}>Supprimer de mes favoris</Text>
+                            <Text style={{color: 'red', fontSize: 12, fontWeight: '600'}}>{t('wishlist.removeFromWishlist')}</Text>
                         )}
                     </TouchableOpacity>
                     {product?.remaining_stock != 0 &&(

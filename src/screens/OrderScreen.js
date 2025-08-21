@@ -9,13 +9,15 @@ import { getRequest } from "../utils/api";
 import { wait } from "../utils/utils";
 import PhoneInput from "react-native-phone-number-input";
 import colors from "../utils/colors";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function OrderScreen({navigation}){
     const {auth} = useRootContext();
+    const { t } = useTranslation();
 
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [orders, setOrders] = useState([]);
-    const [activeFilter, setActiveFilter] = useState("En attente");
+    const [activeFilter, setActiveFilter] = useState(t('order.statusPending')); // 'En attente' par défaut
     const [loading, setLoading] = useState(false);
 
     const phoneInput = useRef(null);
@@ -23,10 +25,10 @@ export default function OrderScreen({navigation}){
     const [countryCode, setCountryCode] = useState(auth?.user?.phone_detail?.slug || 'CI');
 
     const orderStatus = [
-        'En attente',
-        'Validé',
-        'Annulé',
-        'Livré',
+        t('order.statusPending'), // 'En attente'
+        t('order.statusValidated'), // 'Validé'
+        t('order.statusCancelled'), // 'Annulé'
+        t('order.statusDelivered'), // 'Livré'
     ]
 
     // Fonction de filtrage
@@ -100,7 +102,7 @@ export default function OrderScreen({navigation}){
             setOrders(ordersData);
 
             const filteredData = ordersData.filter(order =>
-                order.status_label.toLowerCase().includes('en attente'.toLowerCase())
+                order.status_label.toLowerCase().includes(t('order.statusPending').toLowerCase())
             );
             setFilteredOrders(filteredData);
             setLoading(false);
@@ -122,7 +124,7 @@ export default function OrderScreen({navigation}){
         <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header/>
             <ScrollView>
-                <Title title="Mes commandes" />
+                <Title title={t('order.ordersTitle')} />
                 <View style={{ position: "relative", width: "95%" , marginHorizontal: 10}}>
                     <PhoneInput
                         ref={phoneInput}
@@ -130,7 +132,7 @@ export default function OrderScreen({navigation}){
                         defaultCode={countryCode}
                         layout="second"
                         onChangeText={setPhone}
-                        placeholder="Entrez votre numéro"
+                        placeholder={t('order.inputPlaceholder')}
                         containerStyle={{
                             width: "100%",
                             borderRadius: 12,
@@ -192,7 +194,7 @@ export default function OrderScreen({navigation}){
                      {loading ? (
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                             <ActivityIndicator size="large" color={colors.primary} />
-                            <Text style={{ marginTop: 10 }}>Chargement des commandes...</Text>
+                            <Text style={{ marginTop: 10 }}>{t('order.loadingOrders')}</Text>
                         </View>
                     ) : (
                         <View style={{margin: 8}}>
@@ -225,7 +227,7 @@ export default function OrderScreen({navigation}){
                                 )}
                                 ListEmptyComponent={
                                     filteredOrders.length === 0 ? (
-                                        <Text style={{ textAlign: 'center', marginTop: 20 }}>Aucune commande trouvée</Text>
+                                        <Text style={{ textAlign: 'center', marginTop: 20 }}>{t('order.noOrders')}</Text>
                                     ) : null
                                 }
                                 showsVerticalScrollIndicator={false}
@@ -236,7 +238,7 @@ export default function OrderScreen({navigation}){
                     {auth.isLoggedIn === false && (
                         <View style={{marginTop: 20, marginBottom: 20}}>
                             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')} style={{marginHorizontal: 15, borderWidth: 1, borderColor: '#ddd', padding: 10, borderRadius: 10, backgroundColor: '#f9f9f9'}}>
-                                <Text style={{textAlign: 'center', fontWeight: '600', fontSize: 16, color: 'blue'}}>Connectez-vous</Text>
+                                <Text style={{textAlign: 'center', fontWeight: '600', fontSize: 16, color: 'blue'}}>{t('order.login')}</Text>
                             </TouchableOpacity>
                         </View>
                     )}

@@ -28,7 +28,12 @@
     "categoriesTitle": "Toutes les catégories"
   },
   "auth": {
-    "loginTitle": "Connexion",
+    "loginTitle": "Log In",
+    "welcomeMessage": "Bienvenue sur notre application",
+    "welcomeSubtitle": "Veuillez vous connecter pour continuer",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "registerSubtitle": "Veuillez vous inscrire pour continuer",
     "registerTitle": "Inscription",
     "emailPlaceholder": "Votre email",
     "passwordPlaceholder": "Votre mot de passe",
@@ -54,11 +59,26 @@
     "emptyCart": "Votre panier est vide !",
     "sameCurrencyOnly": "Vous ne pouvez ajouter que des produits avec la même devise."
   },
+  "order": {
+    "ordersTitle": "Mes Commandes",
+    "login": "Connectez-vous",
+    "inputPlaceholder": "Entrez votre numéro de téléphone",
+    "loadingOrders": "Chargement des commandes...",
+    "noOrders": "Aucune commande trouvée",
+    "statusPending": "En attente",
+    "statusValidated": "Validé",
+    "statusCancelled": "Annulé",
+    "statusDelivered": "Livré"
+  },
   "wishlist": {
     "wishlistTitle": "Mes Favoris",
     "removeConfirmTitle": "Supprimer du favori",
     "removeConfirmMessage": "Voulez-vous vraiment supprimer ce produit de vos favoris ?",
-    "removeFromWishlist": "Supprimer de mes favoris"
+    "removeFromWishlist": "Supprimer de mes favoris",
+    "clearWishlist": "Vider les favoris",
+    "emptyWishlist": "Votre liste de favoris est vide !",
+    "category": "Catégorie",
+    "Price": "Prix"
   },
   "buttons": {
     "addToCart": "Ajouter au panier",
@@ -68,6 +88,20 @@
     "submit": "Soumettre",
     "register": "S'inscrire",
     "login": "Se connecter"
+  },
+  "input":{
+    "phoneTitle": "Téléphone",
+    "phonePlaceholder": "Entrez votre téléphone",
+    "emailTitle": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "passwordTitle": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "addressTitle": "Adresse",
+    "addressPlaceholder": "Entrez votre adresse",
+    "firstnameTitle": "Nom",
+    "firstnamePlaceholder": "Entrez votre nom",
+    "lastnameTitle": "Prénoms",
+    "lastnamePlaceholder": "Entrez vos prénoms"
   },
   "search":{
     "searchTitle": "Rechercher",

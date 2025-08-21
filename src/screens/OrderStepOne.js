@@ -13,8 +13,10 @@ import { useRootContext } from "../context/RootContext";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import PhoneInput from "react-native-phone-number-input";
 import { useRef } from "react";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function OrderStepOne({navigation}) {
+    const {t} = useTranslation();
     const { cart, getTotal, productListInCart, currency } = useCart();
     const {auth, countries} = useRootContext();
     const phoneInput = useRef(null);
@@ -89,7 +91,7 @@ export default function OrderStepOne({navigation}) {
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <View>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
+                                    <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>{t('input.phoneTitle')}</Text>
                                     <Text style={{color: 'red'}}>*</Text>
                                 </View>
                             </View>
@@ -100,7 +102,7 @@ export default function OrderStepOne({navigation}) {
                                     defaultCode={countryCode}
                                     layout="second"
                                     onChangeText={setPhone}
-                                    placeholder="Entrez votre numéro"
+                                    placeholder={t('input.phonePlaceholder')}
                                     containerStyle={{
                                         width: "100%",
                                         borderRadius: 15,
@@ -122,31 +124,24 @@ export default function OrderStepOne({navigation}) {
                                 />
                             </View>
                             <Input
-                                label="Nom"
+                                label={t('input.firstnameTitle')}
                                 icon="user-tie"
-                                placeholder="Entrez votre nom"
+                                placeholder={t('input.firstnamePlaceholder')}
                                 value={firstname}
                                 onChangeText={setFirstname}
                             />
                             <Input
-                                label="Prénoms"
+                                label={t('input.lastnameTitle')}
                                 icon="user-tie"
-                                placeholder="Entrez votre prénoms"
+                                placeholder={t('input.lastnamePlaceholder')}
                                 value={lastname}
                                 onChangeText={setLastname}
                             />
-                            {/* <Input
-                                label="Email"
-                                icon="envelope"
-                                placeholder="Entrez votre email"
-                                keyboardType="email-address"
-                                value={email}
-                                onChangeText={setEmail}
-                            /> */}
+        
                             <Input
-                                label="Adresse"
+                                label={t('input.addressTitle')}
                                 icon="map-marker-alt"
-                                placeholder="Cocody Abidjan"
+                                placeholder={t('input.addressPlaceholder')}
                                 value={address}
                                 onChangeText={setAddress}
                             />
