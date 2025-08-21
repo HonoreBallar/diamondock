@@ -6,7 +6,22 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "price": "Prix",
-    "seeMore": "Voir plus"
+    "seeMore": "Voir plus",
+    "itemsLeft": "articles restants",
+    "description": "Description",
+    "reviews": "Avis clients",
+    "add": "Ajouter",
+    "category": "Catégorie",
+    "view": "Visité",
+    "outOfStock": "Rupture de stock",
+    "productOutOfStock": "Produit en rupture de stock",
+    "becomeSeller": "Devenir vendeur",
+    "products": "Produits",
+    "sellers": "Vendeurs",
+    "seller": "Vendeur",
+    "productAvailable": "Produit disponible",
+    "noProducts": "Aucun produit disponible",
+    "myAccount": "Mon compte"
   },
   "tabs": {
     "tab_home": "Accueil",
@@ -81,7 +96,7 @@
     "Price": "Prix"
   },
   "buttons": {
-    "addToCart": "Ajouter au panier",
+    "addToCart": "Ajouter",
     "validOrder": "Valider la commande",
     "clearCart": "Vider le panier",
     "search": "Rechercher",

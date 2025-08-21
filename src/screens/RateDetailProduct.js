@@ -6,8 +6,10 @@ import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { getRequest } from "../utils/api";
 import colors from "../utils/colors";
 import { renderStars } from "../utils/utils";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function RateDetailProduct({navigation, route}){
+    const {t} = useTranslation();
     const {product} = route.params;
     const [rate, setRate] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -55,7 +57,7 @@ export default function RateDetailProduct({navigation, route}){
                     loading ? (
                         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 40}}>
                             <ActivityIndicator size={50} color={colors.primary} />
-                            <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>Chargement...</Text>
+                            <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>{t('common.loading')}</Text>
                         </View>
                     ) : (
                         <View style={{flex: 1, justifyContent: 'center', marginTop: 30}}>

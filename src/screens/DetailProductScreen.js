@@ -12,9 +12,11 @@ import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
 import HeaderLogo from "../components/HeaderLogo";
 import RenderHTML from "react-native-render-html";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function DetailProductScreen({navigation, route}){
 
+    const {t} = useTranslation();
     const {product} = route.params;
     const {addToCart} = useCart();
     const [quantity, setQuantity] = useState('1');
@@ -75,7 +77,7 @@ export default function DetailProductScreen({navigation, route}){
                     <HeaderLogo />
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <ActivityIndicator size={50} color={colors.primary} />
-                        <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>Chargement...</Text>
+                        <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>{t('common.loading')}</Text>
                     </View>
                 </>
             ) : (
@@ -127,37 +129,18 @@ export default function DetailProductScreen({navigation, route}){
                                     <Text style={{fontSize: 20, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through', marginLeft: 5}}>{formatAmount(product?.base_price || 0)} {product?.currency}</Text>
                                 ) }  
                             </View>
-                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>Description</Text>
+                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.description')}</Text>
                             <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
-                            {/* <Text style={{fontSize: 14, marginBottom: 8}}>
-                                {mainProduct?.description || 'Aucune description disponible pour ce produit.'}
-                            </Text> */}
                             {ratio === 0 ? (
-                                <Text style={{color: 'red', fontWeight: '400', fontSize: 16, marginBottom: 5}}>Ce produit est actuellement en rupture de stock.</Text>
+                                <Text style={{color: 'red', fontWeight: '400', fontSize: 16, marginBottom: 5}}>{t('common.productOutOfStock')}</Text>
                             ) :(
                                 <View style={{marginBottom: 10}}>
-                                    <Text style={{fontWeight: '300', fontSize: 16, marginBottom: 5}}>{mainProduct?.remaining_stock || 0} article (s) resrtant(s)</Text>
+                                    <Text style={{fontWeight: '300', fontSize: 16, marginBottom: 5}}>{mainProduct?.remaining_stock || 0} {t('common.itemsLeft')}</Text>
                                     <ProgressBar progress={ratio} color={colors.primary} />
                                 </View>
                             )}
-                            {/* <Text style={{fontWeight: '600', fontSize: 25, marginBottom: 5}}>Livraison</Text> */}
-                            {/* <View>
-                                <View  style={{flexDirection: 'row', backgroundColor: '#f9f9f9', borderRadius: 8, padding: 5, alignItems: 'center', borderWidth: 0.5, borderColor: colors.primary, marginBottom: 10}}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:6, width: '100%'}}>
-                                        <Text style={{ fontWeight: '500', fontSize: 19}}>Standard</Text>
-                                        <Text style={{backgroundColor: '#f5f8ff', padding: 5, borderRadius: 5, color: colors.primary}}>5-7 jours</Text>
-                                        <Text style={{fontWeight: '700', fontSize: 18}}>1 500 F CFA</Text>
-                                    </View>
-                                </View>
-                                <View  style={{flexDirection: 'row', backgroundColor: '#f9f9f9', borderRadius: 8, padding: 5, alignItems: 'center', borderWidth: 0.5, borderColor: colors.primary, marginBottom: 10}}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop:6, width: '100%'}}>
-                                        <Text style={{ fontWeight: '500', fontSize: 19}}>Express</Text>
-                                        <Text style={{backgroundColor: '#f5f8ff', padding: 5, borderRadius: 5, color: colors.primary}}>1-2 jours</Text>
-                                        <Text style={{fontWeight: '700', fontSize: 18}}>8 00 F CFA</Text>
-                                    </View>
-                                </View>
-                            </View> */}
-                            <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>Avis clients</Text>
+                            
+                            <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>{t('common.reviews')}</Text>
                             <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
                                 <TouchableOpacity onPress={()=>navigation.navigate('RateDetailProduct',{product: product})} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <View style={{flexDirection: 'row'}}>
@@ -223,12 +206,12 @@ export default function DetailProductScreen({navigation, route}){
                             </View>
                             { mainProduct?.remaining_stock === 0 ? (
                                 <TouchableOpacity disabled={true} style={{backgroundColor: colors.gray, padding: 9, borderRadius: 8, alignItems: 'center'}}>
-                                    <Text style={{color: 'white'}}> En Rupture de stock</Text>
+                                    <Text style={{color: 'white'}}> {t('common.outOfStock')}</Text>
                                 </TouchableOpacity>
                             ) : (
                                 <TouchableOpacity disabled={isAddedToCart} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
                                     { isAddedToCart ? <ActivityIndicator size="small" color="white" /> :<FontAwesome5 name="cart-plus" size={20} color="white"/>}
-                                    <Text style={{color: 'white', marginLeft: 8}}>Ajouter</Text>
+                                    <Text style={{color: 'white', marginLeft: 8}}>{t('common.add')}</Text>
                                 </TouchableOpacity>
                             )}
                         </View>

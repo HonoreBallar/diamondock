@@ -54,7 +54,7 @@ export default function CartCard({navigation, product}){
                 <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen',{product: product})} >
                     <Text style={{fontSize: 15, fontWeight: 'bold', marginBottom: 2, color: colors.primary, width: '70%'}} numberOfLines={1}>{product?.name || 'nom produit'}</Text>
                 </TouchableOpacity>
-                <Text style={{fontSize: 12, color: '#555555', marginTop: 5, width: '70%'}} numberOfLines={1}>Categorie: {product?.category || 'categorie'}</Text>
+                <Text style={{fontSize: 12, color: '#555555', marginTop: 5, width: '70%'}} numberOfLines={1}>{t('common.category')}: {product?.category || 'categorie'}</Text>
                 <Text style={{fontSize: 14, color: '#000', fontWeight: 'bold'}}>Prix: {formatAmount(product?.price || 0)} {product?.currency}</Text>
                 <View style={{flexDirection: 'row', justifyContent:'space-between', width: '80%', marginTop: 10, }}>
                     <View style={{flexDirection: 'row', width: '60%', justifyContent: 'space-around'}}>

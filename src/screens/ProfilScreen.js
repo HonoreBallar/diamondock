@@ -7,8 +7,10 @@ import { useRootContext } from "../context/RootContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { useState } from "react";
 import ProfilLine from "../components/ProfilLine";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function ProfilScreen({navigation}){
+    const {t} = useTranslation();
     const {auth} = useRootContext();
     const {logout} = useRootContext();
     const [loading, setLoading] = useState(false);
@@ -46,7 +48,7 @@ export default function ProfilScreen({navigation}){
         <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header />
             <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-                <Title title="Mon compte" />
+                <Title title={t('common.myAccount')} />
                 <View style={{margin: 15}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image source={require('../assets/user.jpeg')} style={{height: 100, width: 100, borderRadius: 50}}/>
@@ -59,7 +61,6 @@ export default function ProfilScreen({navigation}){
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
                         <ProfilLine icon="shopping-cart" iconColor={"#8cbdef"} title="Mes commandes" onPress={()=>navigation.navigate('OrderScreen')}/>
-                        {/* <ProfilLine icon="wallet" iconColor={"#bf73ef"} title="Methode de paiement" onPress={()=>navigation.navigate('MethodPaymentScreen')}/> */}
                         <ProfilLine icon="wallet" iconColor={"#bf73ef"} title="Methode de paiement" onPress={handleBuild}/>
                         <ProfilLine icon="comment-dots" iconColor={"#43e6e5"} title="Mes avis" onPress={handleBuild}/>
                     </View>

@@ -6,9 +6,11 @@ import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
 import { getRequest } from "../utils/api";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function DetailSellerScreen({route, navigation}){
 
+    const {t} = useTranslation();
     const {seller} = route.params;
     const [sellers, setSellers] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -58,7 +60,7 @@ export default function DetailSellerScreen({route, navigation}){
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
                         <FontAwesome5 name="arrow-left" size={20} color={colors.primary} style={{marginTop: 4, marginLeft: 5}}/>
                     </TouchableOpacity>
-                    <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>Vendeur {seller?.name ?? 'N/A'}</Text>
+                    <Text style={{marginLeft: 10, fontSize: 18, color: colors.primary, width: '80%'}} numberOfLines={1}>{t('common.seller')} {seller?.name ?? 'N/A'}</Text>
                 </View>
                 <FlottingCart navigation={navigation}/>
             </View>
@@ -73,7 +75,7 @@ export default function DetailSellerScreen({route, navigation}){
                             <Text style={{fontSize: 22, fontWeight: 'bold',marginTop: 5, color: colors.primary}}>{seller?.name ?? 'Vendeur'}</Text>
                         </View>
                         
-                        <Text style={{color: '#555555'}}>{seller?.nb_products ?? '0'} produit(s) disponible</Text>
+                        <Text style={{color: '#555555'}}>{seller?.nb_products ?? '0'} {t('common.productAvailable')}</Text>
                     </View>
                     <View style={{margin: 10}}>
                         {loading ? (
@@ -94,7 +96,7 @@ export default function DetailSellerScreen({route, navigation}){
                                     ListEmptyComponent={()=>{
                                         return(
                                             <View style={{backgroundColor: 'white', borderRadius: 10}}>
-                                                <Text style={{textAlign: 'center', padding: 20, color: 'red'}}>Aucun produit disponible pour cette catégorie.</Text>
+                                                <Text style={{textAlign: 'center', padding: 20, color: 'red'}}>{t('common.noProducts')}</Text>
                                             </View>
                                         )
                                     }}

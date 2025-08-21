@@ -6,8 +6,10 @@ import React, { useState } from 'react';
 import colors from '../utils/colors';
 import { formatAmount, ratio } from '../utils/utils';
 import { ProgressBar } from 'react-native-paper';
+import { useTranslation } from '../context/LocalizationContext';
 
 const ProductCard = ({navigation, product})=>{
+    const {t} = useTranslation();
     const {addToCart} = useCart();
     const {addToWishlist, isProductInWishlist} = useWishlist();
     const [loading, setLoading] = useState(false);
@@ -67,14 +69,14 @@ const ProductCard = ({navigation, product})=>{
                     {
                         product?.remaining_stock === 0 ? (
                             <>
-                                <Text style={{fontSize: 12, color: colors.gray, marginTop: 1, marginBottom: 3}}>Rupture de stock</Text>
+                                <Text style={{fontSize: 12, color: colors.gray, marginTop: 1, marginBottom: 3}}>{}{t('common.outOfStock')}</Text>
                                 <TouchableOpacity disabled={true} style={{backgroundColor: "#b3b9cb", borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                                     {loading ? (
                                         <ActivityIndicator size="small" color={colors.border} />
                                     ):(
                                         <View style={{flexDirection: 'row'}}>
                                             <FontAwesome5 name="eye" size={15} color="#000" />
-                                            <Text style={{marginLeft: 5}}>Visiter</Text>
+                                            <Text style={{marginLeft: 5}}>{t('common.view')}</Text>
                                         </View>
                                     )}
                                 </TouchableOpacity>
@@ -82,7 +84,7 @@ const ProductCard = ({navigation, product})=>{
                         ) : (
                             <>
                                 <View>
-                                    <Text style={{fontSize: 9, color: colors.gray, marginTop: 2}}>{product?.remaining_stock} articles restants</Text>
+                                    <Text style={{fontSize: 9, color: colors.gray, marginTop: 2}}>{product?.remaining_stock} {t('common.itemsLeft')}</Text>
                                     <ProgressBar style={{height: 3, marginTop: 1, marginBottom: 2}} progress={monRatio} color={colors.primary} />
                                 </View>
                                 <View style={{marginTop: 3, alignItems: 'center'}}>
@@ -92,7 +94,7 @@ const ProductCard = ({navigation, product})=>{
                                         ):(
                                             <View style={{flexDirection: 'row'}}>
                                                 <FontAwesome5 name="cart-plus" size={15} color="#000" />
-                                                <Text style={{marginLeft: 5}}>Ajouter</Text>
+                                                <Text style={{marginLeft: 5}}>{t('buttons.addToCart')}</Text>
                                             </View>
                                         )}
                                     </TouchableOpacity>

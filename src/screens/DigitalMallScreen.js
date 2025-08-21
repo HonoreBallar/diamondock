@@ -13,10 +13,12 @@ import colors from "../utils/colors";
 import { useState, useEffect } from "react";
 import { wait } from "../utils/utils";
 import { useSellers } from "../context/SellerContext";
+import { useTranslation } from "../context/LocalizationContext";
 
 const PAGE_SIZE = 10;
 
 export default function DigitalMallScreen({ navigation }) {
+    const { t } = useTranslation();
     const { sellers, fetchSellers } = useSellers();
 
     const [displayedSellers, setDisplayedSellers] = useState([]);
@@ -80,7 +82,7 @@ export default function DigitalMallScreen({ navigation }) {
 
             {/* Vendeurs */}
             <View style={{ marginHorizontal: 10, marginTop: 5, flex: 1 }}>
-                <Title title="Nos Vendeurs" />
+                <Title title={t('common.sellers')} />
                 <FlatList
                     data={displayedSellers}
                     keyExtractor={(item, index) => index.toString()}
@@ -116,7 +118,7 @@ export default function DigitalMallScreen({ navigation }) {
                                 textAlign: 'center',
                                 color: '#555'
                             }}>
-                                produit(s) {item?.nb_products ?? '0'}
+                                {t('common.products')} {item?.nb_products ?? '0'}
                             </Text>
                         </TouchableOpacity>
                     )}
