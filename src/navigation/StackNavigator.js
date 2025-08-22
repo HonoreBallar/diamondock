@@ -25,6 +25,7 @@ const Stack = createStackNavigator();
 const WELCOME_SEEN_KEY = '@welcome_seen';
 import { getItemFromStorage } from '../utils/utils';
 import { ActivityIndicator, Image, View } from 'react-native';
+import LanguageScreen from '../screens/LanguageScreen';
 
 
 const StackNavigator = () => {
@@ -98,6 +99,8 @@ const StackNavigator = () => {
       <Stack.Screen name="DetailSellerScreen" component={DetailSellerScreen} options={{ headerShown: false }} />
       <Stack.Screen name="RateDetailProduct" component={RateDetailProduct} options={{ headerShown: false }} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="LanguageScreen" component={LanguageScreen} options={{ headerShown: false }} />
+
      
       <Stack.Screen name="OrderStepOne" component={OrderStepOne} options={{ headerShown: false }} />
       <Stack.Screen name="OrderStepTwo" component={OrderStepTwo} options={{ headerShown: false }} />

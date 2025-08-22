@@ -83,22 +83,7 @@ export const RootProvider = ({children})=>{
     const registerUser = async (datas)=>{
         try {
             const response = await postRequest('/customer/register', datas);
-            // if(response?.status === false){
-            //     showMessage({
-            //         message: response?.error,
-            //         type: "danger",
-            //         icon: { icon: "danger"},
-            //         duration: 2000,
-            //     });
-            //     return;
-            // }
-            // await updateAuthState({isLoggedIn: true, user: response?.data});
-            // showMessage({
-            //     message: "Compte créé avec succès",
-            //     type: "success",
-            //     icon: { icon: "success"},
-            //     duration: 2000,
-            // });
+            
             return response;
         } catch (error) {
             showMessage({

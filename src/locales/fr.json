@@ -21,7 +21,8 @@
     "seller": "Vendeur",
     "productAvailable": "Produit disponible",
     "noProducts": "Aucun produit disponible",
-    "myAccount": "Mon compte"
+    "myAccount": "Mon compte",
+    "logout": "Se déconnecter"
   },
   "tabs": {
     "tab_home": "Accueil",
@@ -117,6 +118,16 @@
     "firstnamePlaceholder": "Entrez votre nom",
     "lastnameTitle": "Prénoms",
     "lastnamePlaceholder": "Entrez vos prénoms"
+  },
+  "profil":{
+    "editProfile": "Modifier mon profil",
+    "orders": "Mes commandes",
+    "language": "Langue et devise",
+    "about": "À propos de nous",
+    "terms": "Termes et conditions",
+    "address": "Mes adresses",
+    "account": "Mon compte",
+    "reviews": "Mes avis"
   },
   "search":{
     "searchTitle": "Rechercher",

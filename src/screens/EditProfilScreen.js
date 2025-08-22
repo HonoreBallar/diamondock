@@ -97,17 +97,17 @@ export default function EditProfilScreen({navigation}){
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{flex: 1}}>
                     <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
-                        <HeaderSimple title="Modifier mon profil" />
+                        <HeaderSimple title={t('profil.editProfile')} />
                         <View style={{margin: 15}}>
                             <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
                                 <Image source={require('../assets/user.jpeg')} style={{height: 100, width: 100, borderRadius: 50}}/>
                             </View>
                             <View>
-                                <Input label={"Nom"} icon="user-tie" placeholder="Nom" value={firstname} onChangeText={setFirstname} isRequired={true}/>
-                                <Input label={"Prénoms"} icon="user-tie" placeholder="Prénoms" value={lastname} onChangeText={setLastname} isRequired={true}/>
+                                <Input label={t('input.firstnameTitle')} icon="user-tie" placeholder={t('input.firstnamePlaceholder')} value={firstname} onChangeText={setFirstname} isRequired={true}/>
+                                <Input label={t('input.lastnameTitle')} icon="user-tie" placeholder={t('input.lastnamePlaceholder')} value={lastname} onChangeText={setLastname} isRequired={true}/>
                                 <View>
                                     <View style={{flexDirection: 'row'}}>
-                                        <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Téléphone</Text>
+                                        <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>{t('input.phoneTitle')}</Text>
                                         <Text style={{color: 'red'}}>*</Text>
                                     </View>
                                 </View>
@@ -118,7 +118,7 @@ export default function EditProfilScreen({navigation}){
                                         defaultCode={countryCode}
                                         layout="second"
                                         onChangeText={setPhone}
-                                        placeholder="Entrez votre numéro"
+                                        placeholder={t('input.phonePlaceholder')}
                                         containerStyle={{
                                             width: "100%",
                                             borderRadius: 15,
@@ -139,8 +139,8 @@ export default function EditProfilScreen({navigation}){
                                         }}
                                     />
                                 </View>
-                                <Input label={"Adresse"} icon="map" placeholder="Adresse" keyboardType="text" value={address} onChangeText={setAddress}/>
-                                <Input label={"Email"} icon="envelope" placeholder="Email" keyboardType="email-address" value={email} onChangeText={setEmail}/>
+                                <Input label={t('input.addressTitle')} icon="map" placeholder={t('input.addressPlaceholder')} keyboardType="text" value={address} onChangeText={setAddress}/>
+                                <Input label={t('input.emailTitle')} icon="envelope" placeholder={t('input.emailPlaceholder')} keyboardType="email-address" value={email} onChangeText={setEmail}/>
                             </View>
                             <View style={{marginTop: 30}}>
                                 <Btn label="Enregistrer" loader={loading} action={handleUpdate}/>
