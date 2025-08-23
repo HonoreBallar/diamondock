@@ -45,7 +45,7 @@ export default function DetailProductScreen({navigation, route}){
                 setRatio(datas?.remaining_stock/datas?.total_stock);
                 setLoading(false);
             } catch (error) {
-                console.error('Erreur lors du chargement des produits :', error);
+                console.error('Error :', error);
             }
             finally {
                 setLoading(false);

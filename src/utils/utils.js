@@ -14,7 +14,7 @@ export const setItemInStorage = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.error('Erreur lors de la sauvegarde de l\'élément :', error);
+    console.error('Error saving item in storage :', error);
     throw error;
   }
 };
@@ -26,7 +26,7 @@ export const getItemFromStorage = async (key) => {
         return JSON.parse(value);
       }
     } catch (error) {
-      console.error('Erreur lors de la récupération de l\'élément :', error);
+      console.error('Error getting item from storage :', error);
       throw error;
     }
 }

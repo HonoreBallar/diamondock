@@ -23,7 +23,7 @@ export default function RateDetailProduct({navigation, route}){
                 setRate(data);
             }catch(error){
                 showMessage({
-                    message: "Erreur : " + error?.message,
+                    message: "Error : " + error?.message,
                     type: "danger",
                 });
             } finally {

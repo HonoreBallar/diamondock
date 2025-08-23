@@ -130,7 +130,7 @@ export const RootProvider = ({children})=>{
                 return;
             }
             showMessage({
-                message: "Erreur réseau "+ error.message,
+                message: "Error "+ error.message,
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,

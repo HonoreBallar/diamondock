@@ -149,13 +149,13 @@ export default function OrderStepTwo({ navigation, route }) {
                                 setLoading(false);
                             })
                             .catch((error) => {
-                                console.error('Erreur lors du chargement dans le navigateur', error);
+                                console.error('Error opening URL:', error);
                                 setLoading(false);
                             });
                     }
                 } else {
                     showMessage({
-                        message: "Une erreur s'est produite",
+                        message: "Error " + response?.message,
                         type: "danger",
                         icon: { icon: "danger", position: "left" },
                         duration: 2000,
@@ -164,7 +164,7 @@ export default function OrderStepTwo({ navigation, route }) {
                 }
             } catch (error) {
                 showMessage({
-                    message: "Erreur " + error.message,
+                    message: "Error " + error.message,
                     type: "danger",
                     icon: { icon: "danger", position: "left" },
                     duration: 2000,

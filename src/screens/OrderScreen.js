@@ -49,7 +49,7 @@ export default function OrderScreen({navigation}){
                     }
                 } catch (err) {
                     showMessage({
-                        message: "Erreur lors de la recherche de la commande",
+                        message: "Error for fetching orders",
                         type: "danger",
                         icon: { icon: "danger", position: "left" },
                         duration: 2000,
@@ -109,7 +109,7 @@ export default function OrderScreen({navigation}){
             
         } catch (error) {
             showMessage({
-                message: "Erreur lors de la recherche de la commande",
+                message: "Error for fetching orders",
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,

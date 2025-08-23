@@ -76,7 +76,7 @@ export default function RegisterScreen({navigation}){
                 }
             } catch (error) {
                 showMessage({
-                    message: "Erreur " + error?.message,
+                    message: "Error " + error?.message,
                     type: "danger",
                     icon: { icon: "danger", position: "left" },
                     duration: 2000,

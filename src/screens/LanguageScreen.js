@@ -40,8 +40,8 @@ export default function LanguageScreen({navigation}) {
             
             navigation.replace('ChangeLangueScreen');
         } catch (error) {
-            console.error('Erreur lors de la sauvegarde des préférences :', error);
-            alert('Une erreur est survenue. Veuillez réessayer.');
+            console.error('Error saving preferences :', error);
+            alert('An error has occurred. Please try again..');
         } finally {
             setIsLoading(false);
         }

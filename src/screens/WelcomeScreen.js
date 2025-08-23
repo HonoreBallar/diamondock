@@ -39,8 +39,8 @@ const WelcomeScreen = () => {
         setAppCurrency(selectedCurrency);
         navigation.replace('Main');
     } catch (error) {
-        console.error('Erreur lors de la sauvegarde des préférences :', error);
-        alert('Une erreur est survenue. Veuillez réessayer.');
+        console.error('Error saving preferences :', error);
+        alert('An error has occurred. Please try again..');
     } finally {
         setIsLoading(false);
     }
