@@ -14,7 +14,7 @@ export const CategoryProvider = ({ children }) => {
           const dataCategories = await getRequest('/category/all');
           setCategories(dataCategories?.data ?? []);
       } catch (error) {
-          console.error('Erreur lors du chargement des produits des vendeurs :', error);
+          console.error('Error loading seller products :', error);
       }
   };
 

@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { useTranslation } from "./LocalizationContext";
 
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({children})=>{
+    const {t} = useTranslation();
     const [wishlist, setWishlist] = useState([]);
 
     // Charger les produits de la liste d'envies au démarrage
@@ -51,7 +53,7 @@ export const WishlistProvider = ({children})=>{
         if (existingProductIndex >= 0) {
             updatedWishlist = wishlist.filter((item) => item.token !== product.token);
             showMessage({
-                message: "Produit supprimé à votre liste d'envies",
+                message: t('alerts.productRemovedToWishlist'),
                 type: "info",
                 icon: { icon: "info", position: "left" },
                 duration: 2000,
@@ -59,7 +61,7 @@ export const WishlistProvider = ({children})=>{
         } else {
             updatedWishlist = [...wishlist, product];
             showMessage({
-                message: "Produit ajouté à votre liste d'envies",
+                message: t('alerts.productAddedToWishlist'),
                 type: "success",
                 icon: { icon: "success", position: "left" },
                 duration: 2000,
@@ -78,7 +80,7 @@ export const WishlistProvider = ({children})=>{
         setWishlist(updatedWishlist);
         saveWishlistToStorage(updatedWishlist);
         showMessage({
-            message: "Produit supprimé de votre liste d'envies",
+            message: t('alerts.productRemovedToWishlist'),
             type: "info",
             icon: { icon: "info" },
             duration: 2000,

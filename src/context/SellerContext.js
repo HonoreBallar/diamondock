@@ -12,7 +12,7 @@ export const SellerProvider = ({children})=>{
             const dataSeller = await getRequest('/seller/all');
             setSellers(dataSeller?.data ?? []);
         } catch (error) {
-            console.error('Erreur lors du chargement des produits des vendeurs :', error);
+            console.error('Error fetching sellers :', error);
         }
     };
 

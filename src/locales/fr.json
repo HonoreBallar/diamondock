@@ -4,6 +4,7 @@
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
     "cancel": "Annuler",
+    "empty": "Vider",
     "delete": "Supprimer",
     "price": "Prix",
     "seeMore": "Voir plus",
@@ -156,6 +157,19 @@
     "save": "Enregistrer"
   },
   "alerts": {
-    "infoBuilding": "En cours de construction"
+    "infoBuilding": "En cours de construction",
+    "productAddedToCart": "Produit ajouté au panier",
+    "productRemovedToCart": "Produit supprimé du panier",
+    "emptyCart": "Your cart is empty !",
+    "addProductToSameCurrency": "Vous ne pouvez ajouter que des produits avec la même devise.",
+    "logout": "Déconnexion réussie",
+    "productAddedToWishlist": "Produit ajouté aux favoris",
+    "productRemovedFromWishlist": "Produit supprimé des favoris",
+    "emptyWishlist": "Votre liste de favoris est vide !",
+    "removeFromWishlist": "Supprimer de mes favoris",
+    "clearWishlist": "Vider les favoris",
+    "removedFromWishlistMessage": "Voulez-vous vraiment supprimer ce produit de vos favoris ?",
+    "removeConfirmTitle": "Supprimer du favori",
+    "editProfile": "Profil modifié avec succès"
   }
 }

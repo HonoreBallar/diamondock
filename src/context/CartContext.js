@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { useTranslation } from "../context/LocalizationContext";
 
 const CartContext = createContext();
 
 export const CartProvider = ({children}) =>{
+    const {t} = useTranslation();
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currency, setCurrency] = useState(null);
@@ -38,7 +40,7 @@ export const CartProvider = ({children}) =>{
 
         if (currency && product?.currency !== currency) {
             showMessage({
-                message: "Vous ne pouvez ajouter que des produits avec la même devise.",
+                message: t('addProductToSameCurrency'),
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,
@@ -60,7 +62,7 @@ export const CartProvider = ({children}) =>{
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
         showMessage({
-            message: "Produit ajouté au panier",
+            message: t('alerts.productAddedToCart'),
             type: "success",
             icon: { icon: "success", position: "left" },
             duration: 2000,
@@ -73,7 +75,7 @@ export const CartProvider = ({children}) =>{
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
         showMessage({
-            message: "Produit supprimé du panier",
+            message: t('alerts.productRemovedToCart'),
             type: "success",
             icon: { icon: "success"},
             duration: 2000,
@@ -96,7 +98,7 @@ export const CartProvider = ({children}) =>{
         saveCartToStorage(_);
         if (message) {
             showMessage({
-                message: "Votre panier est vide !",
+                message: t('alerts.emptyCart'),
                 type: "warning",
                 icon: { icon: "success"},
                 duration: 2000,

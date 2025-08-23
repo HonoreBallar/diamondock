@@ -69,7 +69,7 @@ export default function EditProfilScreen({navigation}){
 
             if(response?.status){
                 showMessage({
-                    message: "Modification du profil reussie",
+                    message: t('alerts.editProfile'),
                     type: "success",
                     icon: { icon: "success"},
                     duration: 2000,
@@ -78,7 +78,7 @@ export default function EditProfilScreen({navigation}){
             }
         }catch (error) {
             showMessage({
-                message: "Erreur " + error.message,
+                message: "Error " + error.message,
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,

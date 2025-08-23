@@ -15,11 +15,11 @@ export default function WishlistCard({navigation, product}){
     const handleRemoveFromWishlist = (product)=>{
         setLoadingWishlist(true);
         Alert.alert(
-            'Supprimer du favori',
-            'Voulez-vous vraiment supprimer ce produit de vos favoris?',
+            t('alerts.removeFromWishlist'),
+            t('alerts.removedFromWishlistMessage'),
             [
-                {text: 'Annuler', style: 'cancel', onPress: ()=> setLoadingWishlist(false)},
-                {text: 'Supprimer', onPress: () => {
+                {text: t('common.cancel'), style: 'cancel', onPress: ()=> setLoadingWishlist(false)},
+                {text: t('common.delete'), onPress: () => {
                     removeFromWishlist(product)
                     setLoadingWishlist(false);
                 }}

@@ -73,7 +73,7 @@ export const RootProvider = ({children})=>{
     const logout = async ()=>{
         await updateAuthState({isLoggedIn: false, user: null});
         showMessage({
-            message: "Déconnexion réussie",
+            message: t('alerts.logout'),
             type: "info",
             icon: { icon: "info"},
             duration: 2000,
@@ -87,7 +87,7 @@ export const RootProvider = ({children})=>{
             return response;
         } catch (error) {
             showMessage({
-                message: "Erreur réseau "+ error.message,
+                message: "Error "+ error.message,
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,
@@ -104,7 +104,7 @@ export const RootProvider = ({children})=>{
             return response;
         } catch (error) {
             showMessage({
-                message: "Erreur réseau "+ error.message,
+                message: "Error "+ error.message,
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,
@@ -154,7 +154,7 @@ export const RootProvider = ({children})=>{
             setCountries(response?.data);
         } catch (error) {
             showMessage({
-                message: "Erreur réseau "+ error.message,
+                message: "Error "+ error.message,
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,
@@ -176,7 +176,7 @@ export const RootProvider = ({children})=>{
             setCurrencies(response?.data);
         } catch (error) {
             showMessage({
-                message: "Erreur réseau "+ error.message,
+                message: "Error "+ error.message,
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,

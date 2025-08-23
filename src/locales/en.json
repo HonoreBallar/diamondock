@@ -5,6 +5,7 @@
     "error": "An error occurred",
     "cancel": "Cancel",
     "delete": "Delete",
+    "empty": "Empty",
     "price": "Price",
     "seeMore": "See More",
     "itemsLeft": "items left",
@@ -154,7 +155,21 @@
     "save": "Save"
   },
   "alerts": {
-    "infoBuilding": "Under construction"
+    "infoBuilding": "Under construction",
+    "productAddedToCart": "Product added to cart",
+    "productRemovedToCart": "Product removed to cart",
+    "emptyCart": "Your cart is empty !",
+    "addProductToSameCurrency": "You can only add products with the same currency.",
+    "logout": "Logout success",
+    "productAddedToWishlist": "Product added to wishlist",
+    "productRemovedToWishlist": "Product removed to wishlist",
+    "emptyWishlist": "Your favorites list is empty !",
+    "removeFromWishlist": "Remove from Favorites",
+    "clearWishlist": "Empty Favorites",
+    "clearWishlistMessage": "Are you sure you want to clear your favorites ?",
+    "removedFromWishlistMessage": "Are you sure you want to remove this product from your favorites ?",
+    "removeConfirmTitle": "Remove from Favorites",
+    "editProfile": "Profile edited successfully"
 
   }
 }

@@ -12,7 +12,7 @@ export const OrderProvider = ({children})=>{
             const dataMode = await getRequest('/setting/payment-methods');
             setModePayment(dataMode?.data.online_payment_options ?? []);
         } catch (error) {
-            console.error('Erreur lors du chargement des produits des vendeurs :', error);
+            console.error('Error loading seller products :', error);
         }
     };
 
@@ -21,7 +21,7 @@ export const OrderProvider = ({children})=>{
             const response = await postRequest('/order/create', datas);
             return response;
         } catch (error) {
-            console.error('Erreur lors :', error);
+            console.error('Error :', error);
         }
     }
 

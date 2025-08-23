@@ -20,7 +20,7 @@ export const SearchProvider = ({children})=>{
             return;
             setFilteredProducts(response.data);
         }catch(err){
-            console.error("Erreur lors de la recherche : "+err.message);
+            console.error("Error : "+err.message);
         }
 
     }

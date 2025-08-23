@@ -13,7 +13,7 @@ export const ProductProvider = ({children})=>{
             const dataSeller = await getRequest('/seller/all');
             setSellers(dataSeller?.data ?? []);
         } catch (error) {
-            console.error('Erreur lors du chargement des produits des vendeurs :', error);
+            console.error('Error loading seller products :', error);
         }
     };
 
@@ -22,7 +22,7 @@ export const ProductProvider = ({children})=>{
             const dataProduct = await getRequest('/product/all');
             setProducts(dataProduct?.data ?? []);
         } catch (error) {
-            console.error('Erreur lors du chargement des produits:', error);
+            console.error('Error loading products list:', error);
         }
     };
 

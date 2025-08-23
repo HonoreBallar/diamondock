@@ -17,11 +17,11 @@ export default function WishlistScreen({navigation}){
     const handleClearWishlist = () => {
         setloadingWishlist(true);
         Alert.alert(
-            'Vider la liste des favoris',
-            'Voulez-vous vraiment vider votre liste ?',
+            t('alerts.clearWishlist'),
+            t('alerts.clearWishlistMessage'),
             [
-                {text: 'Annuler', style: 'cancel', onPress: ()=> setloadingWishlist(false)},
-                {text: 'Vider', onPress: () => {
+                {text: t('common.cancel'), style: 'cancel', onPress: ()=> setloadingWishlist(false)},
+                {text: t("common.empty"), onPress: () => {
                     clearWishlist();
                     setloadingWishlist(false);
                 }}
