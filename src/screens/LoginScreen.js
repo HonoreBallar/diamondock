@@ -32,7 +32,7 @@ export default function LoginScreen({navigation}){
     const handleLoginUser = async () => {
         if(phone === '' || password === ''){
             showMessage({
-                message: "Veuillez remplir tous les champs",
+                message: t('common.fillFileds'),
                 type: "danger",
             });
             return;
@@ -59,7 +59,7 @@ export default function LoginScreen({navigation}){
             });
         }else{
             showMessage({
-                message: "Connexion réussie avec succès!",
+                message: t('alerts.connexionSuccess'),
                 type: "success",
                 icon: { icon: "success"},
                 duration: 2000,
@@ -129,7 +129,12 @@ export default function LoginScreen({navigation}){
                                     showEyeIcon={true}
                                 />
                             </View>
-                            <View style={{marginTop: 20}}>
+                            <View>
+                                <Text style={{textAlign: 'right', marginTop: 5, fontSize: 16, fontWeight: '400'}}>
+                                    <Text onPress={() => navigation.navigate('ResetPasswordScreen')} style={{color: 'blue', textDecorationLine: 'underline'}}> {t('common.forgetPassword')}</Text>
+                                </Text>
+                            </View>
+                            <View style={{marginTop: 10}}>
                                 <Btn label={t('buttons.login')} loader={loading? true : false} disabled={loading ? true: false} action={handleLoginUser} />
                             </View>
                             <View>

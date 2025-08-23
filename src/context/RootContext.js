@@ -139,6 +139,29 @@ export const RootProvider = ({children})=>{
 
     }
 
+    const resetPassword = async(datas)=>{
+        try {
+            const response = await postRequest('/auth/reset',datas);
+            
+            if(response?.status === false){
+                showMessage({
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+            }
+            return response;
+        } catch (error) {
+            showMessage({
+                message: "Error "+ error.message,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }
+    }
+
     const getCountries = async()=>{
         try {
             const response = await getRequest('/setting/countries');
@@ -185,7 +208,7 @@ export const RootProvider = ({children})=>{
     }
 
     return (
-        <RootContext.Provider value={{starter, auth, loading, countries, currencies ,appLanguage, appCurrency, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency}}>
+        <RootContext.Provider value={{starter, auth, loading, countries, currencies ,appLanguage, appCurrency, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency, resetPassword}}>
             {children}
             <FlashMessage
                 animated={true}

@@ -27,6 +27,7 @@ import { getItemFromStorage } from '../utils/utils';
 import { ActivityIndicator, Image, View } from 'react-native';
 import LanguageScreen from '../screens/LanguageScreen';
 import ChangeLangueScreen from '../screens/ChangeLangueScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
 
 const StackNavigator = () => {
@@ -96,6 +97,7 @@ const StackNavigator = () => {
       <Stack.Screen name="AddressScreen" component={AddressScreen} options={{ headerShown: false }} />
       <Stack.Screen name="MethodPaymentScreen" component={MethodPaymentScreen} options={{ headerShown: false }} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} options={{ headerShown: false }} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name="DetailSellerScreen" component={DetailSellerScreen} options={{ headerShown: false }} />
       <Stack.Screen name="RateDetailProduct" component={RateDetailProduct} options={{ headerShown: false }} />

@@ -28,7 +28,13 @@
     "step1": "Step 1 : Contact information",
     "step2": "Step 2 : Delivery",
     "cart": "Cart",
-    "save":"Save"
+    "save":"Save",
+    "forgetPasswordTitle": "Forgot password",
+    "forgetPassword": "Forgot password ?",
+    "forgetPasswordSubtitle": "Please enter your email to receive a link to create a new password via email",
+    "alreadyHaveAccount": "Already have an account ?",
+    "send": "Send",
+    "fillFileds": "Please fill all fields"
   },
   "tabs": {
     "tab_home": "Home",
@@ -171,7 +177,9 @@
     "clearWishlistMessage": "Are you sure you want to clear your favorites ?",
     "removedFromWishlistMessage": "Are you sure you want to remove this product from your favorites ?",
     "removeConfirmTitle": "Remove from Favorites",
-    "editProfile": "Profile edited successfully"
+    "editProfile": "Profile edited successfully",
+    "connexionSuccess":"Login successful",
+    "emailsent": "An email has been sent to reset your password"
 
   }
 }

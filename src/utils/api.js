@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const apiClient = axios.create({
     baseURL: 'https://api-diamondock.nkouadio.com/api',
     timeout: 5000,
@@ -8,13 +9,13 @@ const apiClient = axios.create({
     },
 });
 
-export const getRequest = async (endpoint, params = {}, additonalHeaders = {}) =>{
+export const getRequest = async (endpoint, params = {}, headers = {}) =>{
     try {
         const response = await apiClient.get(endpoint ,{
             params,
             headers: {
                 ...apiClient.defaults.headers,
-                ...additonalHeaders
+                ...headers
             }
         });
         return response.data;
@@ -24,13 +25,15 @@ export const getRequest = async (endpoint, params = {}, additonalHeaders = {}) =
     }
 }
 
-export const postRequest = async (endpoint, data = {},  additonnalHeaders = {}) =>{
+export const postRequest = async (endpoint, data = {},  headers = {}) =>{
     try {
         const response = await apiClient.post(endpoint,data,{
             headers: {
-               ...apiClient.defaults.headers,
-               ...additonnalHeaders
-            }
+                'X-App-Key': '019523f4-174a-7005-a126-366e48e46dcc',
+                'X-HLang': 'fr',
+                'X-Devise': 'USD',
+                ...headers
+            },
         });
         return response.data;
     } catch (error) {
