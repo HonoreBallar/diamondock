@@ -87,7 +87,7 @@ export default function OrderStepOne({navigation}) {
                         keyboardShouldPersistTaps="handled"
                     >
                         <HeaderLogo />
-                        <Title title="Étape 1 : Informations de contact" />
+                        <Title title={t('common.step1')} />
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <View>
                                 <View style={{flexDirection: 'row'}}>
@@ -147,7 +147,7 @@ export default function OrderStepOne({navigation}) {
                             />
                             <View style={{borderWidth: 1 , borderColor: '#ccc', borderRadius: 10, marginTop: 10}}>
                                 <TouchableOpacity onPress={toggleExpanded} style={{flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
-                                    <Text style={{color: colors.primary, fontSize: 15}}>Resumé de commande</Text>
+                                    <Text style={{color: colors.primary, fontSize: 15}}>{t('common.summarycart')}</Text>
                                     <FontAwesome5 name={isExpanded ? 'chevron-up' : 'chevron-down'} size={15} color="black" style={{}}/>
                                 </TouchableOpacity>
                                 {isExpanded && (
@@ -178,10 +178,10 @@ export default function OrderStepOne({navigation}) {
                                 </View>
                             </View>
                             <View style={{marginTop: 20}}>
-                                <Btn label={"Enregistrer la commande"} loader={loading} action={handleNext} />
+                                <Btn label={t('order.checkout')} loader={loading} action={handleNext} />
                             </View>
                             <TouchableOpacity onPress={()=>navigation.goBack()} style={{marginTop: 5}}>
-                                <Text style={{color: '#ccc', fontWeight: 'bold', textDecorationLine: 'underline', textAlign: 'center'}}>Voir le panier</Text>
+                                <Text style={{color: '#ccc', fontWeight: 'bold', textDecorationLine: 'underline', textAlign: 'center'}}>{t('common.cart')}</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>

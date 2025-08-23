@@ -143,7 +143,7 @@ export default function EditProfilScreen({navigation}){
                                 <Input label={t('input.emailTitle')} icon="envelope" placeholder={t('input.emailPlaceholder')} keyboardType="email-address" value={email} onChangeText={setEmail}/>
                             </View>
                             <View style={{marginTop: 30}}>
-                                <Btn label="Enregistrer" loader={loading} action={handleUpdate}/>
+                                <Btn label={t('buttons.save')} loader={loading} action={handleUpdate}/>
                             </View>
                         </View>
                     </ScrollView>

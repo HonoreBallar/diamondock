@@ -89,7 +89,7 @@ export default function LanguageScreen({navigation}) {
             <HeaderSimple title={t('profil.language')} />
             
             <View style={{ margin: 20, marginTop: 30 }}>
-                <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 10 }}>Langue</Text>
+                <Text style={{ fontSize: 18, fontWeight: '400', marginBottom: 10 }}>{t('language.chooseLanguage')}</Text>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
                     {languages.map((item) => (
                     <SelectionButton
@@ -104,7 +104,7 @@ export default function LanguageScreen({navigation}) {
                 </View>
 
                 <View style={{ marginTop: 20, marginBottom: 30 }}>
-                    <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 10 }}>Devise</Text>
+                    <Text style={{ fontSize: 18, fontWeight: '400', marginBottom: 10 }}>{t('language.chooseCurrency')}</Text>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                         {currencies.map((item) => (
                         <SelectionButton
@@ -131,7 +131,7 @@ export default function LanguageScreen({navigation}) {
                 {isLoading ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
-                    <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Enregistrer</Text>
+                    <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>{t('language.save')}</Text>
                 )}
                 </TouchableOpacity>
             </View>

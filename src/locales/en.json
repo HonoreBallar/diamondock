@@ -22,7 +22,12 @@
     "productAvailable": "Product(s) available",
     "noProducts": "No products available",
     "myAccount": "My account",
-    "logout": "Logout"
+    "logout": "Logout",
+    "summarycart": "Cart summary",
+    "step1": "Step 1 : Contact information",
+    "step2": "Step 2 : Delivery",
+    "cart": "Cart",
+    "save":"Save"
   },
   "tabs": {
     "tab_home": "Home",
@@ -84,7 +89,8 @@
     "statusPending": "Pending",
     "statusValidated": "Validated",
     "statusCancelled": "Cancelled",
-    "statusDelivered": "Delivered"
+    "statusDelivered": "Delivered",
+    "checkout": "Checkout"
   },
   "wishlist": {
     "wishlistTitle": "My Favorites",
@@ -103,7 +109,8 @@
     "search": "Search",
     "submit": "Submit",
     "register": "Register",
-    "login": "Login"
+    "login": "Login",
+    "save": "Save"
   },
   "input":{
     "phoneTitle": "Phone Number",
@@ -117,7 +124,14 @@
     "firstnameTitle": "Firstname",
     "firstnamePlaceholder": "Enter your name",
     "lastnameTitle": "Lastname",
-    "lastnamePlaceholder": "Enter your last name"
+    "lastnamePlaceholder": "Enter your last name",
+    "deliveryModeTitle": "Delivery mode",
+    "paymentModeTitle": "Paiment method",
+    "deliveryDateTitle": "Delivery date",
+    "deliveryDatePlaceholder": "Choisissez une date de livraison",
+    "deliveryAddressTitle": "Delivery address",
+    "deliveryAddressPlaceholder": "Enter your delivery address",
+    "system": "System"
   },
   "profil":{
     "editProfile": "Edit Profile",
@@ -134,7 +148,13 @@
     "searchPlaceholder": "Search for products ...",
     "noResults": "No results found"
   },
+  "language":{
+    "chooseLanguage": "Choose a language",
+    "chooseCurrency": "Choose a currency",
+    "save": "Save"
+  },
   "alerts": {
     "infoBuilding": "Under construction"
+
   }
 }

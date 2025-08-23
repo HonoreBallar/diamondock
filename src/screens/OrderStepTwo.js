@@ -13,8 +13,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDateToEnglish } from "../utils/utils";
 import { useCart } from "../context/CartContext";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
+import { useTranslation } from "../context/LocalizationContext";
 
 export default function OrderStepTwo({ navigation, route }) {
+
+    const {t} = useTranslation();
 
     const {modePayment, fetchOrder} = useOrders();
     const {clearCart} = useCart();
@@ -189,9 +192,9 @@ export default function OrderStepTwo({ navigation, route }) {
                         keyboardShouldPersistTaps="handled"
                     >
                         <HeaderLogo />
-                        <Title title="Étape 2 : Informations de livraison" />
+                        <Title title={t('common.step2')} />
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
-                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>Mode de livraison</Text>
+                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>{t('input.deliveryModeTitle')}</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2}}>
                                 <TouchableOpacity onPress={handleHome} style={{flexDirection: 'row'}}>
                                     <RadioButton
@@ -213,9 +216,9 @@ export default function OrderStepTwo({ navigation, route }) {
                                 </TouchableOpacity>
                             </View>
                             <Input
-                                label="Adresse de livraison"
+                                label={t('input.deliveryAddressTitle')}
                                 icon="map-marker-alt"
-                                placeholder="Entrez votre adresse"
+                                placeholder={t('input.deliveryAddressTitle')}
                                 value={delivery}
                                 onChangeText={setDelivery}
                                 isRequired={true}
@@ -223,17 +226,17 @@ export default function OrderStepTwo({ navigation, route }) {
                             />
                              <View>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{fontSize: 15,marginBottom: 8,fontWeight: 'bold',}}>Date de livraison</Text>
+                                    <Text style={{fontSize: 15,marginBottom: 8,fontWeight: 'bold',}}>{t('input.deliveryDateTitle')}</Text>
                                     {visible && <Text style={{color: 'red'}}> *</Text>}
                                 </View>
                                 <TouchableOpacity onPress={showDatePicker} style={{borderWidth: 1, borderColor: "#c5c5c5", padding: 13, borderRadius: 15, marginBottom: 10}}>
                                     <View style={{flexDirection: 'row', justifyContent: ''}}>
                                         <FontAwesome5 name="calendar" size={18} color="black" style={{fontSize: 18, marginRight: 5,}} />
-                                        <Text style={{}}>{selectedDate != '' ? selectedDate.toLocaleString() : "Selectionner une date"}</Text>
+                                        <Text style={{}}>{selectedDate != '' ? selectedDate.toLocaleString() : t('input.deliveryDateTitle')}</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>Mode de paiement</Text>
+                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>{t('input.paymentModeTitle')}</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
                                 <TouchableOpacity onPress={handleCash} style={{flexDirection: 'row'}}>
                                     <RadioButton
@@ -261,7 +264,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 }}>
                                     <View>
                                         <View style={{flexDirection: 'row'}}>
-                                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>Mode de paiement</Text>
+                                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>{t('input.system')}</Text>
                                             <Text style={{color: 'red'}}>*</Text>
                                         </View>
                                         <SingleDropdownSelect items={modePayment} iconSelect="wallet" onSelectHandler={(_)=>setSelectedPayment(_?.name)}/>
@@ -269,7 +272,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 </View>
                             )}
                             <Btn
-                                label="Suivant"
+                                label={t('common.save')}
                                 loader={loading}
                                 disabled={loading}
                                 action={handleSubmit}
