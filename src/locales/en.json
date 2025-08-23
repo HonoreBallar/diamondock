@@ -161,6 +161,8 @@
     "emptyCart": "Your cart is empty !",
     "addProductToSameCurrency": "You can only add products with the same currency.",
     "logout": "Logout success",
+    "logoutTitle": "Logout",
+    "logoutMessage": "Are you sure you want to logout ?",
     "productAddedToWishlist": "Product added to wishlist",
     "productRemovedToWishlist": "Product removed to wishlist",
     "emptyWishlist": "Your favorites list is empty !",

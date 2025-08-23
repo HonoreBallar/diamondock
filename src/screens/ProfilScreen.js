@@ -22,11 +22,11 @@ export default function ProfilScreen({navigation}){
     const handleLogout = () => {
         setLoading(true);
         Alert.alert(
-            'Se déconnecter',
-            'Voulez-vous vraiment vous déconnecter ?',
+            t('alerts.logoutTitle'),
+            t('alerts.logoutMessage'),
             [
-                {text: 'Annuler', style: 'cancel', onPress: ()=> setLoading(false)},
-                {text: 'valider', onPress: async () => {
+                {text: t('common.cancel'), style: 'cancel', onPress: ()=> setLoading(false)},
+                {text: t('common.logout'), onPress: async () => {
                     await logout();
                     setLoading(false);
                 }}

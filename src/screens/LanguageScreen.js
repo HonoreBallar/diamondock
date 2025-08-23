@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { setItemInStorage } from '../utils/utils';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRootContext } from '../context/RootContext';
@@ -37,7 +38,7 @@ export default function LanguageScreen({navigation}) {
             setAppLanguage(selectedLanguage);
             setAppCurrency(selectedCurrency);
             
-            navigation.navigate('Main');
+            navigation.replace('ChangeLangueScreen');
         } catch (error) {
             console.error('Erreur lors de la sauvegarde des préférences :', error);
             alert('Une erreur est survenue. Veuillez réessayer.');
