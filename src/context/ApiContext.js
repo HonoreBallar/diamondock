@@ -19,7 +19,7 @@ export const ApiProvider = ({ children }) => {
   // Interceptor pour headers dynamiques
   apiClient.interceptors.request.use((config) => {
     config.headers['X-HLang'] = appLanguage || 'fr';
-    config.headers['X-Devise'] = appCurrency || 'USD';
+    config.headers['X-Devise'] = appCurrency || 'EUR';
     return config;
   });
 

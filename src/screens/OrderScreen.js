@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useRootContext } from "../context/RootContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { wait } from "../utils/utils";
+import { formatAmount, wait } from "../utils/utils";
 import PhoneInput from "react-native-phone-number-input";
 import colors from "../utils/colors";
 import { useTranslation } from "../context/LocalizationContext";
@@ -44,9 +44,13 @@ export default function OrderScreen({navigation}){
                 setLoading(true);
                 try {
                     const response = await apiClient.get(`/order/all/${auth?.user?.phone}`);
-                    if (response?.status === true) {
-                        setOrders(response?.data?.data || []);
-                        setFilteredOrders(response?.data?.data || []);
+                    if (response?.data?.status) {
+                        const ordersData = response?.data?.data || [];
+                        const filteredData = ordersData.filter(order =>
+                            order.status_label.toLowerCase().includes(t('order.statusPending').toLowerCase())
+                        );
+                        setOrders(ordersData || []);
+                        setFilteredOrders(filteredData || []);
                     }
                 } catch (err) {
                     showMessage({
@@ -212,7 +216,7 @@ export default function OrderScreen({navigation}){
                                         </View>
                                         <View style={{flexDirection: 'row', marginTop: 1, justifyContent: 'space-between', marginBottom: 2}}>
                                             <Text style={{ fontSize: 14, color: '#666', width: '50%' }} numberOfLines={2}>{item?.product_name} ({item?.quantity})</Text>
-                                            <Text style={{fontWeight: '600' }}>Prix : {item?.amount} {item?.currency}</Text>
+                                            <Text style={{fontWeight: '600' }}>Prix : {formatAmount(item?.amount)} {item?.currency}</Text>
                                         </View>
                                         <View style={{flexDirection: 'row', marginTop: 1, justifyContent: 'space-between'}}>
                                             <View style={{flexDirection: 'row', marginTop: 5}}>
