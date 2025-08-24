@@ -5,15 +5,15 @@ import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
-import { getRequest } from "../utils/api";
 import { useTranslation } from "../context/LocalizationContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function CategoryDetailScreen({route, navigation}){
 
     const {t} = useTranslation();
 
     const {category} = route.params;
-    // const {products} = useProducts();
+    const apiClient = useApiClient();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -22,8 +22,8 @@ export default function CategoryDetailScreen({route, navigation}){
             setLoading(true);
             try {
                 // Simulate an API call to fetch products based on the category
-                const response = await getRequest(`/category/${category.token}`);
-                setProducts(response.data.products);
+                const response = await apiClient.get(`/category/${category.token}`);
+                setProducts(response?.data?.data?.products);
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {

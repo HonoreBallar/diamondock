@@ -1,16 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from 'axios';
-import { getRequest } from "../utils/api";
+import { useApiClient } from "./ApiContext";
 
 const SellerContext = createContext();
 
 export const SellerProvider = ({children})=>{
     const [sellers, setSellers] = useState([]);
+    const apiClient = useApiClient();
 
     const fetchSellers = async () => {
         try {
-            const dataSeller = await getRequest('/seller/all');
-            setSellers(dataSeller?.data ?? []);
+            const dataSeller = await apiClient.get('/seller/all');
+            setSellers(dataSeller?.data?.data ?? []);
         } catch (error) {
             console.error('Error fetching sellers :', error);
         }

@@ -5,7 +5,6 @@ import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
-import { getRequest } from "../utils/api";
 import { formatAmount, ratio, renderStars } from "../utils/utils";
 import { ProgressBar } from "react-native-paper";
 import { useCart } from "../context/CartContext";
@@ -13,6 +12,7 @@ import { useWishlist } from "../context/WishlistContext";
 import HeaderLogo from "../components/HeaderLogo";
 import RenderHTML from "react-native-render-html";
 import { useTranslation } from "../context/LocalizationContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function DetailProductScreen({navigation, route}){
 
@@ -27,14 +27,15 @@ export default function DetailProductScreen({navigation, route}){
     const [loadingWishlist, setLoadingWishlist] = useState(false);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const {isProductInWishlist, addToWishlist} = useWishlist();
+    const apiClient = useApiClient();
 
 
     useEffect(()=>{
         async function loadProducts() {
             setLoading(true);
             try {
-                const response = await getRequest('/product/'+product?.token);
-                const datas = response.data ?? []
+                const response = await apiClient.get('/product/' + product?.token);
+                const datas = response?.data?.data ?? []
                 if (!datas?.images || datas?.images.length === 0) {
                     let defaultImage = datas?.main_image;
                     setPhotos([{url: defaultImage}]);

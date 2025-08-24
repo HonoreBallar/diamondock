@@ -15,6 +15,9 @@ export const getRequest = async (endpoint, params = {}, headers = {}) =>{
             params,
             headers: {
                 ...apiClient.defaults.headers,
+                'X-App-Key': '019523f4-174a-7005-a126-366e48e46dcc',
+                'X-HLang': 'fr',
+                'X-Devise': 'XOF',
                 ...headers
             }
         });

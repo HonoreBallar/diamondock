@@ -40,7 +40,7 @@ export const CartProvider = ({children}) =>{
 
         if (currency && product?.currency !== currency) {
             showMessage({
-                message: t('addProductToSameCurrency'),
+                message: t('alerts.addProductToSameCurrency'),
                 type: "danger",
                 icon: { icon: "danger"},
                 duration: 2000,

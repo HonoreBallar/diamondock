@@ -1,12 +1,11 @@
 import { ActivityIndicator, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
-import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
-import { getRequest } from "../utils/api";
 import { useTranslation } from "../context/LocalizationContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function DetailSellerScreen({route, navigation}){
 
@@ -15,13 +14,14 @@ export default function DetailSellerScreen({route, navigation}){
     const [sellers, setSellers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const apiClient = useApiClient();
 
     const fetchSellers = async () => {
         setLoading(true);
         try {
             // Simulate an API call to fetch products based on the category
-            const response = await getRequest(`/seller/${seller.token}`);
-            setSellers(response?.data?.products ?? []);
+            const response = await apiClient.get(`/seller/${seller.token}`);
+            setSellers(response?.data?.data?.products ?? []);
         } catch (error) {
             console.error('Error fetching products:', error);
         } finally {

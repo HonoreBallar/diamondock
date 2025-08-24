@@ -14,6 +14,7 @@ import { formatDateToEnglish } from "../utils/utils";
 import { useCart } from "../context/CartContext";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import { useTranslation } from "../context/LocalizationContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function OrderStepTwo({ navigation, route }) {
 
@@ -81,7 +82,7 @@ export default function OrderStepTwo({ navigation, route }) {
 
         if (delivery.trim() === '') {
             showMessage({
-                message: "Veuillez entrer une adresse de livraison",
+                message: t('alerts.deliveryAddress'),
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,
@@ -90,7 +91,7 @@ export default function OrderStepTwo({ navigation, route }) {
         }
         if (selectedDate === '') {
             showMessage({
-                message: "Veuillez sélectionner une date de livraison",
+                message: t('alerts.deliveryDate'),
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,
@@ -99,7 +100,7 @@ export default function OrderStepTwo({ navigation, route }) {
         }
         if(payment === 'online' && selectedPayment.trim() === ''){
              showMessage({
-                message: "Veuillez sélectionner un moyen de paiement",
+                message: t('alerts.paymentMethod'),
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,
@@ -123,12 +124,12 @@ export default function OrderStepTwo({ navigation, route }) {
             setLoading(true);
             try {
                 const response = await fetchOrder(order);
-                const responseData = response?.data;
+                const responseData = response?.data?.data;
                 if (response.status) {
                     clearCart();
                     if (responseData?.payment_method == 'cash') {
                         showMessage({
-                            message: "Commande créée avec succès",
+                            message: t('alerts.orderSuccess'),
                             type: "success",
                             icon: { icon: "success", position: "left" },
                             duration: 2000,
@@ -140,7 +141,7 @@ export default function OrderStepTwo({ navigation, route }) {
                         Linking.openURL(responseData?.payment_url)
                             .then(() => {
                                 showMessage({
-                                    message: "Paiement en cours de validation...",
+                                    message: t('alerts.paiementWainting'),
                                     type: "success",
                                     icon: { icon: "success", position: "left" },
                                     duration: 2000,
@@ -203,7 +204,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                         status={ checked === 'at_home' ? 'checked' : 'unchecked' }
                                         onPress={handleHome}
                                     />
-                                    <Text style={{marginTop:7, fontWeight: '500'}}>Livraison à domicile</Text>
+                                    <Text style={{marginTop:7, fontWeight: '500'}}>{t('common.homeDelivery')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={handleRelayPoint} style={{flexDirection: 'row'}}>
                                     <RadioButton
@@ -212,7 +213,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                         status={ checked === 'relay_point' ? 'checked' : 'unchecked' }
                                         onPress={handleRelayPoint}
                                     />
-                                    <Text style={{marginTop:7, fontWeight: "500"}}>Point relais</Text>
+                                    <Text style={{marginTop:7, fontWeight: "500"}}>{t('common.relayPoint')}</Text>
                                 </TouchableOpacity>
                             </View>
                             <Input
@@ -245,7 +246,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                         status={ payment === 'cash' ? 'checked' : 'unchecked' }
                                         onPress={handleCash}
                                     />
-                                    <Text style={{marginTop:7, fontWeight: '500'}}>Cash à la livraison</Text>
+                                    <Text style={{marginTop:7, fontWeight: '500'}}>{t('common.cash')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={handleOnline} style={{flexDirection: 'row'}}>
                                     <RadioButton
@@ -254,7 +255,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                         status={ payment === 'online' ? 'checked' : 'unchecked' }
                                         onPress={handleOnline}
                                     />
-                                    <Text style={{marginTop:7, fontWeight: "500"}}>Paiement en ligne</Text>
+                                    <Text style={{marginTop:7, fontWeight: "500"}}>{t('common.online')}</Text>
                                 </TouchableOpacity>
                             </View>
                             {visible && (

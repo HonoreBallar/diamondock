@@ -34,7 +34,11 @@
     "forgetPassword": "Mot de passe oublié ?",
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
     "send": "Envoyer",
-    "fillFileds": "Veuillez remplir tous les champs"
+    "fillFileds": "Veuillez remplir tous les champs",
+    "homeDelivery": "Livraison à domicile",
+    "relayPoint": "Point relais",
+    "cash": "Cash à la livraison",
+    "online": "Paiement en ligne"
   },
   "tabs": {
     "tab_home": "Accueil",
@@ -181,6 +185,12 @@
     "removeConfirmTitle": "Supprimer du favori",
     "editProfile": "Profil modifié avec succès",
     "connexionSuccess": "Connexion réussie",
-    "emailsent": "Un email a été envoyé pour réinitialiser votre mot de passe"
+    "emailsent": "Un email a été envoyé pour réinitialiser votre mot de passe",
+    "deliveryAddress": "Veuillez entrer votre adresse de livraison",
+    "paymentMethod": "Veuillez choisir un mode de paiement",
+    "deliveryMode": "Veuillez choisir un mode de livraison",
+    "deliveryDate": "Veuillez choisir une date de livraison",
+    "orderSuccess": "Commande validée avec succès",
+    "paiementWainting": "Paiement en cours de validation..."
   }
 }

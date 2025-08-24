@@ -1,15 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from 'axios';
-import { getRequest, postRequest } from "../utils/api";
+import { useApiClient } from "./ApiContext";
 
 const OrderContext = createContext();
 
 export const OrderProvider = ({children})=>{
     const [modePayment, setModePayment] = useState([]);
+    const apiClient = useApiClient();
 
     const fetchMode = async () => {
         try {
-            const dataMode = await getRequest('/setting/payment-methods');
+            const dataMode = await apiClient.get('/setting/payment-methods');
             setModePayment(dataMode?.data.online_payment_options ?? []);
         } catch (error) {
             console.error('Error loading seller products :', error);
@@ -18,7 +18,7 @@ export const OrderProvider = ({children})=>{
 
     const fetchOrder = async (datas)=>{
         try {
-            const response = await postRequest('/order/create', datas);
+            const response = await apiClient.post('/order/create', datas);
             return response;
         } catch (error) {
             console.error('Error :', error);

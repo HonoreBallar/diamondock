@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useRootContext } from '../context/RootContext';
 import { useTranslation } from '../context/LocalizationContext';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import HeaderSimple from '../components/HeaderSimple';
 
 const LANGUAGE_KEY = '@app_language';
@@ -37,6 +38,12 @@ export default function LanguageScreen({navigation}) {
 
             setAppLanguage(selectedLanguage);
             setAppCurrency(selectedCurrency);
+
+            showMessage({
+                message: "Langue et devise mises à jour. Rafraîchissement en cours...",
+                type: "info",
+                duration: 2000,
+            });
             
             navigation.replace('ChangeLangueScreen');
         } catch (error) {

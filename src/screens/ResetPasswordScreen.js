@@ -6,8 +6,6 @@ import { useRootContext } from "../context/RootContext";
 import { useEffect, useRef, useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { wait } from "../utils/utils";
-import SingleDropdownSelect from "../components/SingleDropdownSelect";
-import PhoneInput from "react-native-phone-number-input";
 import { useTranslation } from "../context/LocalizationContext";
 
 export default function ResetPasswordScreen({navigation}){
@@ -35,7 +33,7 @@ export default function ResetPasswordScreen({navigation}){
         setLoading(true);
         await wait(200);
 
-        const response = await resetPassword(datas);
+        const response = await resetPassword(email);
 
         if(response.status === false){
             showMessage({

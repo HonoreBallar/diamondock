@@ -10,9 +10,9 @@ export const SearchProvider = ({children})=>{
     const {products} = useProductContext();
     const [filteredProducts, setFilteredProducts] = useState(products);
 
-    useEffect(()=>{
-        // console.log(products)
-    }, []);
+    // useEffect(()=>{
+    //     // console.log(products)
+    // }, []);
 
     const filterProducts = async (datas) => {
         try{

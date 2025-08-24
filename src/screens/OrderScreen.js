@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useRootContext } from "../context/RootContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { getRequest } from "../utils/api";
 import { wait } from "../utils/utils";
 import PhoneInput from "react-native-phone-number-input";
 import colors from "../utils/colors";
 import { useTranslation } from "../context/LocalizationContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function OrderScreen({navigation}){
     const {auth} = useRootContext();
@@ -19,6 +19,7 @@ export default function OrderScreen({navigation}){
     const [orders, setOrders] = useState([]);
     const [activeFilter, setActiveFilter] = useState(t('order.statusPending')); // 'En attente' par défaut
     const [loading, setLoading] = useState(false);
+    const apiClient = useApiClient();
 
     const phoneInput = useRef(null);
     const [phone, setPhone] = useState(auth?.user?.phone_detail?.number || '');
@@ -42,10 +43,10 @@ export default function OrderScreen({navigation}){
             const fetchOrders = async () => {
                 setLoading(true);
                 try {
-                    const response = await getRequest(`/order/all/${auth?.user?.phone}`);
+                    const response = await apiClient.get(`/order/all/${auth?.user?.phone}`);
                     if (response?.status === true) {
-                        setOrders(response?.data || []);
-                        setFilteredOrders(response?.data || []);
+                        setOrders(response?.data?.data || []);
+                        setFilteredOrders(response?.data?.data || []);
                     }
                 } catch (err) {
                     showMessage({
@@ -86,7 +87,7 @@ export default function OrderScreen({navigation}){
             setOrders([]);
             setFilteredOrders([]);
 
-            const response = await getRequest(`/order/all/${completePhone}`);
+            const response = await apiClient.get(`/order/all/${completePhone}`);
             if(response?.status === false){
                 showMessage({
                     message: response?.error,
@@ -98,7 +99,7 @@ export default function OrderScreen({navigation}){
                 setLoading(false);
             }
 
-            const ordersData = response?.data || [];
+            const ordersData = response?.data?.data || [];
             setOrders(ordersData);
 
             const filteredData = ordersData.filter(order =>

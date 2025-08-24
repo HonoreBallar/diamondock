@@ -1,17 +1,19 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from 'axios';
-import { getRequest } from "../utils/api";
+import { useRootContext } from "./RootContext";
+import { useApiClient } from "./ApiContext";
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({children})=>{
+    const {appLanguage, appCurrency} = useRootContext();
+    const apiClient = useApiClient();
     const [sellers, setSellers] = useState([]);
     const [products, setProducts] = useState([]);
 
     const fetchSellers = async () => {
         try {
-            const dataSeller = await getRequest('/seller/all');
-            setSellers(dataSeller?.data ?? []);
+            const dataSeller = await apiClient.get('/seller/all');
+            setSellers(dataSeller?.data?.data ?? []);
         } catch (error) {
             console.error('Error loading seller products :', error);
         }
@@ -19,8 +21,8 @@ export const ProductProvider = ({children})=>{
 
     const fetchProducts = async () => {
         try {
-            const dataProduct = await getRequest('/product/all');
-            setProducts(dataProduct?.data ?? []);
+            const dataProduct = await apiClient.get('/product/all');
+            setProducts(dataProduct?.data?.data ?? []);
         } catch (error) {
             console.error('Error loading products list:', error);
         }
@@ -30,7 +32,7 @@ export const ProductProvider = ({children})=>{
     useEffect(() => {
         fetchSellers();
         fetchProducts();
-    }, []);
+    }, [appLanguage, appCurrency]);
 
     return (
         <ProductContext.Provider value={{ products, sellers, fetchProducts, fetchSellers }}>

@@ -3,23 +3,24 @@ import FlottingCart from "../components/FlottingCart";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { getRequest } from "../utils/api";
 import colors from "../utils/colors";
 import { renderStars } from "../utils/utils";
 import { useTranslation } from "../context/LocalizationContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function RateDetailProduct({navigation, route}){
     const {t} = useTranslation();
     const {product} = route.params;
     const [rate, setRate] = useState([]);
     const [loading, setLoading] = useState(false);
+    const apiClient = useApiClient();
 
     useState(()=>{
        const fetchRates = async () => {
             try{
                 setLoading(true);
-                const response = await getRequest(`/product/comment/${product?.token}`);
-                const data = await response?.data?.comments;
+                const response = await apiClient.get(`/product/comment/${product?.token}`);
+                const data = await response?.data?.data?.comments;
                 setRate(data);
             }catch(error){
                 showMessage({

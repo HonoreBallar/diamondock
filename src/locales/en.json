@@ -34,7 +34,11 @@
     "forgetPasswordSubtitle": "Please enter your email to receive a link to create a new password via email",
     "alreadyHaveAccount": "Already have an account ?",
     "send": "Send",
-    "fillFileds": "Please fill all fields"
+    "fillFileds": "Please fill all fields",
+    "homeDelivery": "Home delivery",
+    "relayPoint": "Relay point",
+    "cash": "Cash",
+    "online": "Online"
   },
   "tabs": {
     "tab_home": "Home",
@@ -179,7 +183,12 @@
     "removeConfirmTitle": "Remove from Favorites",
     "editProfile": "Profile edited successfully",
     "connexionSuccess":"Login successful",
-    "emailsent": "An email has been sent to reset your password"
-
+    "emailsent": "An email has been sent to reset your password",
+    "deliveryAddress": "Please enter your delivery address",
+    "paymentMethod": "Please choose a payment method",
+    "deliveryMode": "Please choose a delivery mode",
+    "deliveryDate": "Please choose a delivery date",
+    "orderSuccess": "Order placed successfully",
+    "paiementWainting": "Payment pending..."
   }
 }

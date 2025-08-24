@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { getRequest } from '../utils/api';
+import { useApiClient } from './ApiContext';
 
 // Créer le contexte
 const CategoryContext = createContext();
@@ -8,11 +7,12 @@ const CategoryContext = createContext();
 // Provider CategoryContext
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
+  const apiClient = useApiClient();
 
   const fetchCategories = async () => {
       try {
-          const dataCategories = await getRequest('/category/all');
-          setCategories(dataCategories?.data ?? []);
+          const dataCategories = await apiClient.get('/category/all');
+          setCategories(dataCategories?.data?.data ?? []);
       } catch (error) {
           console.error('Error loading seller products :', error);
       }

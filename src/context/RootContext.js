@@ -141,7 +141,7 @@ export const RootProvider = ({children})=>{
 
     const resetPassword = async(datas)=>{
         try {
-            const response = await postRequest('/auth/reset',datas);
+            const response = await postRequest('/auth/reset',{"role": "customer", "email": datas});
             
             if(response?.status === false){
                 showMessage({
