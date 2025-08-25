@@ -46,7 +46,7 @@ const WelcomeScreen = () => {
     }
   };
 
-  const SelectionButton = ({ label, value, isSelected, onPress, image }) => (
+  const SelectionButton = ({ label, value, isSelected, onPress, image, width = 90 }) => (
     <TouchableOpacity
       onPress={() => onPress(value)}
       style={{
@@ -56,7 +56,7 @@ const WelcomeScreen = () => {
         backgroundColor: isSelected ? '#ffa100' : '#F0F0F0',
         paddingVertical: 12,
         paddingHorizontal: 16,
-        width: 90,
+        width: width,
         borderRadius: 10,
         marginBottom: 10,
         marginRight: 10,
@@ -105,13 +105,14 @@ const WelcomeScreen = () => {
 
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 10 }}>Langue</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           {languages.map((item) => (
             <SelectionButton
               key={item.value}
               label={item.label}
               value={item.value}
               image={item.image}
+              width={"45%"}
               isSelected={selectedLanguage === item.value}
               onPress={setSelectedLanguage}
             />

@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useApiClient } from './ApiContext';
+import { useRootContext } from './RootContext';
 
 // Créer le contexte
 const CategoryContext = createContext();
 
 // Provider CategoryContext
 export const CategoryProvider = ({ children }) => {
+
+  const {appLanguage} = useRootContext();
   const [categories, setCategories] = useState([]);
   const apiClient = useApiClient();
 
@@ -21,7 +24,7 @@ export const CategoryProvider = ({ children }) => {
   // Récupérer les catégories depuis l'API
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [appLanguage]);
 
   return (
     <CategoryContext.Provider value={{ categories , fetchCategories }}>

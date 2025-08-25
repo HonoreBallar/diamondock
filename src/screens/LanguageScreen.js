@@ -55,7 +55,7 @@ export default function LanguageScreen({navigation}) {
         
       };
 
-    const SelectionButton = ({ label, value, isSelected, onPress, image }) => (
+    const SelectionButton = ({ label, value, isSelected, onPress, image, width = 90 }) => (
         <TouchableOpacity
           onPress={() => onPress(value)}
           style={{
@@ -65,7 +65,7 @@ export default function LanguageScreen({navigation}) {
             backgroundColor: isSelected ? '#ffa100' : '#F0F0F0',
             paddingVertical: 12,
             paddingHorizontal: 16,
-            width: 90,
+            width: width,
             borderRadius: 10,
             marginBottom: 10,
             marginRight: 10,
@@ -98,13 +98,14 @@ export default function LanguageScreen({navigation}) {
             
             <View style={{ margin: 20, marginTop: 30 }}>
                 <Text style={{ fontSize: 18, fontWeight: '400', marginBottom: 10 }}>{t('language.chooseLanguage')}</Text>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                     {languages.map((item) => (
                     <SelectionButton
                         key={item.value}
                         label={item.label}
                         value={item.value}
                         image={item.image}
+                        width={"45%"}
                         isSelected={selectedLanguage === item.value}
                         onPress={setSelectedLanguage}
                     />
