@@ -22,6 +22,8 @@
     "seller": "Seller",
     "productAvailable": "Product(s) available",
     "noProducts": "No products available",
+    "noCategories": "No categories available",
+    "noSellers": "No sellers available",
     "myAccount": "My account",
     "logout": "Logout",
     "summarycart": "Cart summary",

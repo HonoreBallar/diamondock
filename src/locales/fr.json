@@ -22,6 +22,8 @@
     "seller": "Vendeur",
     "productAvailable": "Produit (s) disponible",
     "noProducts": "Aucun produit disponible",
+    "noCategories": "Aucune catégorie disponible",
+    "noSellers": "Aucun vendeur disponible",
     "myAccount": "Mon compte",
     "logout": "Se déconnecter",
     "summarycart": "Résumé du panier",

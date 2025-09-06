@@ -23,6 +23,11 @@ export default function CategoryScreen({navigation}){
                             <CategoryCard category={item} navigation={navigation}/>
                         )}
                         ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+                        ListEmptyComponent={() => (
+                            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                                <Text style={{textAlign: 'center'}}>{t('common.noCategories')}</Text>
+                            </View>
+                        )}
                     />
                 </View>
             </ScrollView>

@@ -139,6 +139,11 @@ export default function DigitalMallScreen({ navigation }) {
                             </View>
                         ) : null
                     }
+                    ListEmptyComponent={() => (
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                            <Text style={{ textAlign: 'center' }}>{t('common.noSellers')}</Text>
+                        </View>
+                    )}
                 />
             </View>
         </View>
