@@ -74,6 +74,9 @@ export const CartProvider = ({children}) =>{
         const updatedCart = cart.filter((product) => product.token!== productId);
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
+        if (updatedCart.length === 0) {
+            setCurrency(null);
+        }
         showMessage({
             message: t('alerts.productRemovedToCart'),
             type: "success",
@@ -96,6 +99,7 @@ export const CartProvider = ({children}) =>{
         let _=[];
         setCart(_);
         saveCartToStorage(_);
+        setCurrency(null);
         if (message) {
             showMessage({
                 message: t('alerts.emptyCart'),
