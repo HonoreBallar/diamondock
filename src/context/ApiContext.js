@@ -9,7 +9,8 @@ export const ApiProvider = ({ children }) => {
 
   // Crée une instance Axios
   const apiClient = axios.create({
-    baseURL: 'https://api.diamondock.com/api',
+    // baseURL: 'https://api.diamondock.com/api',
+    baseURL: 'https://api-diamondock.nkouadio.com/api',
     timeout: 5000,
     headers: {
       'X-App-Key': '019523f4-174a-7005-a126-366e48e46dcc',
