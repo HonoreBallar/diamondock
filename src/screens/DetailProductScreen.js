@@ -29,6 +29,28 @@ export default function DetailProductScreen({navigation, route}){
     const {isProductInWishlist, addToWishlist} = useWishlist();
     const apiClient = useApiClient();
 
+    const [selectedVariants, setSelectedVariants] = useState({});
+
+    const handleSelectVariant = (groupName, item) => {
+        setSelectedVariants(prev => ({
+            ...prev,
+            [groupName]: item
+        }));
+    };
+
+    // LISTE DES VARIANTS CHOISIS
+    const selectedVariantsList = Object.values(selectedVariants);
+
+    // PRIX FINAL
+    const finalPrice =
+        selectedVariantsList.length === 0
+        ? mainProduct.price
+        : selectedVariantsList.reduce(
+            (total, variant) => total + (variant.price || 0),
+            0
+    );
+
+
 
     useEffect(()=>{
         async function loadProducts() {
@@ -125,13 +147,15 @@ export default function DetailProductScreen({navigation, route}){
                             <Text style={{fontSize: 17, marginBottom: 3, fontWeight: '500'}} numberOfLines={2}>{mainProduct?.name}</Text>
                             <Text style={{fontSize: 17, marginBottom: 8, color: '#ccc'}} numberOfLines={2}>{mainProduct?.title}</Text>
                             <View style={{flexDirection: 'row', }}>
-                                <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(mainProduct?.price || 0)} {mainProduct?.currency || 'F CFA' } </Text>
-                                { product?.reduction_rate != null && (
-                                    <Text style={{fontSize: 20, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through', marginLeft: 5}}>{formatAmount(product?.base_price || 0)} {product?.currency}</Text>
+                                <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(finalPrice || 0)} {mainProduct?.currency || 'F CFA' } </Text>
+                                { mainProduct?.reduction_rate != null && (
+                                    <Text style={{fontSize: 20, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through', marginLeft: 5}}>{formatAmount(mainProduct?.base_price || 0)} {mainProduct?.currency}</Text>
                                 ) }  
                             </View>
-                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.description')}</Text>
-                            <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
+                            <View style={{backgroundColor: '#03045e', padding: 4, marginBottom: 10, borderRadius: 5, alignSelf: 'flex-start'}}>
+                                <Text style={{fontWeight: '600', fontSize: 14, color: '#fff'}}>{mainProduct?.category || 'Non disponible'}</Text>
+                            </View>
+                            
                             {ratio === 0 ? (
                                 <Text style={{color: 'red', fontWeight: '400', fontSize: 16, marginBottom: 5}}>{t('common.productOutOfStock')}</Text>
                             ) :(
@@ -140,6 +164,53 @@ export default function DetailProductScreen({navigation, route}){
                                     <ProgressBar progress={ratio} color={colors.primary} />
                                 </View>
                             )}
+                            {/* VARIANTS */}
+                            <View style={{marginBottom: 10}}>
+                                {mainProduct?.variants?.map((variantGroup, index) => (
+                                <View key={index} style={{ marginTop: 10 }}>
+
+                                    <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 10 }}>
+                                    {variantGroup.name} :
+                                    </Text>
+
+                                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                                    {variantGroup.items.map((item) => {
+                                        
+                                        const isSelected =
+                                        selectedVariants[variantGroup.name]?.token === item.token;
+
+                                        return (
+                                        <TouchableOpacity
+                                            key={item.token}
+                                            onPress={() => handleSelectVariant(variantGroup.name, item)}
+                                            style={{
+                                            paddingHorizontal: 10,
+                                            paddingVertical: 6,
+                                            backgroundColor: isSelected ? "#ffa100" : "#ddd",
+                                            marginRight: 10,
+                                            marginBottom: 10,
+                                            borderRadius: 6,
+                                            }}
+                                        >
+                                            <Text
+                                            style={{
+                                                fontWeight: "600",
+                                                color: isSelected ? "white" : "black",
+                                            }}
+                                            >
+                                            {item.name}
+                                            </Text>
+                                        </TouchableOpacity>
+                                        );
+                                    })}
+                                    </View>
+
+                                </View>
+                                ))}
+                            </View>
+                            
+                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.description')}</Text>
+                            <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
                             
                             <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>{t('common.reviews')}</Text>
                             <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
@@ -154,29 +225,6 @@ export default function DetailProductScreen({navigation, route}){
                                     <FontAwesome5 name="chevron-right" size={20} color="#000"/>
                                 </TouchableOpacity>
                             </View>
-                            {/* <View>
-                                <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-                                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text>⭐⭐⭐⭐</Text>
-                                            <FontAwesome5 name="star" size={12} color="#fec727" style={{marginTop: 2}}/>
-                                        </View>
-                                    </View>
-                                    <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
-                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
-                                </View>
-                                <View style={{borderWidth: 0.3, backgroundColor: '#f9f9f9', padding: 8, borderRadius: 8, marginBottom: 10}}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-                                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nom de l'utilisateur</Text>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text>⭐⭐⭐⭐⭐</Text>
-                                        </View>
-                                    </View>
-                                    <Text style={{fontSize: 16, lineHeight: 22}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel odio id dui fermentum laoreet.</Text>
-                                    <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400'}}>12/15/2025</Text>
-                                </View>
-                            </View> */}
                         </View>
                     </ScrollView>
                     <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>
