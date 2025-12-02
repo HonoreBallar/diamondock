@@ -80,7 +80,7 @@ export default function DetailProductScreen({navigation, route}){
     const addToCartHandler = async () => {
         setIsAddedToCart(true);
         setTimeout(async () => {
-            await addToCart(mainProduct, parseInt(quantity));
+            await addToCart(mainProduct, parseInt(quantity), selectedVariants);
             setQuantity('1');
             setIsAddedToCart(false);
         },50);

@@ -5,8 +5,8 @@ import { useTranslation } from "../context/LocalizationContext";
 
 const CartContext = createContext();
 
-export const CartProvider = ({children}) =>{
-    const {t} = useTranslation();
+export const CartProvider = ({ children }) => {
+    const { t } = useTranslation();
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currency, setCurrency] = useState(null);
@@ -17,7 +17,7 @@ export const CartProvider = ({children}) =>{
             try {
                 const cartData = await AsyncStorage.getItem('cart');
                 if (cartData) {
-                    const _= JSON.parse(cartData);
+                    const _ = JSON.parse(cartData);
                     setCart(_);
                     if (_.length > 0) {
                         setCurrency(_[0]?.currency);
@@ -27,7 +27,7 @@ export const CartProvider = ({children}) =>{
             } catch (error) {
                 console.log('Error loading cart from AsyncStorage', error);
                 setLoading(false);
-            }finally{
+            } finally {
                 setLoading(false);
             }
         }
@@ -36,13 +36,12 @@ export const CartProvider = ({children}) =>{
 
 
     //Ajouter un produit au panier
-    const addToCart = (product, nbOfProduct = 1) => {
-
+    const addToCart = (product, nbOfProduct = 1, selectedVariants = {}) => {
         if (currency && product?.currency !== currency) {
             showMessage({
                 message: t('alerts.addProductToSameCurrency'),
                 type: "danger",
-                icon: { icon: "danger"},
+                icon: { icon: "danger" },
                 duration: 2000,
             });
             return;
@@ -50,17 +49,50 @@ export const CartProvider = ({children}) =>{
 
         if (!currency) setCurrency(product?.currency);
 
-        const existingProductIndex = cart.findIndex((item) => item.token === product.token);
+        // Créer un identifiant unique pour le produit selon ses variantes
+        const variantTokenString = Object.values(selectedVariants)
+            .map(v => v.token)
+            .sort()
+            .join('-');
+
+        const productKey = product.token + (variantTokenString ? `-${variantTokenString}` : '');
+
+        const existingProductIndex = cart.findIndex((item) => item.uniqueKey === productKey);
         let updatedCart;
-        
+
         if (existingProductIndex >= 0) {
-            const updatedProduct = {...cart[existingProductIndex], quantity: parseInt(cart[existingProductIndex].quantity) + parseInt(nbOfProduct)};
-            updatedCart = [...cart.slice(0, existingProductIndex), updatedProduct,...cart.slice(existingProductIndex + 1)];
+            const updatedProduct = {
+                ...cart[existingProductIndex],
+                quantity: parseInt(cart[existingProductIndex].quantity) + parseInt(nbOfProduct)
+            };
+            updatedCart = [
+                ...cart.slice(0, existingProductIndex),
+                updatedProduct,
+                ...cart.slice(existingProductIndex + 1)
+            ];
         } else {
-            updatedCart = [...cart, {...product, quantity: nbOfProduct}];
+            // Calcul du prix en fonction des variants
+            let finalPrice = product.price;
+            const selectedVariantsList = Object.values(selectedVariants);
+            if (selectedVariantsList.length > 0) {
+                finalPrice = selectedVariantsList.reduce((total, variant) => total + (variant.price || 0), 0);
+            }
+
+            updatedCart = [
+                ...cart,
+                {
+                    ...product,
+                    price: finalPrice,
+                    quantity: nbOfProduct,
+                    selectedVariants: selectedVariants,
+                    uniqueKey: productKey // clé unique pour identifier le produit + variantes
+                }
+            ];
         }
+
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
+
         showMessage({
             message: t('alerts.productAddedToCart'),
             type: "success",
@@ -69,9 +101,10 @@ export const CartProvider = ({children}) =>{
         });
     };
 
+
     //Enlever un produit du panier
-    const removeFromCart = (productId) => {
-        const updatedCart = cart.filter((product) => product.token!== productId);
+    const removeFromCart = (productKey) => {
+        const updatedCart = cart.filter((product) => product.uniqueKey !== productKey);
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
         if (updatedCart.length === 0) {
@@ -80,7 +113,7 @@ export const CartProvider = ({children}) =>{
         showMessage({
             message: t('alerts.productRemovedToCart'),
             type: "success",
-            icon: { icon: "success"},
+            icon: { icon: "success" },
             duration: 2000,
         });
     };
@@ -96,7 +129,7 @@ export const CartProvider = ({children}) =>{
 
     //Vider le panier
     const clearCart = (message = true) => {
-        let _=[];
+        let _ = [];
         setCart(_);
         saveCartToStorage(_);
         setCurrency(null);
@@ -104,7 +137,7 @@ export const CartProvider = ({children}) =>{
             showMessage({
                 message: t('alerts.emptyCart'),
                 type: "warning",
-                icon: { icon: "success"},
+                icon: { icon: "success" },
                 duration: 2000,
             });
         }
@@ -116,28 +149,28 @@ export const CartProvider = ({children}) =>{
     };
 
     //Augmentation de la quantité de 1
-    const incrementQuantity = (productId) => {
+    const incrementQuantity = (productKey) => {
         const updatedCart = cart.map((product) =>
-            product.token === productId? {...product, quantity: product.quantity + 1} : product
+            product.uniqueKey === productKey ? { ...product, quantity: product.quantity + 1 } : product
         );
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
     };
 
     //Diminution de la quantité de 1
-    const decrementQuantity = (productId) => {
+    const decrementQuantity = (productKey) => {
         const updatedCart = cart.map((product) =>
-            product.token === productId && product.quantity > 1 ? {...product, quantity: product.quantity - 1} : product
+            product.uniqueKey === productKey && product.quantity > 1 ? { ...product, quantity: product.quantity - 1 } : product
         );
         setCart(updatedCart);
         saveCartToStorage(updatedCart);
     };
 
-    const productInCart = ()=>{
+    const productInCart = () => {
         return cart.length ?? 0;
     }
 
-    const productListInCart = cart.map(item=>({
+    const productListInCart = cart.map(item => ({
         token: item.token,
         quantity: item.quantity,
     }));
@@ -148,10 +181,10 @@ export const CartProvider = ({children}) =>{
             <FlashMessage
                 animated={true}
                 position="top"
-                style={{ paddingTop: 50}}
-             />
+                style={{ paddingTop: 50 }}
+            />
         </CartContext.Provider>
     );
 }
 
-export const useCart = ()=> useContext(CartContext);
+export const useCart = () => useContext(CartContext);
