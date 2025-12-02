@@ -84,7 +84,7 @@ export default function ResetPasswordScreen({navigation}){
                             <View>
                                 <Text style={{textAlign: 'center', marginTop: 20, fontSize: 16, fontWeight: '400'}}>
                                     {t('common.alreadyHaveAccount')}
-                                    <Text onPress={() => navigation.navigate('LoginScreen')} style={{color: 'blue'}}> {t('auth.loginTitle')}</Text>
+                                    <Text onPress={() => navigation.goBack()} style={{color: 'blue'}}> {t('auth.loginTitle')}</Text>
                                 </Text>
                             </View>
                         </View>

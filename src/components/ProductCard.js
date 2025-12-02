@@ -38,7 +38,7 @@ const ProductCard = ({navigation, product})=>{
 
     return (
         <TouchableOpacity onPress={handlePress}>
-            <View style={{backgroundColor: '#f7f7f7', width: 150, height: 250, borderRadius: 10, marginRight: 10, padding: 8}}>
+            <View style={{backgroundColor: '#f7f7f7', width: 150, height: 220, borderRadius: 10, marginRight: 10, padding: 8}}>
                 <View style={{alignSelf: 'center',marginTop: 10, height: 120, width: 130, backgroundColor: 'white', borderRadius: 10}}>
                     <Image source={product?.main_image ? {uri: product?.main_image} : require('../assets/icon.png')} style={{height:100, width: 100, alignSelf: 'center', marginTop: 5 }}/>
                     <View style={{marginTop: -115, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -69,8 +69,8 @@ const ProductCard = ({navigation, product})=>{
                     {
                         product?.remaining_stock === 0 ? (
                             <>
-                                <Text style={{fontSize: 12, color: colors.gray, marginTop: 1, marginBottom: 3}}>{}{t('common.outOfStock')}</Text>
-                                <TouchableOpacity disabled={true} style={{backgroundColor: "#b3b9cb", borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={{fontSize: 12, color: "red", marginTop: 2, marginBottom: 3}}>{t('common.outOfStock')}</Text>
+                                {/* <TouchableOpacity disabled={true} style={{backgroundColor: "#b3b9cb", borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                                     {loading ? (
                                         <ActivityIndicator size="small" color={colors.border} />
                                     ):(
@@ -79,15 +79,15 @@ const ProductCard = ({navigation, product})=>{
                                             <Text style={{marginLeft: 5}}>{t('common.view')}</Text>
                                         </View>
                                     )}
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </>
                         ) : (
                             <>
                                 <View>
                                     <Text style={{fontSize: 9, color: colors.gray, marginTop: 2}}>{product?.remaining_stock} {t('common.itemsLeft')}</Text>
-                                    <ProgressBar style={{height: 3, marginTop: 1, marginBottom: 2}} progress={monRatio} color={colors.primary} />
+                                    <ProgressBar style={{height: 5, borderRadius: 5, marginTop: 1, marginBottom: 2}} progress={monRatio} color={colors.primary} />
                                 </View>
-                                <View style={{marginTop: 3, alignItems: 'center'}}>
+                                {/* <View style={{marginTop: 3, alignItems: 'center'}}>
                                     <TouchableOpacity disabled={loading} onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#ffa100', borderRadius: 5, width:119, height:30, justifyContent: 'center', alignItems: 'center'}}>
                                         {loading ? (
                                             <ActivityIndicator size="small" color={colors.border} />
@@ -98,7 +98,7 @@ const ProductCard = ({navigation, product})=>{
                                             </View>
                                         )}
                                     </TouchableOpacity>
-                                </View>
+                                </View> */}
                             </>
                         )
                     }
