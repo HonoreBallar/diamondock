@@ -26,7 +26,7 @@ export default function OrderStepOne({navigation}) {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [countryCode, setCountryCode] = useState(auth?.user?.phone_detail?.slug || 'CI');
-    // const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
 
 
@@ -34,15 +34,15 @@ export default function OrderStepOne({navigation}) {
         if(auth.isLoggedIn && auth.user){
             setFirstname(auth?.user?.firstname);
             setLastname(auth?.user?.lastname);
-            // setEmail(auth.user.email);
+            setEmail(auth.user.email);
             setAddress(auth.user.address);
         }
     },[auth?.user]);
 
     const handleNext = () => {
-        if (phone.trim() === '') {
+        if (phone.trim() === '' || firstname.trim() === '' || lastname.trim() === '' || email.trim() === '' || address.trim() === '') {
             showMessage({
-                message: "Veuillez entrer un numéro de téléphone valide",
+                message: "Veuillez remplir tous les champs",
                 type: "danger",
                 icon: { icon: "danger", position: "left" },
                 duration: 2000,
@@ -57,7 +57,7 @@ export default function OrderStepOne({navigation}) {
             firstname: firstname,
             lastname: lastname,
             phone: completePhone,
-            // email: email,
+            email: email,
             address: address,
         }
 
@@ -125,6 +125,7 @@ export default function OrderStepOne({navigation}) {
                             </View>
                             <Input
                                 label={t('input.firstnameTitle')}
+                                isRequired
                                 icon="user-tie"
                                 placeholder={t('input.firstnamePlaceholder')}
                                 value={firstname}
@@ -132,15 +133,25 @@ export default function OrderStepOne({navigation}) {
                             />
                             <Input
                                 label={t('input.lastnameTitle')}
+                                isRequired 
                                 icon="user-tie"
                                 placeholder={t('input.lastnamePlaceholder')}
                                 value={lastname}
                                 onChangeText={setLastname}
                             />
+                            <Input
+                                label={t('input.emailTitle')}
+                                isRequired 
+                                icon="user-tie"
+                                placeholder={t('input.emailPlaceholder')}
+                                value={email}
+                                onChangeText={setEmail}
+                            />
         
                             <Input
                                 label={t('input.addressTitle')}
                                 icon="map-marker-alt"
+                                isRequired
                                 placeholder={t('input.addressPlaceholder')}
                                 value={address}
                                 onChangeText={setAddress}
