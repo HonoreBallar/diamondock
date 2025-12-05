@@ -193,6 +193,7 @@
     "deliveryMode": "Veuillez choisir un mode de livraison",
     "deliveryDate": "Veuillez choisir une date de livraison",
     "orderSuccess": "Commande validée avec succès",
-    "paiementWainting": "Paiement en cours de validation..."
+    "paiementWainting": "Paiement en cours de validation...",
+    "productRemovedToWishlist": "Produit supprimé des favoris"
   }
 }
