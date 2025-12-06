@@ -50,7 +50,10 @@ export default function DetailProductScreen({navigation, route}){
             0
     );
 
-
+    // VÉRIFIER SI TOUS LES VARIANTS SONT SÉLECTIONNÉS
+    const hasVariants = mainProduct?.variants && mainProduct.variants.length > 0;
+    const allVariantsSelected = hasVariants ? mainProduct.variants.every(variantGroup => selectedVariants[variantGroup.name]) : true;
+    const isAddButtonDisabled = isAddedToCart || (hasVariants && !allVariantsSelected) || mainProduct?.remaining_stock === 0;
 
     useEffect(()=>{
         async function loadProducts() {
@@ -258,7 +261,7 @@ export default function DetailProductScreen({navigation, route}){
                                     <Text style={{color: 'white'}}> {t('common.outOfStock')}</Text>
                                 </TouchableOpacity>
                             ) : (
-                                <TouchableOpacity disabled={isAddedToCart} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
+                                <TouchableOpacity disabled={isAddButtonDisabled} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: isAddButtonDisabled ? colors.gray : "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
                                     { isAddedToCart ? <ActivityIndicator size="small" color="white" /> :<FontAwesome5 name="cart-plus" size={20} color="white"/>}
                                     <Text style={{color: 'white', marginLeft: 8}}>{t('common.add')}</Text>
                                 </TouchableOpacity>

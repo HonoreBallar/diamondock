@@ -79,13 +79,21 @@ const VariantsBottomSheet = ({
     // Sinon: prix du produit
     const finalPrice = hasSelectedVariants ? variantsPrice : (product?.price || 0);
 
+    // Calculer la quantité totale à partir des quantités individuelles de chaque variant
+    const totalQuantity = hasSelectedVariants
+        ? selectedVariantsList.reduce((total, variant) => {
+            const itemQty = getItemQuantity(variant.token);
+            return total + itemQty;
+        }, 0)
+        : 1;
+
     const handleAddToCart = () => {
-        onAddToCart(selectedVariants, 1, itemQuantities);
+        onAddToCart(selectedVariants, totalQuantity, itemQuantities);
         handleClose();
     };
 
     const handleGoToCart = () => {
-        onGoToCart(selectedVariants, 1, itemQuantities);
+        onGoToCart(selectedVariants, totalQuantity, itemQuantities);
         handleClose();
     };
 
