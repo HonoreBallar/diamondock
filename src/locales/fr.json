@@ -40,7 +40,11 @@
     "homeDelivery": "Livraison à domicile",
     "relayPoint": "Point relais",
     "cash": "Cash à la livraison",
-    "online": "Paiement en ligne"
+    "online": "Paiement en ligne",
+    "selectVariants": "Sélectionner vos options",
+    "noVariants": "Aucune variante disponible",
+    "total": "Total",
+    "quantity": "Quantité"
   },
   "tabs": {
     "tab_home": "Accueil",
@@ -123,7 +127,9 @@
     "submit": "Soumettre",
     "register": "S'inscrire",
     "login": "Se connecter",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "continueShopping": "Continuer l'achat",
+    "viewCart": "Aller au panier"
   },
   "input":{
     "phoneTitle": "Téléphone",
