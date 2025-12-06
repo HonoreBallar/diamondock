@@ -4,21 +4,18 @@ import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Btn from "../components/Btn";
-import { Picker } from "@react-native-picker/picker";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDateToEnglish } from "../utils/utils";
 import { useCart } from "../context/CartContext";
-import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import SearchableSelect from "../components/SearchableSelect";
 import { useTranslation } from "../context/LocalizationContext";
-import { useApiClient } from "../context/ApiContext";
+import { useRootContext } from "../context/RootContext";
 
 export default function OrderStepTwo({ navigation, route }) {
 
     const {t} = useTranslation();
+    const {countries} = useRootContext();
 
     const {modePayment, fetchOrder} = useOrders();
     const {clearCart} = useCart();
@@ -36,6 +33,7 @@ export default function OrderStepTwo({ navigation, route }) {
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);
+
 
     // Données exemple
     const countriesData = [
@@ -67,47 +65,6 @@ export default function OrderStepTwo({ navigation, route }) {
         { token: '5', name: 'Yopougon' },
     ];
 
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleConfirm = (date) => {
-        setSelectedDate(date.toLocaleDateString('fr-FR')); // Format date to DD/MM/YYYY
-        hideDatePicker();
-    };
-
-    const getDateOneDaysLater = () => {
-        const today = new Date();
-        const nextDay = new Date(today);
-        nextDay.setDate(today.getDate() + 1);
-        return nextDay;
-    }
-
-    const relay_point = "Cocody Angré Djorobité";
-
-    const handleHome = ()=>{
-        setChecked('at_home');
-        setDelivery('')
-    }
-
-    const handleRelayPoint = () => {
-        setChecked('relay_point');
-        setDelivery(relay_point)
-    }
-
-    const handleCash = ()=>{
-        setPayment('cash');
-        setVisible(false);
-    }
-
-    const handleOnline = ()=> {
-        setPayment('online');
-        setVisible(true);
-    }
 
 
     const handleSubmit = () => {
@@ -211,10 +168,6 @@ export default function OrderStepTwo({ navigation, route }) {
         
     };
 
-    const toggleExpanded = () => {
-        setIsExpanded(!isExpanded);
-    };
-
 
     return (
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'white' }}>
@@ -229,7 +182,7 @@ export default function OrderStepTwo({ navigation, route }) {
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <SearchableSelect
                                 label="Pays"
-                                data={countriesData}
+                                data={countries}
                                 value={selectedCountry}
                                 onChange={setSelectedCountry}
                                 placeholder="Sélectionner un pays"
