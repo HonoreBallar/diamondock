@@ -82,12 +82,12 @@ export default function OrderStepOne({navigation}) {
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'white' }}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{flex: 1}}>
+                    <HeaderLogo />
+                    <Title title={t('common.step1')} />
                     <ScrollView style={{ flex: 1 }}
                         contentContainerStyle={{ paddingBottom: 20 }}
                         keyboardShouldPersistTaps="handled"
                     >
-                        <HeaderLogo />
-                        <Title title={t('common.step1')} />
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <View>
                                 <View style={{flexDirection: 'row'}}>
@@ -163,7 +163,7 @@ export default function OrderStepOne({navigation}) {
                                 </TouchableOpacity>
                                 {isExpanded && (
                                     cart.map(product => (
-                                        <View key={product.token} style={{flexDirection: 'row', justifyContent:'space-between', marginHorizontal: 15, marginVertical: 10}}>
+                                        <View key={product.uniqueKey} style={{flexDirection: 'row', justifyContent:'space-between', marginHorizontal: 15, marginVertical: 10}}>
                                             <View style={{flexDirection: 'row'}}>
                                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                                     <View style={{marginRight: 15, height: 40, width: 40, borderRadius: 45, backgroundColor: 'white', borderWidth: 0.2, justifyContent: 'center', alignItems: 'center'}}>

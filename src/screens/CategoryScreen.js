@@ -15,7 +15,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function CategoryScreen({ navigation }) {
     const { t } = useTranslation();
-    const { categories, departments } = useCategories();
+    const { categories, departments, loading } = useCategories();
 
     const scrollViewRef = useRef(null);
     const depRefs = useRef({});
@@ -126,6 +126,44 @@ export default function CategoryScreen({ navigation }) {
                     <Text style={styles.emptyStateText}>
                         {t("common.noCategories")}
                     </Text>
+                </View>
+            </View>
+        );
+    }
+
+    // Afficher le skeleton loader pendant le chargement
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <Header />
+                <View style={styles.contentWrapper}>
+                    {/* Sidebar Skeleton */}
+                    <ScrollView
+                        style={styles.sidebar}
+                        contentContainerStyle={styles.sidebarContent}
+                        scrollEnabled={false}
+                    >
+                        {[1, 2, 3, 4, 5].map((index) => (
+                            <View key={index} style={styles.skeletonDeptButton}>
+                                <View style={styles.skeletonText} />
+                            </View>
+                        ))}
+                    </ScrollView>
+
+                    {/* Main Content Skeleton */}
+                    <ScrollView
+                        style={styles.mainContent}
+                        scrollEnabled={false}
+                    >
+                        {[1, 2, 3].map((depIndex) => (
+                            <View key={depIndex} style={styles.skeletonDepartmentSection}>
+                                <View style={styles.skeletonDepartmentTitle} />
+                                {[1, 2, 3].map((catIndex) => (
+                                    <View key={catIndex} style={styles.skeletonCategoryItem} />
+                                ))}
+                            </View>
+                        ))}
+                    </ScrollView>
                 </View>
             </View>
         );
@@ -394,5 +432,34 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 14,
         color: "#9ca3af"
+    },
+    // Skeleton Styles
+    skeletonDeptButton: {
+        paddingHorizontal: 12,
+        paddingVertical: 14,
+        borderLeftWidth: 3,
+        borderLeftColor: "transparent"
+    },
+    skeletonText: {
+        height: 16,
+        backgroundColor: "#e5e7eb",
+        borderRadius: 4,
+        marginBottom: 8
+    },
+    skeletonDepartmentSection: {
+        marginBottom: 28
+    },
+    skeletonDepartmentTitle: {
+        height: 22,
+        backgroundColor: "#e5e7eb",
+        borderRadius: 4,
+        marginBottom: 16,
+        width: "40%"
+    },
+    skeletonCategoryItem: {
+        height: 16,
+        backgroundColor: "#e5e7eb",
+        borderRadius: 4,
+        marginBottom: 12
     }
 });

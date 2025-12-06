@@ -11,16 +11,20 @@ export const CategoryProvider = ({ children }) => {
   const {appLanguage} = useRootContext();
   const [categories, setCategories] = useState([]);
   const [departments, setDepartments] = useState(null);
+  const [loading, setLoading] = useState(true);
   const apiClient = useApiClient();
 
   const fetchCategories = async () => {
       try {
+          setLoading(true);
           const dataCategories = await apiClient.get('/category/all');
           setCategories(dataCategories?.data?.data ?? []);
           const dataDepartments = await apiClient.get('/department/all');
           setDepartments(dataDepartments?.data?.data ?? []);
       } catch (error) {
           console.error('Error loading seller products :', error);
+      } finally {
+          setLoading(false);
       }
   };
 
@@ -30,7 +34,7 @@ export const CategoryProvider = ({ children }) => {
   }, [appLanguage]);
 
   return (
-    <CategoryContext.Provider value={{ categories , fetchCategories, departments }}>
+    <CategoryContext.Provider value={{ categories , fetchCategories, departments, loading }}>
       {children}
     </CategoryContext.Provider>
   );
