@@ -44,7 +44,8 @@
     "selectVariants": "Select variants",
     "noVariants": "No variants available",
     "total": "Total",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "delivery": "Delivery"
   },
   "tabs": {
     "tab_home": "Home",

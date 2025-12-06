@@ -13,6 +13,7 @@ import HeaderLogo from "../components/HeaderLogo";
 import RenderHTML from "react-native-render-html";
 import { useTranslation } from "../context/LocalizationContext";
 import { useApiClient } from "../context/ApiContext";
+import SearchableSelect from "../components/SearchableSelect";
 
 export default function DetailProductScreen({navigation, route}){
 
@@ -30,6 +31,32 @@ export default function DetailProductScreen({navigation, route}){
     const apiClient = useApiClient();
 
     const [selectedVariants, setSelectedVariants] = useState({});
+    const [isDeliveryExpanded, setIsDeliveryExpanded] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedRegion, setSelectedRegion] = useState(null);
+
+    // Données exemple pour les pays
+    const countriesData = [
+        { token: '1', name: 'Côte d\'Ivoire' },
+        { token: '2', name: 'Sénégal' },
+        { token: '3', name: 'Mali' },
+        { token: '4', name: 'Burkina Faso' },
+        { token: '5', name: 'Ghana' },
+        { token: '6', name: 'Nigeria' },
+        { token: '7', name: 'Togo' },
+        { token: '8', name: 'Bénin' },
+        { token: '9', name: 'Guinée' },
+        { token: '10', name: 'Libéria' },
+    ];
+
+    // Données exemple pour les régions
+    const regionsData = [
+        { token: '1', name: 'Abidjan' },
+        { token: '2', name: 'Yamoussoukro' },
+        { token: '3', name: 'Gagnoa' },
+        { token: '4', name: 'Korhogo' },
+        { token: '5', name: 'Bouaké' },
+    ];
 
     const handleSelectVariant = (groupName, item) => {
         setSelectedVariants(prev => ({
@@ -214,6 +241,41 @@ export default function DetailProductScreen({navigation, route}){
                             
                             <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.description')}</Text>
                             <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
+                            
+                            {/* DELIVERY CARD */}
+                            <View style={{borderWidth: 0.8, borderColor: '#ccc', borderRadius: 10, marginBottom: 15, overflow: 'hidden'}}>
+                                <TouchableOpacity 
+                                    onPress={() => setIsDeliveryExpanded(!isDeliveryExpanded)} 
+                                    style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15}}
+                                >
+                                    <Text style={{color: colors.primary, fontSize: 15, fontWeight: '600'}}>📦 {t('common.delivery') || 'Livraison'}</Text>
+                                    <FontAwesome5 name={isDeliveryExpanded ? 'chevron-up' : 'chevron-down'} size={15} color="black" />
+                                </TouchableOpacity>
+                                {isDeliveryExpanded && (
+                                    <View style={{borderTopWidth: 0.8, borderTopColor: '#ccc', padding: 16, backgroundColor: '#f9f9f9'}}>
+
+                                        {/* SELECTS */}
+                                        <View style={{marginTop: 2}}>
+                                            <SearchableSelect
+                                                label="Pays"
+                                                data={countriesData}
+                                                value={selectedCountry}
+                                                onChange={setSelectedCountry}
+                                                placeholder="Sélectionner un pays"
+                                                isRequired
+                                            />
+                                            <SearchableSelect
+                                                label="Région"
+                                                data={regionsData}
+                                                value={selectedRegion}
+                                                onChange={setSelectedRegion}
+                                                placeholder="Sélectionner une région"
+                                                isRequired
+                                            />
+                                        </View>
+                                    </View>
+                                )}
+                            </View>
                             
                             <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>{t('common.reviews')}</Text>
                             <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>

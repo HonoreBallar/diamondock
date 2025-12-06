@@ -44,7 +44,8 @@
     "selectVariants": "Sélectionner vos options",
     "noVariants": "Aucune variante disponible",
     "total": "Total",
-    "quantity": "Quantité"
+    "quantity": "Quantité",
+    "delivery": "Livraison"
   },
   "tabs": {
     "tab_home": "Accueil",
