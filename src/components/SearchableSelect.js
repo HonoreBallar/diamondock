@@ -79,73 +79,73 @@ const SearchableSelect = ({
                     />
 
                     <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        {/* Header */}
-                        <View style={styles.modalHeader}>
-                            <Text style={styles.modalTitle}>{label || placeholder}</Text>
-                            <TouchableOpacity onPress={handleClose}>
-                                <FontAwesome5 name="times" size={20} color="#000" />
-                            </TouchableOpacity>
-                        </View>
-
-                        {/* Search Input */}
-                        <View style={styles.searchContainer}>
-                            <FontAwesome5
-                                name="search"
-                                size={16}
-                                color={colors.primary}
-                                style={styles.searchIcon}
-                            />
-                            <TextInput
-                                style={styles.searchInput}
-                                placeholder="Rechercher..."
-                                value={searchText}
-                                onChangeText={setSearchText}
-                                placeholderTextColor="#999"
-                            />
-                        </View>
-
-                        {/* List */}
-                        <FlatList
-                            data={filteredData}
-                            keyExtractor={(item, index) => item.token || index.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={[
-                                        styles.listItem,
-                                        selectedItem?.token === item.token && styles.listItemSelected,
-                                    ]}
-                                    onPress={() => handleSelectItem(item)}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.listItemText,
-                                            selectedItem?.token === item.token && styles.listItemTextSelected,
-                                        ]}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    {selectedItem?.token === item.token && (
-                                        <FontAwesome5 name="check" size={16} color={colors.primary} />
-                                    )}
+                        <View style={styles.modalContent}>
+                            {/* Header */}
+                            <View style={styles.modalHeader}>
+                                <Text style={styles.modalTitle}>{label || placeholder}</Text>
+                                <TouchableOpacity onPress={handleClose}>
+                                    <FontAwesome5 name="times" size={20} color="#000" />
                                 </TouchableOpacity>
-                            )}
-                            ListEmptyComponent={
-                                <View style={styles.emptyContainer}>
-                                    <Text style={styles.emptyText}>Aucun résultat trouvé</Text>
-                                </View>
-                            }
-                            scrollEnabled={true}
-                        />
+                            </View>
 
-                        {/* Close Button */}
-                        {/* <TouchableOpacity
-                            style={styles.closeButton}
-                            onPress={handleClose}
-                        >
-                            <Text style={styles.closeButtonText}>Fermer</Text>
-                        </TouchableOpacity> */}
-                    </View>
+                            {/* Search Input */}
+                            <View style={styles.searchContainer}>
+                                <FontAwesome5
+                                    name="search"
+                                    size={16}
+                                    color={colors.primary}
+                                    style={styles.searchIcon}
+                                />
+                                <TextInput
+                                    style={styles.searchInput}
+                                    placeholder="Rechercher..."
+                                    value={searchText}
+                                    onChangeText={setSearchText}
+                                    placeholderTextColor="#999"
+                                />
+                            </View>
+
+                            {/* List */}
+                            <FlatList
+                                data={filteredData}
+                                keyExtractor={(item, index) => item.token || index.toString()}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.listItem,
+                                            selectedItem?.token === item.token && styles.listItemSelected,
+                                        ]}
+                                        onPress={() => handleSelectItem(item)}
+                                    >
+                                        <Text
+                                            style={[
+                                                styles.listItemText,
+                                                selectedItem?.token === item.token && styles.listItemTextSelected,
+                                            ]}
+                                        >
+                                            {item.name}
+                                        </Text>
+                                        {selectedItem?.token === item.token && (
+                                            <FontAwesome5 name="check" size={16} color={colors.primary} />
+                                        )}
+                                    </TouchableOpacity>
+                                )}
+                                ListEmptyComponent={
+                                    <View style={styles.emptyContainer}>
+                                        <Text style={styles.emptyText}>Aucun résultat trouvé</Text>
+                                    </View>
+                                }
+                                scrollEnabled={true}
+                            />
+
+                            {/* Close Button */}
+                            {/* <TouchableOpacity
+                                style={styles.closeButton}
+                                onPress={handleClose}
+                            >
+                                <Text style={styles.closeButtonText}>Fermer</Text>
+                            </TouchableOpacity> */}
+                        </View>
                     </View>
                 </View>
             </Modal>
