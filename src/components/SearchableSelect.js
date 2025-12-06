@@ -108,24 +108,24 @@ const SearchableSelect = ({
                             {/* List */}
                             <FlatList
                                 data={filteredData}
-                                keyExtractor={(item, index) => item.token || index.toString()}
+                                keyExtractor={(item, index) => item.id || index.toString()}
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
                                         style={[
                                             styles.listItem,
-                                            selectedItem?.token === item.token && styles.listItemSelected,
+                                            selectedItem?.id === item.id && styles.listItemSelected,
                                         ]}
                                         onPress={() => handleSelectItem(item)}
                                     >
                                         <Text
                                             style={[
                                                 styles.listItemText,
-                                                selectedItem?.token === item.token && styles.listItemTextSelected,
+                                                selectedItem?.id === item.id && styles.listItemTextSelected,
                                             ]}
                                         >
                                             {item.name}
                                         </Text>
-                                        {selectedItem?.token === item.token && (
+                                        {selectedItem?.id === item.id && (
                                             <FontAwesome5 name="check" size={16} color={colors.primary} />
                                         )}
                                     </TouchableOpacity>
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        maxHeight: SCREEN_HEIGHT * 0.75,
+        maxHeight: SCREEN_HEIGHT * 0.55,
         paddingBottom: 16,
     },
     modalHeader: {
