@@ -4,7 +4,6 @@ import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Btn from "../components/Btn";
-import { RadioButton } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
@@ -13,6 +12,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { formatDateToEnglish } from "../utils/utils";
 import { useCart } from "../context/CartContext";
 import SingleDropdownSelect from "../components/SingleDropdownSelect";
+import SearchableSelect from "../components/SearchableSelect";
 import { useTranslation } from "../context/LocalizationContext";
 import { useApiClient } from "../context/ApiContext";
 
@@ -23,7 +23,6 @@ export default function OrderStepTwo({ navigation, route }) {
     const {modePayment, fetchOrder} = useOrders();
     const {clearCart} = useCart();
     const {datas} = route.params;
-    const [address, setAddress] = useState('');
     const [delivery, setDelivery] = useState('');
     const [loading, setLoading] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -34,6 +33,39 @@ export default function OrderStepTwo({ navigation, route }) {
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedRegion, setSelectedRegion] = useState(null);
+    const [selectedCommune, setSelectedCommune] = useState(null);
+
+    // Données exemple
+    const countriesData = [
+        { token: '1', name: 'Côte d\'Ivoire' },
+        { token: '2', name: 'Sénégal' },
+        { token: '3', name: 'Mali' },
+        { token: '4', name: 'Burkina Faso' },
+        { token: '5', name: 'Ghana' },
+        { token: '6', name: 'Nigeria' },
+        { token: '7', name: 'Togo' },
+        { token: '8', name: 'Bénin' },
+        { token: '9', name: 'Guinée' },
+        { token: '10', name: 'Libéria' },
+    ];
+
+    const regionsData = [
+        { token: '1', name: 'Abidjan' },
+        { token: '2', name: 'Yamoussoukro' },
+        { token: '3', name: 'Gagnoa' },
+        { token: '4', name: 'Korhogo' },
+        { token: '5', name: 'Bouaké' },
+    ];
+
+    const communesData = [
+        { token: '1', name: 'Cocody' },
+        { token: '2', name: 'Plateau' },
+        { token: '3', name: 'Treichville' },
+        { token: '4', name: 'Marcory' },
+        { token: '5', name: 'Yopougon' },
+    ];
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -195,27 +227,31 @@ export default function OrderStepTwo({ navigation, route }) {
                         <HeaderLogo />
                         <Title title={t('common.step2')} />
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
-                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>{t('input.deliveryModeTitle')}</Text>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2}}>
-                                <TouchableOpacity onPress={handleHome} style={{flexDirection: 'row'}}>
-                                    <RadioButton
-                                        value="at_home"
-                                        color="#03045e"
-                                        status={ checked === 'at_home' ? 'checked' : 'unchecked' }
-                                        onPress={handleHome}
-                                    />
-                                    <Text style={{marginTop:7, fontWeight: '500'}}>{t('common.homeDelivery')}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={handleRelayPoint} style={{flexDirection: 'row'}}>
-                                    <RadioButton
-                                        value="relay_point"
-                                        color="#03045e"
-                                        status={ checked === 'relay_point' ? 'checked' : 'unchecked' }
-                                        onPress={handleRelayPoint}
-                                    />
-                                    <Text style={{marginTop:7, fontWeight: "500"}}>{t('common.relayPoint')}</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <SearchableSelect
+                                label="Pays"
+                                data={countriesData}
+                                value={selectedCountry}
+                                onChange={setSelectedCountry}
+                                placeholder="Sélectionner un pays"
+                                isRequired
+                            />
+                            <SearchableSelect
+                                label="Région"
+                                data={regionsData}
+                                value={selectedRegion}
+                                onChange={setSelectedRegion}
+                                placeholder="Sélectionner une région"
+                                isRequired
+                            />
+                            <SearchableSelect
+                                label="Commune"
+                                data={communesData}
+                                value={selectedCommune}
+                                onChange={setSelectedCommune}
+                                placeholder="Sélectionner une commune"
+                                isRequired
+                            />
+                            
                             <Input
                                 label={t('input.deliveryAddressTitle')}
                                 icon="map-marker-alt"
@@ -225,69 +261,17 @@ export default function OrderStepTwo({ navigation, route }) {
                                 isRequired={true}
                                 editable={checked == 'at_home'  ? true : false}
                             />
-                             <View>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Text style={{fontSize: 15,marginBottom: 8,fontWeight: 'bold',}}>{t('input.deliveryDateTitle')}</Text>
-                                    {visible && <Text style={{color: 'red'}}> *</Text>}
-                                </View>
-                                <TouchableOpacity onPress={showDatePicker} style={{borderWidth: 1, borderColor: "#c5c5c5", padding: 13, borderRadius: 15, marginBottom: 10}}>
-                                    <View style={{flexDirection: 'row', justifyContent: ''}}>
-                                        <FontAwesome5 name="calendar" size={18} color="black" style={{fontSize: 18, marginRight: 5,}} />
-                                        <Text style={{}}>{selectedDate != '' ? selectedDate.toLocaleString() : t('input.deliveryDateTitle')}</Text>
-                                    </View>
-                                </TouchableOpacity>
+                           
+                            <View style={{ marginBottom: 15, marginTop: 12 }}>
+                                <Btn
+                                    label={t('common.save')}
+                                    loader={loading}
+                                    disabled={loading}
+                                    action={handleSubmit}
+                                />
                             </View>
-                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8}}>{t('input.paymentModeTitle')}</Text>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-                                <TouchableOpacity onPress={handleCash} style={{flexDirection: 'row'}}>
-                                    <RadioButton
-                                        value="cash"
-                                        color="#03045e"
-                                        status={ payment === 'cash' ? 'checked' : 'unchecked' }
-                                        onPress={handleCash}
-                                    />
-                                    <Text style={{marginTop:7, fontWeight: '500'}}>{t('common.cash')}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={handleOnline} style={{flexDirection: 'row'}}>
-                                    <RadioButton
-                                        value="online"
-                                        color="#03045e"
-                                        status={ payment === 'online' ? 'checked' : 'unchecked' }
-                                        onPress={handleOnline}
-                                    />
-                                    <Text style={{marginTop:7, fontWeight: "500"}}>{t('common.online')}</Text>
-                                </TouchableOpacity>
-                            </View>
-                            {visible && (
-                                <View style={{
-                                    borderColor: '#ccc',
-                                    marginBottom: 15,
-                                }}>
-                                    <View>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Text style={{fontSize:15, fontWeight: 'bold', marginBottom: 8, marginRight: 3}}>{t('input.system')}</Text>
-                                            <Text style={{color: 'red'}}>*</Text>
-                                        </View>
-                                        <SingleDropdownSelect items={modePayment} iconSelect="wallet" onSelectHandler={(_)=>setSelectedPayment(_?.name)}/>
-                                    </View>
-                                </View>
-                            )}
-                            <Btn
-                                label={t('common.save')}
-                                loader={loading}
-                                disabled={loading}
-                                action={handleSubmit}
-                            />
                         </View>
-                        <DateTimePickerModal
-                            isVisible={isDatePickerVisible}
-                            mode="date"
-                            format="DD-MM-YYYY"
-                            placeholder="Selectionner une date"
-                            minimumDate={getDateOneDaysLater()}
-                            onConfirm={handleConfirm}
-                            onCancel={hideDatePicker}
-                        />
+                        
                     </ScrollView>
                 </View>
             </TouchableWithoutFeedback>
