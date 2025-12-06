@@ -40,7 +40,11 @@
     "homeDelivery": "Home delivery",
     "relayPoint": "Relay point",
     "cash": "Cash",
-    "online": "Online"
+    "online": "Online",
+    "selectVariants": "Select variants",
+    "noVariants": "No variants available",
+    "total": "Total",
+    "quantity": "Quantity"
   },
   "tabs": {
     "tab_home": "Home",
@@ -123,7 +127,9 @@
     "submit": "Submit",
     "register": "Register",
     "login": "Login",
-    "save": "Save"
+    "save": "Save",
+    "continueShopping": "Continue Shopping",
+    "viewCart": "Go to Cart"
   },
   "input":{
     "phoneTitle": "Phone Number",
