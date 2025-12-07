@@ -15,6 +15,9 @@ export const RootProvider = ({children})=>{
     const [appLanguage, setAppLanguage] = useState('');
     const [appCurrency, setAppCurrency] = useState('');
     const [currencies, setCurrencies] = useState([]);
+    const [regions, setRegions] = useState([]);
+    const [municipalities, setMunicipalities] = useState([]);
+    const [typeDelivery, setTypeDelivery] = useState([]);
     const [auth, setAuth] = useState({
         isLoggedIn: false,
         user: null
@@ -50,6 +53,7 @@ export const RootProvider = ({children})=>{
         _();
         getCountries();
         getCurrencies();
+        getTypeDelivery();
     },[]);
 
     const updateStarterState = async (payload = {})=>{
@@ -207,8 +211,74 @@ export const RootProvider = ({children})=>{
         }
     }
 
+    const getRegions = async(country)=>{
+        try {
+            const response = await getRequest('/setting/regions?country='+country);
+            if(response?.status === false){
+                showMessage({
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+            }
+            setRegions(response?.data);
+        } catch (error) {
+            showMessage({
+                message: "Error "+ error.message,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }
+    }
+
+    const getMunicipalities = async(region)=>{
+        try {
+            const response = await getRequest('/setting/municipalities?region='+region);
+            if(response?.status === false){
+                showMessage({
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+            }
+            setMunicipalities(response?.data);
+        } catch (error) {
+            showMessage({
+                message: "Error "+ error.message,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }
+    }
+
+    const getTypeDelivery = async()=>{
+        try {
+            const response = await getRequest('/setting/delivery-types');
+            if(response?.status === false){
+                showMessage({
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger"},
+                    duration: 2000,
+                });
+            }
+            setTypeDelivery(response?.data);
+        } catch (error) {
+            showMessage({
+                message: "Error "+ error.message,
+                type: "danger",
+                icon: { icon: "danger"},
+                duration: 2000,
+            });
+        }
+    }
+
     return (
-        <RootContext.Provider value={{starter, auth, loading, countries, currencies ,appLanguage, appCurrency, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency, resetPassword}}>
+        <RootContext.Provider value={{starter, auth, loading, countries, municipalities, currencies, regions, appLanguage, appCurrency, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency, resetPassword, getRegions, getMunicipalities}}>
             {children}
             <FlashMessage
                 animated={true}

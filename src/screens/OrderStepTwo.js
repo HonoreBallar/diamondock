@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useEffect, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
@@ -15,57 +15,50 @@ import { useRootContext } from "../context/RootContext";
 export default function OrderStepTwo({ navigation, route }) {
 
     const {t} = useTranslation();
-    const {countries} = useRootContext();
+    const {countries, getMunicipalities, getRegions, regions, municipalities} = useRootContext();
 
     const {modePayment, fetchOrder} = useOrders();
     const {clearCart} = useCart();
     const {datas} = route.params;
     const [delivery, setDelivery] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
     const [checked, setChecked] = useState('at_home');
     const [payment, setPayment] = useState('cash');
     const [selectedPayment, setSelectedPayment] = useState('');
-    const [visible, setVisible] = useState(false);
 
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);
+    const [loadingRegions, setLoadingRegions] = useState(false);
+    const [loadingMunicipalities, setLoadingMunicipalities] = useState(false);
 
+    // Charger les régions quand le pays change
+    useEffect(() => {
+        if (selectedCountry) {
+            setLoadingRegions(true);
+            setSelectedRegion(null);
+            setSelectedCommune(null);
+            getRegions(selectedCountry.id || selectedCountry).then(() => {
+                setLoadingRegions(false);
+            }).catch(() => {
+                setLoadingRegions(false);
+            });
+        }
+    }, [selectedCountry]);
 
-    // Données exemple
-    const countriesData = [
-        { token: '1', name: 'Côte d\'Ivoire' },
-        { token: '2', name: 'Sénégal' },
-        { token: '3', name: 'Mali' },
-        { token: '4', name: 'Burkina Faso' },
-        { token: '5', name: 'Ghana' },
-        { token: '6', name: 'Nigeria' },
-        { token: '7', name: 'Togo' },
-        { token: '8', name: 'Bénin' },
-        { token: '9', name: 'Guinée' },
-        { token: '10', name: 'Libéria' },
-    ];
-
-    const regionsData = [
-        { token: '1', name: 'Abidjan' },
-        { token: '2', name: 'Yamoussoukro' },
-        { token: '3', name: 'Gagnoa' },
-        { token: '4', name: 'Korhogo' },
-        { token: '5', name: 'Bouaké' },
-    ];
-
-    const communesData = [
-        { token: '1', name: 'Cocody' },
-        { token: '2', name: 'Plateau' },
-        { token: '3', name: 'Treichville' },
-        { token: '4', name: 'Marcory' },
-        { token: '5', name: 'Yopougon' },
-    ];
-
-
+    // Charger les communes quand la région change
+    useEffect(() => {
+        if (selectedRegion && selectedCountry) {
+            setLoadingMunicipalities(true);
+            setSelectedCommune(null);
+            getMunicipalities(selectedRegion.id || selectedRegion).then(() => {
+                setLoadingMunicipalities(false);
+            }).catch(() => {
+                setLoadingMunicipalities(false);
+            });
+        }
+    }, [selectedRegion]);
 
     const handleSubmit = () => {
 
@@ -190,19 +183,33 @@ export default function OrderStepTwo({ navigation, route }) {
                             />
                             <SearchableSelect
                                 label="Région"
-                                data={regionsData}
+                                data={regions}
                                 value={selectedRegion}
                                 onChange={setSelectedRegion}
                                 placeholder="Sélectionner une région"
                                 isRequired
+                                disabled={!selectedCountry || loadingRegions}
+                                loading={loadingRegions}
                             />
                             <SearchableSelect
                                 label="Commune"
-                                data={communesData}
+                                data={municipalities}
                                 value={selectedCommune}
                                 onChange={setSelectedCommune}
                                 placeholder="Sélectionner une commune"
                                 isRequired
+                                disabled={!selectedRegion || loadingMunicipalities}
+                                loading={loadingMunicipalities}
+                            />
+
+                            <SearchableSelect
+                                label="Type de livraison"
+                                data={municipalities}
+                                value={selectedCommune}
+                                onChange={setSelectedCommune}
+                                placeholder="Sélectionner un type de livraison"
+                                isRequired
+                                loading={loadingMunicipalities}
                             />
                             
                             <Input
