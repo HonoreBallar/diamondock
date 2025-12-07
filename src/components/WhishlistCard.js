@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 import { formatAmount } from '../utils/utils';
 import { useTranslation } from '../context/LocalizationContext';
+import VariantsBottomSheet from './VariantsBottomSheet';
 
 export default function WishlistCard({navigation, product}){
     const {t} = useTranslation();
@@ -12,6 +13,8 @@ export default function WishlistCard({navigation, product}){
     const {addToCart} = useCart();
     const [loadingWishlist, setLoadingWishlist] = useState(false);
     const [loadingCart, setLoadingCart] = useState(false);
+    const [showVariantsSheet, setShowVariantsSheet] = useState(false);
+
     const handleRemoveFromWishlist = (product)=>{
         setLoadingWishlist(true);
         Alert.alert(
@@ -27,13 +30,27 @@ export default function WishlistCard({navigation, product}){
             {cancelable: false}
         )
     }
+
     const handleAddToCart = async (product)=>{
         setLoadingCart(true);
+        // Si le produit a des variants, ouvrir le bottom sheet
+        if (product?.variants && product.variants.length > 0) {
+            setShowVariantsSheet(true);
+            return;
+        }
+        
+        // Sinon, ajouter directement au panier
         setTimeout(async () => {
             await addToCart(product);
             setLoadingCart(false);
-        }, 50);
+        }, 50); 
     }
+
+    const handleOnClose = async () => {
+        setShowVariantsSheet(false);
+        setLoadingCart(false);
+    }
+
     return (
         <View style={{flexDirection: 'row', height: 120, backgroundColor: '#f9f9f9', borderRadius: 10, padding: 10, marginBottom: 10, elevation: 1}}>
             <TouchableOpacity onPress={()=>navigation.navigate('DetailProductScreen', {product})}>
@@ -53,7 +70,7 @@ export default function WishlistCard({navigation, product}){
                             <Text style={{color: 'red', fontSize: 12, fontWeight: '600'}}>{t('wishlist.removeFromWishlist')}</Text>
                         )}
                     </TouchableOpacity>
-                    {/* {product?.remaining_stock != 0 &&(
+                    {product?.remaining_stock != 0 &&(
                         <TouchableOpacity onPress={()=>handleAddToCart(product)} style={{backgroundColor: '#03045e', padding: 8, borderRadius: 18}}>
                             {loadingCart ?(
                                 <ActivityIndicator size={15} color="white" />
@@ -62,9 +79,34 @@ export default function WishlistCard({navigation, product}){
                             )
                             }
                         </TouchableOpacity>
-                    ) } */}
+                    ) }
                 </View>
             </View>
+            
+            {/* Bottom Sheet pour les variants */}
+            <VariantsBottomSheet
+                visible={showVariantsSheet}
+                onClose={handleOnClose}
+                product={product}
+                onAddToCart={(selectedVariants, quantity) => {
+                    setLoadingCart(true);
+                    setTimeout(() => {
+                        addToCart(product, quantity, selectedVariants);
+                        setShowVariantsSheet(false);
+                        setLoadingCart(false);
+                    }, 50);
+                }}
+                onGoToCart={(selectedVariants, quantity) => {
+                    setLoadingCart(true);
+                    setTimeout(() => {
+                        addToCart(product, quantity, selectedVariants);
+                        setShowVariantsSheet(false);
+                        // Naviguer vers l'onglet du panier
+                        navigation?.navigate('Main',{screen: t('tabs.tab_cart')});
+                        setLoadingCart(false);
+                    }, 50);
+                }}
+            />
         </View>
     )
 }

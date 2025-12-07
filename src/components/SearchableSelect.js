@@ -15,6 +15,14 @@ import colors from '../utils/colors';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
+// Fonction pour normaliser les caractères et retirer les accents
+const normalizeString = (str) => {
+    return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+};
+
 const SearchableSelect = ({
     label,
     data = [],
@@ -27,9 +35,9 @@ const SearchableSelect = ({
     const [searchText, setSearchText] = useState('');
     const [selectedItem, setSelectedItem] = useState(value || null);
 
-    // Filtrer les données selon la recherche
+    // Filtrer les données selon la recherche avec normalisation
     const filteredData = data.filter(item =>
-        item.name.toLowerCase().includes(searchText.toLowerCase())
+        normalizeString(item.name).includes(normalizeString(searchText))
     );
 
     const handleSelectItem = (item) => {

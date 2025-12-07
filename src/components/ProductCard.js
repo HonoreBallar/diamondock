@@ -58,7 +58,7 @@ const ProductCard = ({ navigation, product }) => {
         setTimeout(async () => {
             await addToCart(product, quantity, selectedVariants, itemQuantities);
             setLoading(false);
-            navigation.navigate('Main', { screen: 'Panier' });
+            navigation.navigate('Main', { screen: t('tabs.tab_cart') });
         }, 50);
     };
 
