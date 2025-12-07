@@ -14,10 +14,12 @@ import RenderHTML from "react-native-render-html";
 import { useTranslation } from "../context/LocalizationContext";
 import { useApiClient } from "../context/ApiContext";
 import SearchableSelect from "../components/SearchableSelect";
+import { useRootContext } from "../context/RootContext";
 
 export default function DetailProductScreen({navigation, route}){
 
     const {t} = useTranslation();
+    const {countries, getMunicipalities, getRegions, regions, municipalities} = useRootContext();
     const {product} = route.params;
     const {addToCart} = useCart();
     const [quantity, setQuantity] = useState('1');
@@ -34,29 +36,38 @@ export default function DetailProductScreen({navigation, route}){
     const [isDeliveryExpanded, setIsDeliveryExpanded] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
+    const [selectedCommune, setSelectedCommune] = useState(null);
+    const [loadingRegions, setLoadingRegions] = useState(false);
+    const [loadingMunicipalities, setLoadingMunicipalities] = useState(false);
 
-    // Données exemple pour les pays
-    const countriesData = [
-        { token: '1', name: 'Côte d\'Ivoire' },
-        { token: '2', name: 'Sénégal' },
-        { token: '3', name: 'Mali' },
-        { token: '4', name: 'Burkina Faso' },
-        { token: '5', name: 'Ghana' },
-        { token: '6', name: 'Nigeria' },
-        { token: '7', name: 'Togo' },
-        { token: '8', name: 'Bénin' },
-        { token: '9', name: 'Guinée' },
-        { token: '10', name: 'Libéria' },
-    ];
+    // Charger les régions quand le pays change
+    useEffect(() => {
+        if (selectedCountry) {
+            setLoadingRegions(true);
+            setSelectedRegion(null);
+            setSelectedCommune(null);
+            getRegions(selectedCountry.id || selectedCountry).then(() => {
+                setLoadingRegions(false);
+            }).catch(() => {
+                setLoadingRegions(false);
+            });
+        }
+    }, [selectedCountry]);
 
-    // Données exemple pour les régions
-    const regionsData = [
-        { token: '1', name: 'Abidjan' },
-        { token: '2', name: 'Yamoussoukro' },
-        { token: '3', name: 'Gagnoa' },
-        { token: '4', name: 'Korhogo' },
-        { token: '5', name: 'Bouaké' },
-    ];
+    // Charger les communes quand la région change
+    useEffect(() => {
+        if (selectedRegion && selectedCountry) {
+            setLoadingMunicipalities(true);
+            setSelectedCommune(null);
+            getMunicipalities(selectedRegion.id || selectedRegion).then(() => {
+                setLoadingMunicipalities(false);
+            }).catch(() => {
+                setLoadingMunicipalities(false);
+            });
+        }
+    }, [selectedRegion]);
+
+
 
     const handleSelectVariant = (groupName, item) => {
         setSelectedVariants(prev => ({
@@ -243,7 +254,7 @@ export default function DetailProductScreen({navigation, route}){
                             <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
                             
                             {/* DELIVERY CARD */}
-                            <View style={{borderWidth: 0.8, borderColor: '#ccc', borderRadius: 10, marginBottom: 15, overflow: 'hidden'}}>
+                            <View style={{borderWidth: 0.8, borderColor: '#ccc', borderRadius: 10, marginBottom: 15, marginTop: 15, overflow: 'hidden'}}>
                                 <TouchableOpacity 
                                     onPress={() => setIsDeliveryExpanded(!isDeliveryExpanded)} 
                                     style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15}}
@@ -258,7 +269,7 @@ export default function DetailProductScreen({navigation, route}){
                                         <View style={{marginTop: 2}}>
                                             <SearchableSelect
                                                 label="Pays"
-                                                data={countriesData}
+                                                data={countries}
                                                 value={selectedCountry}
                                                 onChange={setSelectedCountry}
                                                 placeholder="Sélectionner un pays"
@@ -266,11 +277,23 @@ export default function DetailProductScreen({navigation, route}){
                                             />
                                             <SearchableSelect
                                                 label="Région"
-                                                data={regionsData}
+                                                data={regions}
                                                 value={selectedRegion}
                                                 onChange={setSelectedRegion}
                                                 placeholder="Sélectionner une région"
                                                 isRequired
+                                                disabled={!selectedCountry || loadingRegions}
+                                                loading={loadingRegions}
+                                            />
+                                            <SearchableSelect
+                                                label="Commune"
+                                                data={municipalities}
+                                                value={selectedCommune}
+                                                onChange={setSelectedCommune}
+                                                placeholder="Sélectionner une commune"
+                                                isRequired
+                                                disabled={!selectedRegion || loadingMunicipalities}
+                                                loading={loadingMunicipalities}
                                             />
                                         </View>
                                     </View>

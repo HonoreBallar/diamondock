@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -9,6 +9,7 @@ import {
     StyleSheet,
     FlatList,
     Dimensions,
+    ActivityIndicator,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from '../utils/colors';
@@ -30,10 +31,17 @@ const SearchableSelect = ({
     onChange,
     placeholder = 'Sélectionner...',
     isRequired = false,
+    disabled = false,
+    loading = false,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [selectedItem, setSelectedItem] = useState(value || null);
+
+    // Synchroniser selectedItem avec la prop value
+    useEffect(() => {
+        setSelectedItem(value || null);
+    }, [value]);
 
     // Filtrer les données selon la recherche avec normalisation
     const filteredData = data.filter(item =>
@@ -64,12 +72,17 @@ const SearchableSelect = ({
             {/* Button pour ouvrir le select */}
             <TouchableOpacity
                 onPress={() => setIsOpen(true)}
-                style={styles.selectButton}
+                style={[styles.selectButton, disabled && styles.selectButtonDisabled]}
+                disabled={disabled}
             >
-                <Text style={styles.selectButtonText}>
+                <Text style={[styles.selectButtonText, disabled && styles.selectButtonTextDisabled]}>
                     {selectedItem ? selectedItem.name : placeholder}
                 </Text>
-                <FontAwesome5 name="chevron-down" size={14} color={colors.primary} />
+                {loading ? (
+                    <ActivityIndicator size={16} color={colors.primary} />
+                ) : (
+                    <FontAwesome5 name="chevron-down" size={14} color={disabled ? '#ccc' : colors.primary} />
+                )}
             </TouchableOpacity>
 
             {/* Modal avec le select dropdown */}
@@ -195,6 +208,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#1f2937',
         flex: 1,
+    },
+    selectButtonDisabled: {
+        backgroundColor: '#f5f5f5',
+        opacity: 0.6,
+    },
+    selectButtonTextDisabled: {
+        color: '#999',
     },
     modalOverlay: {
         flex: 1,
