@@ -28,6 +28,16 @@ export const ProductProvider = ({children})=>{
         }
     };
 
+    // Fonction pour obtenir N produits aléatoires
+    const getRandomProducts = (count = 10) => {
+        // Filtrer les produits qui ont remaining_stock > 0
+        const filtered = products.filter(prod => prod.remaining_stock > 0);
+        // Créer une copie du tableau filtré et le mélanger
+        const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+        // Retourner les N premiers éléments
+        return shuffled.slice(0, Math.min(count, shuffled.length));
+    };
+
     // Charger les produits depuis l'API
     useEffect(() => {
         fetchSellers();
@@ -35,7 +45,7 @@ export const ProductProvider = ({children})=>{
     }, [appLanguage, appCurrency]);
 
     return (
-        <ProductContext.Provider value={{ products, sellers, fetchProducts, fetchSellers }}>
+        <ProductContext.Provider value={{ products, sellers, fetchProducts, fetchSellers, getRandomProducts }}>
             {children}
         </ProductContext.Provider>
     );

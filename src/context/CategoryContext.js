@@ -14,6 +14,16 @@ export const CategoryProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const apiClient = useApiClient();
 
+  // Fonction pour obtenir N catégories aléatoires avec nb_products > 1
+  const getRandomCategories = (count = 10) => {
+    // Filtrer les catégories qui ont nb_products > 1
+    const filtered = categories.filter(cat => cat.nb_products >= 1);
+    // Créer une copie du tableau filtré et le mélanger
+    const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+    // Retourner les N premiers éléments
+    return shuffled.slice(0, Math.min(count, shuffled.length));
+  };
+
   const fetchCategories = async () => {
       try {
           setLoading(true);
@@ -34,7 +44,7 @@ export const CategoryProvider = ({ children }) => {
   }, [appLanguage]);
 
   return (
-    <CategoryContext.Provider value={{ categories , fetchCategories, departments, loading }}>
+    <CategoryContext.Provider value={{ categories, fetchCategories, departments, loading, getRandomCategories }}>
       {children}
     </CategoryContext.Provider>
   );

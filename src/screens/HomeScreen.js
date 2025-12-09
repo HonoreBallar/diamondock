@@ -5,22 +5,40 @@ import colors from "../utils/colors";
 import { useCategories } from "../context/CategoryContext";
 import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import CategoryItem from "../components/CategoryItem";
 import { useTranslation } from "../context/LocalizationContext";
 
 export default function HomeScreen({navigation}){
     const { t } = useTranslation();
-    const {categories} = useCategories();
-    const {products} = useProducts();
+    const {getRandomCategories, categories} = useCategories();
+    const {getRandomProducts, products} = useProducts();
     const [loading, setLoading] = useState(true);
 
+    // Mémoriser les catégories aléatoires pour éviter les changements constants
+    const randomCategories = useMemo(() => {
+        return getRandomCategories();
+    }, [categories]);
+
+    // Mémoriser les produits aléatoires pour chaque section
+    const newProducts = useMemo(() => {
+        return getRandomProducts(10);
+    }, [products]);
+
+    const limitedTimeProducts = useMemo(() => {
+        return getRandomProducts(10);
+    }, [products]);
+
+    const bestArticlesProducts = useMemo(() => {
+        return getRandomProducts(10);
+    }, [products]);
+
     useEffect(() => {
-        if (products && categories) {
+        if (products && randomCategories.length > 0) {
             setLoading(false);
         }
     }, 
-    [products, categories]);
+    [products, randomCategories]);
 
     return(
         <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -38,7 +56,7 @@ export default function HomeScreen({navigation}){
                             <ActivityIndicator size="large" color={colors.primary} style={{marginTop: 20}} />
                         ) : (
                             <FlatList
-                                data={categories}
+                                data={randomCategories}
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
                                 keyExtractor={(item, index) => index.toString()}
@@ -60,7 +78,7 @@ export default function HomeScreen({navigation}){
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.new')}</Text>
                         </View>
                         <FlatList
-                            data={products}
+                            data={newProducts}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => index.toString()}
@@ -82,7 +100,7 @@ export default function HomeScreen({navigation}){
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.limitedTimeOffer')}</Text>
                         </View>
                         <FlatList
-                            data={products}
+                            data={limitedTimeProducts}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => index.toString()}
@@ -104,7 +122,7 @@ export default function HomeScreen({navigation}){
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.bestArticles')}</Text>
                         </View>
                         <FlatList
-                            data={products}
+                            data={bestArticlesProducts}
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             keyExtractor={(item, index) => index.toString()}
