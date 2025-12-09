@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
         fontWeight: "500"
     },
     deptButtonTextActive: {
-        color: "#2563eb",
+        color: "#ffa100",
         fontWeight: "600"
     },
     mainContent: {
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         marginBottom: 16,
-        color: "#1f2937"
+        color: "#03045e"
     },
     parentSection: {
         marginBottom: 16

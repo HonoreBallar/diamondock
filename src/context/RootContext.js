@@ -257,7 +257,7 @@ export const RootProvider = ({children})=>{
 
     const getTypeDelivery = async()=>{
         try {
-            const response = await getRequest('/setting/delivery-types');
+            const response = await getRequest('/delivery/category/all');
             if(response?.status === false){
                 showMessage({
                     message: response?.message,

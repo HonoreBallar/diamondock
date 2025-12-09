@@ -38,7 +38,7 @@ const ProductCard = ({ navigation, product }) => {
         setTimeout(async () => {
             await addToWishlist(product);
             setLoadingWishlist(false);
-        }, 50);
+        }, 10);
     }, [addToWishlist]);
 
     const handlePress = useCallback(() => {
@@ -50,7 +50,7 @@ const ProductCard = ({ navigation, product }) => {
         setTimeout(async () => {
             await addToCart(product, quantity, selectedVariants, itemQuantities);
             setLoading(false);
-        }, 50);
+        }, 10);
     };
 
     const handleVariantsGoToCart = async (selectedVariants, quantity, itemQuantities) => {
@@ -59,7 +59,7 @@ const ProductCard = ({ navigation, product }) => {
             await addToCart(product, quantity, selectedVariants, itemQuantities);
             setLoading(false);
             navigation.navigate('Main', { screen: t('tabs.tab_cart') });
-        }, 50);
+        }, 10);
     };
 
     return (
