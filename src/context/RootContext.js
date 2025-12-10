@@ -278,7 +278,7 @@ export const RootProvider = ({children})=>{
     }
 
     return (
-        <RootContext.Provider value={{starter, auth, loading, countries, municipalities, currencies, regions, appLanguage, appCurrency, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency, resetPassword, getRegions, getMunicipalities}}>
+        <RootContext.Provider value={{starter, auth, loading, countries, municipalities, currencies, regions, appLanguage, appCurrency, typeDelivery, updateStarterState, updateAuthState, logout, registerUser, editUser, loginUser, getCountries, setAppLanguage, setAppCurrency, resetPassword, getRegions, getMunicipalities, getTypeDelivery}}>
             {children}
             <FlashMessage
                 animated={true}
