@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Image, View, ActivityIndicator } from 'react-native';
+
+// Cache global pour les images chargées
+const imageCache = new Map();
 
 export default function LazyImage({ 
     source, 
@@ -9,18 +12,39 @@ export default function LazyImage({
 }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const imageUrlRef = useRef(source?.uri);
+    const isLoadedRef = useRef(false);
+
+    // Vérifier si l'image est déjà en cache
+    useMemo(() => {
+        const uri = source?.uri;
+        if (uri && imageCache.has(uri)) {
+            isLoadedRef.current = true;
+            setLoading(false);
+            setError(false);
+        } else {
+            isLoadedRef.current = false;
+            setLoading(true);
+            setError(false);
+        }
+    }, [source?.uri]);
 
     useEffect(() => {
-        setLoading(true);
-        setError(false);
-    }, [source]);
+        imageUrlRef.current = source?.uri;
+    }, [source?.uri]);
 
     const handleLoadStart = () => {
         setLoading(true);
     };
 
     const handleLoadEnd = () => {
+        // Ajouter l'image au cache
+        const uri = imageUrlRef.current;
+        if (uri && !imageCache.has(uri)) {
+            imageCache.set(uri, true);
+        }
         setLoading(false);
+        isLoadedRef.current = true;
     };
 
     const handleError = () => {
@@ -43,7 +67,7 @@ export default function LazyImage({
     }
 
     return (
-        <View style={[style, { position: 'relative' }]}>
+        <View style={[style, { position: 'relative', backgroundColor: placeholderColor }]}>
             <Image
                 source={source}
                 style={style}
@@ -51,8 +75,9 @@ export default function LazyImage({
                 onLoadStart={handleLoadStart}
                 onLoadEnd={handleLoadEnd}
                 onError={handleError}
+                cache="force"
             />
-            {loading && (
+            {loading && !isLoadedRef.current && (
                 <View
                     style={[
                         style,
@@ -62,7 +87,8 @@ export default function LazyImage({
                             left: 0,
                             backgroundColor: placeholderColor,
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            zIndex: 10
                         }
                     ]}
                 >

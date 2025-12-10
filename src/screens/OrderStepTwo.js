@@ -63,6 +63,8 @@ export default function OrderStepTwo({ navigation, route }) {
 
     const handleSubmit = () => {
 
+        navigation.navigate('OrderStepThree', {datas: datas});
+
         if (delivery.trim() === '') {
             showMessage({
                 message: t('alerts.deliveryAddress'),
