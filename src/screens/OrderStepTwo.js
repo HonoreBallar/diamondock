@@ -4,6 +4,7 @@ import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Btn from "../components/Btn";
+import CustomSelect from "../components/CustomSelect";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { formatDateToEnglish } from "../utils/utils";
@@ -15,14 +16,14 @@ import { useRootContext } from "../context/RootContext";
 export default function OrderStepTwo({ navigation, route }) {
 
     const {t} = useTranslation();
-    const {countries, getMunicipalities, getRegions, regions, municipalities} = useRootContext();
+    const {countries, getMunicipalities, getRegions, regions, municipalities, typeDelivery} = useRootContext();
 
     const {modePayment, fetchOrder} = useOrders();
     const {clearCart} = useCart();
     const {datas} = route.params;
     const [delivery, setDelivery] = useState('');
     const [loading, setLoading] = useState(false);
-    const [checked, setChecked] = useState('at_home');
+    const [checked, setChecked] = useState('');
     const [payment, setPayment] = useState('cash');
     const [selectedPayment, setSelectedPayment] = useState('');
 
@@ -166,12 +167,14 @@ export default function OrderStepTwo({ navigation, route }) {
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'white' }}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{ flex: 1 }}>
+                    <View style={{ paddingTop: 10 }}>
+                        <HeaderLogo />
+                        <Title title={t('common.step2')} />
+                    </View>
                     <ScrollView style={{ flex: 1 }}
                         contentContainerStyle={{ paddingBottom: 20 }}
                         keyboardShouldPersistTaps="handled"
                     >
-                        <HeaderLogo />
-                        <Title title={t('common.step2')} />
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <SearchableSelect
                                 label="Pays"
@@ -187,7 +190,6 @@ export default function OrderStepTwo({ navigation, route }) {
                                 value={selectedRegion}
                                 onChange={setSelectedRegion}
                                 placeholder="Sélectionner une région"
-                                isRequired
                                 disabled={!selectedCountry || loadingRegions}
                                 loading={loadingRegions}
                             />
@@ -197,19 +199,17 @@ export default function OrderStepTwo({ navigation, route }) {
                                 value={selectedCommune}
                                 onChange={setSelectedCommune}
                                 placeholder="Sélectionner une commune"
-                                isRequired
                                 disabled={!selectedRegion || loadingMunicipalities}
                                 loading={loadingMunicipalities}
                             />
 
-                            <SearchableSelect
+                            <CustomSelect
                                 label="Type de livraison"
-                                data={municipalities}
-                                value={selectedCommune}
-                                onChange={setSelectedCommune}
+                                data={typeDelivery}
+                                value={checked}
+                                onChange={setChecked}
                                 placeholder="Sélectionner un type de livraison"
                                 isRequired
-                                loading={loadingMunicipalities}
                             />
                             
                             <Input
@@ -219,7 +219,6 @@ export default function OrderStepTwo({ navigation, route }) {
                                 value={delivery}
                                 onChangeText={setDelivery}
                                 isRequired={true}
-                                editable={checked == 'at_home'  ? true : false}
                             />
                            
                             <View style={{ marginBottom: 15, marginTop: 12 }}>
@@ -231,7 +230,6 @@ export default function OrderStepTwo({ navigation, route }) {
                                 />
                             </View>
                         </View>
-                        
                     </ScrollView>
                 </View>
             </TouchableWithoutFeedback>
