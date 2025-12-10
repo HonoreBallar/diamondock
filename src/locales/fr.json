@@ -29,6 +29,7 @@
     "summarycart": "Résumé du panier",
     "step1": "Etape 1 : Informations de contact",
     "step2": "Etape 2 : Information de livraison",
+    "step3": "Etape 3 : Paiement",
     "cart": "Voir le Panier",
     "save": "Enregistrer",
     "forgetPasswordTitle": "Mot de passe oublié",
@@ -45,7 +46,12 @@
     "noVariants": "Aucune variante disponible",
     "total": "Total",
     "quantity": "Quantité",
-    "delivery": "Livraison"
+    "delivery": "Livraison",
+    "paymentMethod": "Méthode de paiement",
+    "paymentOption": "Option de paiement",
+    "summary": "Résumé",
+    "proceedPayment": "Procéder au paiement",
+    "confirmOrder": "Confirmer la commande"
   },
   "tabs": {
     "tab_home": "Accueil",
@@ -201,6 +207,8 @@
     "deliveryDate": "Veuillez choisir une date de livraison",
     "orderSuccess": "Commande validée avec succès",
     "paiementWainting": "Paiement en cours de validation...",
-    "productRemovedToWishlist": "Produit supprimé des favoris"
+    "productRemovedToWishlist": "Produit supprimé des favoris",
+    "paiementInfo": "Vous serez redirigé vers la page de paiement sécurisée.",
+    "cashInfo": "Vous paierez à la réception de votre commande."
   }
 }

@@ -29,6 +29,7 @@
     "summarycart": "Cart summary",
     "step1": "Step 1 : Contact information",
     "step2": "Step 2 : Delivery",
+    "step3": "Step 3 : Payment et finalisation",
     "cart": "Cart",
     "save":"Save",
     "forgetPasswordTitle": "Forgot password",
@@ -45,7 +46,12 @@
     "noVariants": "No variants available",
     "total": "Total",
     "quantity": "Quantity",
-    "delivery": "Delivery"
+    "delivery": "Delivery",
+    "paymentMethod": "Payment Method",
+    "paymentOption": "Payment Option",
+    "summary": "Summary",
+    "proceedPayment": "Proceed to Payment",
+    "confirmOrder": "Confirm Order"
   },
   "tabs": {
     "tab_home": "Home",
@@ -198,6 +204,8 @@
     "deliveryMode": "Please choose a delivery mode",
     "deliveryDate": "Please choose a delivery date",
     "orderSuccess": "Order placed successfully",
-    "paiementWainting": "Payment pending..."
+    "paiementWainting": "Payment pending...",
+    "paiementInfo": "You will be redirected to the secure payment page.",
+    "cashInfo": "You will pay upon receipt of your order."
   }
 }

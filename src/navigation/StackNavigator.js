@@ -28,6 +28,7 @@ import { ActivityIndicator, Image, View } from 'react-native';
 import LanguageScreen from '../screens/LanguageScreen';
 import ChangeLangueScreen from '../screens/ChangeLangueScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
+import OrderStepThree from '../screens/OrderStepThree';
 
 
 const StackNavigator = () => {
@@ -108,6 +109,7 @@ const StackNavigator = () => {
      
       <Stack.Screen name="OrderStepOne" component={OrderStepOne} options={{ headerShown: false }} />
       <Stack.Screen name="OrderStepTwo" component={OrderStepTwo} options={{ headerShown: false }} />
+      <Stack.Screen name="OrderStepThree" component={OrderStepThree} options={{ headerShown: false }} />
       
 
       {/* Add more screens here */}
