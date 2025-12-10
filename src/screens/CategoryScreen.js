@@ -8,6 +8,7 @@ import {
     StyleSheet
 } from "react-native";
 import Header from "../components/Header";
+import LazyImage from "../components/LazyImage";
 import { useCategories } from "../context/CategoryContext";
 import { useTranslation } from "../context/LocalizationContext";
 
@@ -221,18 +222,42 @@ export default function CategoryScreen({ navigation }) {
                                 {dep.name}
                             </Text>
 
-                            {/* 1. Catégories sans parent (Standalone) */}
-                            {dep.standaloneCategories.map(cat => (
-                                <TouchableOpacity
-                                    key={cat.token}
-                                    onPress={() => handleCategoryPress(cat)}
-                                    style={styles.standaloneCategoryItem}
-                                >
-                                    <Text style={styles.standaloneCategoryName}>
-                                        {cat.name}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
+                            {/* 1. Catégories sans parent (Standalone) - Grid Layout */}
+                            {dep.standaloneCategories.length > 0 && (
+                                <View style={styles.categoriesGrid}>
+                                    {dep.standaloneCategories.map(cat => (
+                                        <TouchableOpacity
+                                            key={cat.token}
+                                            onPress={() => handleCategoryPress(cat)}
+                                            style={styles.categoryCard}
+                                        >
+                                            <View style={styles.categoryImageContainer}>
+                                                {cat.image ? (
+                                                    <LazyImage
+                                                        source={{ uri: cat.image }}
+                                                        style={styles.categoryImage}
+                                                        resizeMode="cover"
+                                                    />
+                                                ) : (
+                                                    <View style={styles.categoryImagePlaceholder}>
+                                                        <Text style={styles.placeholderText}>
+                                                            {cat.name.charAt(0).toUpperCase()}
+                                                        </Text>
+                                                    </View>
+                                                )}
+                                            </View>
+                                            <View style={styles.categoryCardBottom}>
+                                                <Text style={styles.categoryCardTitle} numberOfLines={2}>
+                                                    {cat.name}
+                                                </Text>
+                                                <Text style={styles.categoryCardCount}>
+                                                    {cat?.nb_products || 0} {t("common.products")}
+                                                </Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                            )}
 
                             {/* 2. Groupes de Parents */}
                             {dep.parentGroups.map(parent => {
@@ -265,17 +290,39 @@ export default function CategoryScreen({ navigation }) {
                                         {isExpanded && (
                                             <View>
                                                 {hasCategories ? (
-                                                    parent.categories.map(cat => (
-                                                        <TouchableOpacity
-                                                            key={cat.token}
-                                                            onPress={() => handleCategoryPress(cat)}
-                                                            style={styles.categoryItem}
-                                                        >
-                                                            <Text style={styles.categoryName}>
-                                                                {cat.name}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                    ))
+                                                    <View style={styles.categoriesGrid}>
+                                                        {parent.categories.map(cat => (
+                                                            <TouchableOpacity
+                                                                key={cat.token}
+                                                                onPress={() => handleCategoryPress(cat)}
+                                                                style={styles.categoryCard}
+                                                            >
+                                                                <View style={styles.categoryImageContainer}>
+                                                                    {cat.image ? (
+                                                                        <LazyImage
+                                                                            source={{ uri: cat.image }}
+                                                                            style={styles.categoryImage}
+                                                                            resizeMode="cover"
+                                                                        />
+                                                                    ) : (
+                                                                        <View style={styles.categoryImagePlaceholder}>
+                                                                            <Text style={styles.placeholderText}>
+                                                                                {cat.name.charAt(0).toUpperCase()}
+                                                                            </Text>
+                                                                        </View>
+                                                                    )}
+                                                                </View>
+                                                                <View style={styles.categoryCardBottom}>
+                                                                    <Text style={styles.categoryCardTitle} numberOfLines={2}>
+                                                                        {cat.name}
+                                                                    </Text>
+                                                                    <Text style={styles.categoryCardCount}>
+                                                                        {cat?.nb_products || 0} {t("common.products")}
+                                                                    </Text>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        ))}
+                                                    </View>
                                                 ) : (
                                                     <View style={styles.emptyCategories}>
                                                         <Text style={styles.emptyCategoriesText}>
@@ -356,7 +403,7 @@ const styles = StyleSheet.create({
         color: "#03045e"
     },
     parentSection: {
-        marginBottom: 16
+        marginBottom: 5
     },
     parentHeader: {
         flexDirection: "row",
@@ -399,6 +446,63 @@ const styles = StyleSheet.create({
     standaloneCategoryName: {
         fontSize: 14,
         color: "#1f2937",
+        fontWeight: "500"
+    },
+    // Grid Styles for Category Cards
+    categoriesGrid: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        marginBottom: 3,
+        justifyContent: "space-between"
+    },
+    categoryCard: {
+        width: "48%",
+        marginBottom: 10,
+        borderRadius: 12,
+        overflow: "hidden",
+        backgroundColor: "white",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+        elevation: 3
+    },
+    categoryImageContainer: {
+        width: "100%",
+        height: 50,
+        backgroundColor: "#f0f0f0",
+        overflow: "hidden"
+    },
+    categoryImage: {
+        width: 150,
+        height: 50
+    },
+    categoryImagePlaceholder: {
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#e5e7eb",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    placeholderText: {
+        fontSize: 32,
+        fontWeight: "bold",
+        color: "#9ca3af"
+    },
+    categoryCardBottom: {
+        padding: 12,
+        minHeight: 60,
+        justifyContent: "center"
+    },
+    categoryCardTitle: {
+        fontSize: 13,
+        fontWeight: "600",
+        color: "#1f2937",
+        marginBottom: 6
+    },
+    categoryCardCount: {
+        fontSize: 11,
+        color: "#9ca3af",
         fontWeight: "500"
     },
     categoryItem: {
