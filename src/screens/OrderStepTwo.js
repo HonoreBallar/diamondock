@@ -179,38 +179,38 @@ export default function OrderStepTwo({ navigation, route }) {
                     >
                         <View style={{ marginTop: 20, marginHorizontal: 15 }}>
                             <SearchableSelect
-                                label="Pays"
+                                label={t('input.countryTitle') || "Pays"}
                                 data={countries}
                                 value={selectedCountry}
                                 onChange={setSelectedCountry}
-                                placeholder="Sélectionner un pays"
+                                placeholder={t('input.countryPlaceholder') || "Sélectionner un pays"}
                                 isRequired
                             />
                             <SearchableSelect
-                                label="Région"
+                                label={t('input.regionTitle') || "Région"}
                                 data={regions}
                                 value={selectedRegion}
                                 onChange={setSelectedRegion}
-                                placeholder="Sélectionner une région"
+                                placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
                                 disabled={!selectedCountry || loadingRegions}
                                 loading={loadingRegions}
                             />
                             <SearchableSelect
-                                label="Commune"
+                                label={t('input.municipalityTitle') || "Commune"}
                                 data={municipalities}
                                 value={selectedCommune}
                                 onChange={setSelectedCommune}
-                                placeholder="Sélectionner une commune"
+                                placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
                                 disabled={!selectedRegion || loadingMunicipalities}
                                 loading={loadingMunicipalities}
                             />
 
                             <CustomSelect
-                                label="Type de livraison"
+                                label={t('input.deliveryModeTitle') || "Type de livraison"}
                                 data={typeDelivery}
                                 value={checked}
                                 onChange={setChecked}
-                                placeholder="Sélectionner un type de livraison"
+                                placeholder={t('input.deliveryModeTitle') || "Sélectionner un type de livraison"}
                                 isRequired
                             />
                             

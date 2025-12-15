@@ -22,7 +22,9 @@ export default function CustomSelect({
     disabled = false,
     loading = false,
     searchable = false,
-    error = null
+    error = null,
+    labelKey = 'name',  // Clé pour le texte affiché
+    valueKey = 'id'     // Clé pour la valeur unique
 }) {
     const [visible, setVisible] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -31,12 +33,11 @@ export default function CustomSelect({
 
     const filteredData = searchable
         ? data.filter(item =>
-            item.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-            item.label?.toLowerCase().includes(searchText.toLowerCase())
+            item[labelKey]?.toLowerCase().includes(searchText.toLowerCase())
         )
         : data;
 
-    const displayValue = value?.name || value?.label || value;
+    const displayValue = value?.[labelKey] || value;
 
     const handleSelect = (item) => {
         onChange(item);
@@ -46,12 +47,12 @@ export default function CustomSelect({
 
     const isItemSelected = (item) => {
         if (!value) return false;
-        // Comparaison par id si disponible
-        if (item.id && value.id) {
-            return item.id === value.id;
+        // Comparaison par valueKey
+        if (item[valueKey] && value[valueKey]) {
+            return item[valueKey] === value[valueKey];
         }
-        // Sinon comparaison par name
-        return item.name === displayValue || item.label === displayValue;
+        // Sinon comparaison par displayValue
+        return item[labelKey] === displayValue;
     };
 
     const toggleDropdown = () => {
@@ -131,7 +132,7 @@ export default function CustomSelect({
 
                         <FlatList
                             data={filteredData}
-                            keyExtractor={(item, index) => item.id?.toString() || index.toString()}
+                            keyExtractor={(item, index) => item[valueKey]?.toString() || index.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
                                     style={[
@@ -146,7 +147,7 @@ export default function CustomSelect({
                                             isItemSelected(item) && styles.optionTextSelected
                                         ]}
                                     >
-                                        {item.name || item.label}
+                                        {item[labelKey]}
                                     </Text>
                                 </TouchableOpacity>
                             )}

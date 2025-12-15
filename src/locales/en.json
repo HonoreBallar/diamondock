@@ -151,13 +151,21 @@
     "firstnamePlaceholder": "Enter your name",
     "lastnameTitle": "Lastname",
     "lastnamePlaceholder": "Enter your last name",
+    "countryTitle": "Country",
+    "countryPlaceholder": "Select a country",
+    "regionTitle": "Region",
+    "regionPlaceholder": "Select a region",
+    "municipalityTitle": "Municipality",
+    "municipalityPlaceholder": "Select a municipality",
     "deliveryModeTitle": "Delivery mode",
     "paymentModeTitle": "Paiment method",
     "deliveryDateTitle": "Delivery date",
     "deliveryDatePlaceholder": "Choisissez une date de livraison",
     "deliveryAddressTitle": "Delivery address",
     "deliveryAddressPlaceholder": "Enter your delivery address",
-    "system": "System"
+    "system": "System",
+    "deliveryFeesCalculating": "Calculating shipping fees...",
+    "deliveryFeesText": "Estimated shipping fees for this item are {{price}} {{currency}}. It will be delivered within {{time}} if you order now."
   },
   "profil":{
     "editProfile": "Edit Profile",
