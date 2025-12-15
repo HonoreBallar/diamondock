@@ -13,13 +13,14 @@ import HeaderLogo from "../components/HeaderLogo";
 import RenderHTML from "react-native-render-html";
 import { useTranslation } from "../context/LocalizationContext";
 import { useApiClient } from "../context/ApiContext";
-import SearchableSelect from "../components/SearchableSelect";
+import CustomSelect from "../components/CustomSelect";
 import { useRootContext } from "../context/RootContext";
+import SearchableSelect from "../components/SearchableSelect";
 
 export default function DetailProductScreen({navigation, route}){
 
     const {t} = useTranslation();
-    const {countries, getMunicipalities, getRegions, regions, municipalities} = useRootContext();
+    const {countries, getMunicipalities, getRegions, regions, municipalities, typeDelivery, getProductDeliveryPrice} = useRootContext();
     const {product} = route.params;
     const {addToCart} = useCart();
     const [quantity, setQuantity] = useState('1');
@@ -27,6 +28,7 @@ export default function DetailProductScreen({navigation, route}){
     const [loading, setLoading] = useState(false);
     const [ratio, setRatio] = useState(0);
     const [photos, setPhotos] = useState([]);
+    const [productDeliveryPrice, setProductDeliveryPrice] = useState([]);
     const [loadingWishlist, setLoadingWishlist] = useState(false);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const {isProductInWishlist, addToWishlist} = useWishlist();
@@ -37,8 +39,11 @@ export default function DetailProductScreen({navigation, route}){
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);
+    const [selectedDeliveryType, setSelectedDeliveryType] = useState(null);
+    const [deliveryTypes, setDeliveryTypes] = useState([]);
     const [loadingRegions, setLoadingRegions] = useState(false);
     const [loadingMunicipalities, setLoadingMunicipalities] = useState(false);
+    const [loadingDeliveryPrice, setLoadingDeliveryPrice] = useState(false);
 
     // Charger les régions quand le pays change
     useEffect(() => {
@@ -67,6 +72,43 @@ export default function DetailProductScreen({navigation, route}){
         }
     }, [selectedRegion]);
 
+    const handleChange = async() => {
+
+        if(!selectedDeliveryType.token && !selectedCountry && !selectedRegion && !selectedCommune) {
+            return;
+        }
+
+        setLoadingDeliveryPrice(true);
+
+        const requestData = {
+            product_token: mainProduct?.token,
+            country_id: selectedCountry?.id || null,
+            region_id: selectedRegion?.id || null,
+            municipality_id: selectedCommune?.id || null,
+            delivery_category_token: selectedDeliveryType?.token || null,
+        };
+
+        try {
+            const response = await apiClient.post('/product/search-delivery', requestData);
+            if (response?.status === false) {
+                setProductDeliveryPrice([]);
+            } else {
+                setProductDeliveryPrice(response?.data?.data?.delivery || []);
+            }
+        } catch (error) {
+            console.error('Error fetching delivery price:', error);
+            setProductDeliveryPrice([]);
+        } finally {
+            setLoadingDeliveryPrice(false);
+        }
+    }
+
+    // Exécuter handleChange quand selectedDeliveryType change
+    useEffect(() => {
+        if (selectedDeliveryType) {
+            handleChange();
+        }
+    }, [selectedDeliveryType]);
 
 
     const handleSelectVariant = (groupName, item) => {
@@ -268,33 +310,89 @@ export default function DetailProductScreen({navigation, route}){
                                         {/* SELECTS */}
                                         <View style={{marginTop: 2}}>
                                             <SearchableSelect
-                                                label="Pays"
+                                                label={t('input.countryTitle') || "Pays"}
                                                 data={countries}
                                                 value={selectedCountry}
                                                 onChange={setSelectedCountry}
-                                                placeholder="Sélectionner un pays"
+                                                placeholder={t('input.countryPlaceholder') || "Sélectionner un pays"}
                                                 isRequired
                                             />
                                             <SearchableSelect
-                                                label="Région"
+                                                label={t('input.regionTitle') || "Région"}
                                                 data={regions}
                                                 value={selectedRegion}
                                                 onChange={setSelectedRegion}
-                                                placeholder="Sélectionner une région"
+                                                placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
                                                 isRequired
                                                 disabled={!selectedCountry || loadingRegions}
                                                 loading={loadingRegions}
                                             />
                                             <SearchableSelect
-                                                label="Commune"
+                                                label={t('input.municipalityTitle') || "Commune"}
                                                 data={municipalities}
                                                 value={selectedCommune}
                                                 onChange={setSelectedCommune}
-                                                placeholder="Sélectionner une commune"
+                                                placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
                                                 isRequired
                                                 disabled={!selectedRegion || loadingMunicipalities}
                                                 loading={loadingMunicipalities}
                                             />
+
+                                            <CustomSelect
+                                                label={t('input.deliveryModeTitle') || "Type de livraison"}
+                                                data={typeDelivery}
+                                                value={selectedDeliveryType}
+                                                onChange={setSelectedDeliveryType}
+                                                placeholder="Sélectionner un type de livraison"
+                                                isRequired
+                                                labelKey="name"
+                                                valueKey="token"
+                                                disabled={!selectedCommune || loadingMunicipalities}
+                                            />
+
+                                            {loadingDeliveryPrice ? (
+                                                <View style={{
+                                                    marginTop: 5,
+                                                    padding: 12,
+                                                    backgroundColor: '#eff6ff',
+                                                    borderRadius: 8,
+                                                    borderLeftWidth: 4,
+                                                    borderLeftColor: '#0284c7',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
+                                                    <ActivityIndicator size="large" color="#0284c7" />
+                                                    <Text style={{
+                                                        fontSize: 12,
+                                                        color: '#0c4a6e',
+                                                        marginTop: 3
+                                                    }}>
+                                                        {t('input.deliveryFeesCalculating') || 'Calcul des frais de livraison...'}
+                                                    </Text>
+                                                </View>
+                                            ) : selectedDeliveryType?.token ? (
+                                                <View style={{
+                                                    marginTop: 16,
+                                                    padding: 12,
+                                                    backgroundColor: '#eff6ff',
+                                                    borderRadius: 8,
+                                                    borderLeftWidth: 4,
+                                                    borderLeftColor: '#0284c7'
+                                                }}>
+
+                                                    <Text style={{
+                                                        fontSize: 12,
+                                                        color: '#0c4a6e',
+                                                        lineHeight: 18
+                                                    }}>
+                                                        {t('input.deliveryFeesText', {
+                                                            price: formatAmount(productDeliveryPrice?.price || 0),
+                                                            currency: productDeliveryPrice?.currency || 'F CFA',
+                                                            time: productDeliveryPrice?.time || 'quelques jours'
+                                                        })}
+                                                    </Text>
+                                                </View>
+                                            ) : null}
                                         </View>
                                     </View>
                                 )}

@@ -151,6 +151,12 @@
     "firstnamePlaceholder": "Entrez votre nom",
     "lastnameTitle": "Prénoms",
     "lastnamePlaceholder": "Entrez vos prénoms",
+    "countryTitle": "Pays",
+    "countryPlaceholder": "Sélectionner un pays",
+    "regionTitle": "Région",
+    "regionPlaceholder": "Sélectionner une région",
+    "municipalityTitle": "Commune",
+    "municipalityPlaceholder": "Sélectionner une commune",
     "deliveryModeTitle": "Mode de livraison",
     "paymentModeTitle": "Mode de paiement",
     "paymentModePlaceholder": "Choisissez votre mode de paiement",
@@ -158,7 +164,9 @@
     "deliveryDatePlaceholder": "Choisissez une date de livraison",
     "deliveryAddressTitle": "Adresse de livraison",
     "deliveryAddressPlaceholder": "Entrez votre adresse de livraison",
-    "system": "Mode de paiement"
+    "system": "Mode de paiement",
+    "deliveryFeesCalculating": "Calcul des frais de livraison...",
+    "deliveryFeesText": "Les frais de livraison pour cet article sont estimés à {{price}} {{currency}}. Il sera livré dans {{time}} si vous commandez dès maintenant."
     
   },
   "profil":{
