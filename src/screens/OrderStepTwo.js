@@ -27,7 +27,6 @@ export default function OrderStepTwo({ navigation, route }) {
     const [payment, setPayment] = useState('cash');
     const [selectedPayment, setSelectedPayment] = useState('');
 
-    const [selectedDate, setSelectedDate] = useState('');
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);
@@ -74,15 +73,7 @@ export default function OrderStepTwo({ navigation, route }) {
             });
             return;
         }
-        if (selectedDate === '') {
-            showMessage({
-                message: t('alerts.deliveryDate'),
-                type: "danger",
-                icon: { icon: "danger", position: "left" },
-                duration: 2000,
-            });
-            return;
-        }
+       
         if(payment === 'online' && selectedPayment.trim() === ''){
              showMessage({
                 message: t('alerts.paymentMethod'),

@@ -9,6 +9,7 @@ import { useRootContext } from '../context/RootContext';
 import { useTranslation } from '../context/LocalizationContext';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import HeaderSimple from '../components/HeaderSimple';
+import { useCart } from '../context/CartContext';
 
 const LANGUAGE_KEY = '@app_language';
 const CURRENCY_KEY = '@app_currency';
@@ -25,6 +26,7 @@ export default function LanguageScreen({navigation}) {
     const [selectedLanguage, setSelectedLanguage] = useState(appLanguage);
     const [selectedCurrency, setSelectedCurrency] = useState(appCurrency);
     const [isLoading, setIsLoading] = useState(false);
+    const { clearCart } = useCart();
 
     const handleSavePreferences = async () => {
         if (!selectedLanguage || !selectedCurrency) {
@@ -38,7 +40,8 @@ export default function LanguageScreen({navigation}) {
 
             setAppLanguage(selectedLanguage);
             setAppCurrency(selectedCurrency);
-
+            
+            clearCart();
             showMessage({
                 message: "Langue et devise mises à jour. Rafraîchissement en cours...",
                 type: "info",
