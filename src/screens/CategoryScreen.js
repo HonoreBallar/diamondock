@@ -16,12 +16,13 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function CategoryScreen({ navigation }) {
     const { t } = useTranslation();
-    const { categories, departments, loading } = useCategories();
+    const { categories, departments } = useCategories();
 
     const scrollViewRef = useRef(null);
     const depRefs = useRef({});
     const [activeDept, setActiveDept] = useState(null);
     const [expandedParents, setExpandedParents] = useState({});
+    const [loading, setLoading] = useState(true);
 
     // Structurer les données : Département > (Catégories sans parent) + (Parents > Catégories)
     const structuredData = useMemo(() => {
@@ -91,6 +92,16 @@ export default function CategoryScreen({ navigation }) {
             setActiveDept(structuredData[0].token);
         }
     }, [structuredData, activeDept]);
+
+    // Arrêter le loading quand les données sont chargées (avec délai de 1 seconde)
+    React.useEffect(() => {
+        if (structuredData.length > 0) {
+            const timer = setTimeout(() => {
+                setLoading(false);
+            }, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [structuredData]);
 
     // Navigation vers le département sélectionné
     const handleDeptPress = useCallback(depToken => {
