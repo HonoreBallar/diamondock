@@ -56,7 +56,7 @@ export default function ProfilScreen({navigation}){
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, marginBottom: 10, borderWidth: 0.1}}>
                         <ProfilLine icon="user-tie" iconColor={"orange"} title={t('profil.account')} onPress={()=>navigation.navigate('EditProfilScreen')}/>
-                        <ProfilLine icon="map-marker-alt" iconColor={"blue"} title={t('profil.address')} onPress={()=>navigation.navigate('EditProfilScreen')}/>
+                        <ProfilLine icon="map-marker-alt" iconColor={"blue"} title={t('profil.address')} onPress={handleBuild}/>
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
                         <ProfilLine icon="shopping-cart" iconColor={"#8cbdef"} title={t('profil.orders')} onPress={()=>navigation.navigate('OrderScreen')}/>

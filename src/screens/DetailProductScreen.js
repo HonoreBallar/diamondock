@@ -64,6 +64,7 @@ export default function DetailProductScreen({navigation, route}){
         if (selectedRegion && selectedCountry) {
             setLoadingMunicipalities(true);
             setSelectedCommune(null);
+            setSelectedDeliveryType(null);
             getMunicipalities(selectedRegion.id || selectedRegion).then(() => {
                 setLoadingMunicipalities(false);
             }).catch(() => {
@@ -372,7 +373,7 @@ export default function DetailProductScreen({navigation, route}){
                                                 </View>
                                             ) : selectedDeliveryType?.token ? (
                                                 <View style={{
-                                                    marginTop: 16,
+                                                    marginTop: 5,
                                                     padding: 12,
                                                     backgroundColor: '#eff6ff',
                                                     borderRadius: 8,

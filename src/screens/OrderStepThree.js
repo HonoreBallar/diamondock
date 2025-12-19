@@ -36,7 +36,6 @@ export default function OrderStepThree({ navigation, route }) {
     const fetchMode = async () => {
         try {
             const dataMode = await apiClient.get('/setting/payment-methods');
-            console.log('Payment Methods Fetched:', dataMode?.data?.data.online_payment_options ?? []);
             setModePayment(dataMode?.data?.data.online_payment_options ?? []);
         } catch (error) {
             console.error('Error loading seller products :', error);

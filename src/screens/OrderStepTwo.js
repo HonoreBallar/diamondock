@@ -45,6 +45,8 @@ export default function OrderStepTwo({ navigation, route }) {
             setLoadingRegions(true);
             setSelectedRegion(null);
             setSelectedCommune(null);
+            setSelectedDeliveryType(null);
+            setLoadingDeliveryPrice(false);
             getRegions(selectedCountry.id || selectedCountry).then(() => {
                 setLoadingRegions(false);
             }).catch(() => {
@@ -58,6 +60,8 @@ export default function OrderStepTwo({ navigation, route }) {
         if (selectedRegion && selectedCountry) {
             setLoadingMunicipalities(true);
             setSelectedCommune(null);
+            setSelectedDeliveryType(null);
+            setLoadingDeliveryPrice(false);
             getMunicipalities(selectedRegion.id || selectedRegion).then(() => {
                 setLoadingMunicipalities(false);
             }).catch(() => {
@@ -65,6 +69,14 @@ export default function OrderStepTwo({ navigation, route }) {
             });
         }
     }, [selectedRegion]);
+
+    //Choisir le type de livraison quand la commune change
+    useEffect(() => {
+        if (selectedCommune) {
+            setSelectedDeliveryType(null);
+            setLoadingDeliveryPrice(false);
+        }
+    }, [selectedCommune]);
 
     // Charger le prix quand le mode de paiement change
     const handleChange = async() => {
@@ -188,7 +200,13 @@ export default function OrderStepTwo({ navigation, route }) {
                 amount: ""
             },
         }
-        navigation.navigate('OrderStepThree', {datas: _datas});
+
+        setLoading(true);
+        setTimeout(()=>{
+            navigation.navigate('OrderStepThree', {datas: _datas});
+            setLoading(false);
+        }, 200);
+        
         
     };
 
@@ -219,6 +237,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 data={regions}
                                 value={selectedRegion}
                                 onChange={setSelectedRegion}
+                                isRequired
                                 placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
                                 disabled={!selectedCountry || loadingRegions}
                                 loading={loadingRegions}
@@ -228,6 +247,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 data={municipalities}
                                 value={selectedCommune}
                                 onChange={setSelectedCommune}
+                                isRequired
                                 placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
                                 disabled={!selectedRegion || loadingMunicipalities}
                                 loading={loadingMunicipalities}
@@ -299,7 +319,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 <Btn
                                     label={t('common.save')}
                                     loader={loading}
-                                    disabled={loading}
+                                    disabled={selectedDeliveryType == null || loadingDeliveryPrice}
                                     action={handleSubmit}
                                 />
                             </View>

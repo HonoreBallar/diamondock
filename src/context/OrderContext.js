@@ -27,9 +27,7 @@ export const OrderProvider = ({children})=>{
 
     const getDeliveryPrice = async (datas)=>{
         try {
-            console.log('Delivery Price Request Data:', datas);
             const response = await apiClient.post('/order/amount-payable', datas);
-            console.log('Delivery Price Response:', response);
             return response;
         } catch (error) {
             console.error('Error fetching delivery price:', error?.response?.data || error?.message || error);
