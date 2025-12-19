@@ -170,14 +170,23 @@ export const CartProvider = ({ children }) => {
         return cart.length ?? 0;
     }
 
-    const productListInCart = cart.map(item => ({
-        quantity: item.quantity,
-        token: item.token,
-        variants: Object.values(item.selectedVariants || {}).map(v => ({
+    const productListInCart = cart.map(item => {
+        const variants = Object.values(item.selectedVariants || []).map(v => ({
             token: v.token,
             value: v.name
-        }))
-    }));
+        }));
+        
+        const product = {
+            quantity: item.quantity,
+            token: item.token
+        };
+        
+        if (variants.length > 0) {
+            product.variants = variants;
+        }
+        
+        return product;
+    });
 
     return (
         <CartContext.Provider value={{ cart, currency, addToCart, removeFromCart, clearCart, getTotal, incrementQuantity, decrementQuantity, productListInCart, productInCart }}>
