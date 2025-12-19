@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
@@ -7,19 +7,22 @@ import Btn from "../components/Btn";
 import CustomSelect from "../components/CustomSelect";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { formatDateToEnglish } from "../utils/utils";
+import { formatAmount, formatDateToEnglish } from "../utils/utils";
 import { useCart } from "../context/CartContext";
+import { useApiClient } from "../context/ApiContext";
 import SearchableSelect from "../components/SearchableSelect";
 import { useTranslation } from "../context/LocalizationContext";
 import { useRootContext } from "../context/RootContext";
 
+
 export default function OrderStepTwo({ navigation, route }) {
 
     const {t} = useTranslation();
+    const apiClient = useApiClient();
     const {countries, getMunicipalities, getRegions, regions, municipalities, typeDelivery} = useRootContext();
 
-    const {modePayment, fetchOrder} = useOrders();
-    const {clearCart} = useCart();
+    const {modePayment, fetchOrder, getDeliveryPrice} = useOrders();
+    const {clearCart, productListInCart} = useCart();
     const {datas} = route.params;
     const [delivery, setDelivery] = useState('');
     const [loading, setLoading] = useState(false);
@@ -30,8 +33,11 @@ export default function OrderStepTwo({ navigation, route }) {
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);
+    const [selectedDeliveryType, setSelectedDeliveryType] = useState(null);
     const [loadingRegions, setLoadingRegions] = useState(false);
     const [loadingMunicipalities, setLoadingMunicipalities] = useState(false);
+    const [loadingDeliveryPrice, setLoadingDeliveryPrice] = useState(false);
+    const [productDeliveryPrice, setProductDeliveryPrice] = useState([]);
 
     // Charger les régions quand le pays change
     useEffect(() => {
@@ -60,9 +66,93 @@ export default function OrderStepTwo({ navigation, route }) {
         }
     }, [selectedRegion]);
 
+    // Charger le prix quand le mode de paiement change
+    const handleChange = async() => {
+
+        if(!selectedDeliveryType.token && !selectedCountry && !selectedRegion && !selectedCommune) {
+            return;
+        }
+
+        setLoadingDeliveryPrice(true);
+
+        const requestData = {
+            delivery: {
+                country_id: selectedCountry?.id, 
+                municipality_id: selectedCommune?.id, 
+                address: "Cocody", 
+                date: "2025-09-17", 
+                method: "at_home", 
+                type: selectedDeliveryType?.token
+            },
+            products: productListInCart
+        };
+
+        try {
+            const response = await getDeliveryPrice(requestData);
+            
+            console.log('Delivery Price Response:', response);
+            return;
+            if (response?.status === false) {
+                setProductDeliveryPrice([]);
+            } else {
+                setProductDeliveryPrice(response?.data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching delivery price:', error);
+            setProductDeliveryPrice([]);
+        } finally {
+            setLoadingDeliveryPrice(false);
+        }
+    }
+
+    // Exécuter handleChange quand selectedDeliveryType change
+    useEffect(() => {
+        if (selectedDeliveryType) {
+            handleChange();
+        }
+    }, [selectedDeliveryType]);
+
     const handleSubmit = () => {
 
-        navigation.navigate('OrderStepThree', {datas: datas});
+        if (selectedCountry == null) {
+            showMessage({
+                message: t('alerts.selectCountry'),
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
+
+        if (selectedRegion == null) {
+            showMessage({
+                message: t('alerts.selectRegion'),
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
+
+        if (selectedCommune == null) {
+            showMessage({
+                message: t('alerts.selectMunicipality'),
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
+
+        if(typeDelivery == null){
+            showMessage({
+                message: t('alerts.deliveryMode'),
+                type: "danger",
+                icon: { icon: "danger", position: "left" },
+                duration: 2000,
+            });
+            return;
+        }
 
         if (delivery.trim() === '') {
             showMessage({
@@ -83,75 +173,22 @@ export default function OrderStepTwo({ navigation, route }) {
             });
             return;
         }
-        const order = {
+        const _datas = {
             ...datas,
-            delivery:{
-                method: checked,
-                address: checked == "relay_point" ? relay_point : delivery,
-                date: selectedDate != '' ? formatDateToEnglish(selectedDate) : null,
+            delivery: {
+                country_id: selectedCountry?.id, 
+                municipality_id: selectedCommune?.id, 
+                address: delivery, 
+                date: "2025-09-17", 
+                method: "at_home", 
+                type: selectedDeliveryType?.token
             },
-            payment: {
-                method: payment,
-                option: selectedPayment
-            }
+            reduction: {
+                code: "", 
+                amount: ""
+            },
         }
-                
-        setTimeout(async () => {
-            setLoading(true);
-            try {
-                const response = await fetchOrder(order);
-                const responseData = response?.data?.data;
-                if (response.status) {
-                    clearCart();
-                    if (responseData?.payment_method == 'cash') {
-                        showMessage({
-                            message: t('alerts.orderSuccess'),
-                            type: "success",
-                            icon: { icon: "success", position: "left" },
-                            duration: 2000,
-                        });
-                        clearCart(false);
-                        navigation.navigate('Main');
-                        setLoading(false);
-                    } else {
-                        Linking.openURL(responseData?.payment_url)
-                            .then(() => {
-                                showMessage({
-                                    message: t('alerts.paiementWainting'),
-                                    type: "success",
-                                    icon: { icon: "success", position: "left" },
-                                    duration: 2000,
-                                });
-                                navigation.navigate('Main');
-                                setLoading(false);
-                            })
-                            .catch((error) => {
-                                console.error('Error opening URL:', error);
-                                setLoading(false);
-                            });
-                    }
-                } else {
-                    showMessage({
-                        message: "Error " + response?.message,
-                        type: "danger",
-                        icon: { icon: "danger", position: "left" },
-                        duration: 2000,
-                    });
-                    setLoading(false);
-                }
-            } catch (error) {
-                showMessage({
-                    message: "Error " + error.message,
-                    type: "danger",
-                    icon: { icon: "danger", position: "left" },
-                    duration: 2000,
-                });
-                setLoading(false);
-            }
-            finally{
-                setLoading(false);
-            }
-        }, 100);
+        navigation.navigate('OrderStepThree', {datas: _datas});
         
     };
 
@@ -199,11 +236,55 @@ export default function OrderStepTwo({ navigation, route }) {
                             <CustomSelect
                                 label={t('input.deliveryModeTitle') || "Type de livraison"}
                                 data={typeDelivery}
-                                value={checked}
-                                onChange={setChecked}
-                                placeholder={t('input.deliveryModeTitle') || "Sélectionner un type de livraison"}
+                                value={selectedDeliveryType}
+                                onChange={setSelectedDeliveryType}
+                                placeholder="Sélectionner un type de livraison"
                                 isRequired
+                                labelKey="name"
+                                valueKey="token"
+                                disabled={!selectedCommune || loadingMunicipalities}
                             />
+
+                            {loadingDeliveryPrice ? (
+                                <View style={{
+                                    marginTop: 5,
+                                    padding: 12,
+                                    backgroundColor: '#eff6ff',
+                                    borderRadius: 8,
+                                    borderLeftWidth: 4,
+                                    borderLeftColor: '#0284c7',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <ActivityIndicator size="large" color="#0284c7" />
+                                    <Text style={{
+                                        fontSize: 12,
+                                        color: '#0c4a6e',
+                                        marginTop: 3
+                                    }}>
+                                        {t('input.deliveryFeesCalculating') || 'Calcul des frais de livraison...'}
+                                    </Text>
+                                </View>
+                            ) : selectedDeliveryType?.token ? (
+                                <View style={{
+                                    marginTop: 1,
+                                    marginBottom: 10,
+                                    padding: 12,
+                                    backgroundColor: '#eff6ff',
+                                    borderRadius: 8,
+                                    borderLeftWidth: 4,
+                                    borderLeftColor: '#0284c7'
+                                }}>
+
+                                    <Text style={{
+                                        fontSize: 12,
+                                        color: '#0c4a6e',
+                                        lineHeight: 18
+                                    }}>
+                                        Le montant de la  livraison est de : {formatAmount(productDeliveryPrice?.delivery_charges || 0)} {productDeliveryPrice?.currency || 'F CFA'}
+                                    </Text>
+                                </View>
+                            ) : null}
                             
                             <Input
                                 label={t('input.deliveryAddressTitle')}
