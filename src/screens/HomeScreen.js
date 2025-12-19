@@ -8,6 +8,8 @@ import ProductCard from "../components/ProductCard";
 import { useEffect, useState, useMemo } from "react";
 import CategoryItem from "../components/CategoryItem";
 import { useTranslation } from "../context/LocalizationContext";
+import SkeletonCategoryItem from "../components/SkeletonCategoryItem";
+import SkeletonProductCard from "../components/SkeletonProductCard";
 
 export default function HomeScreen({navigation}){
     const { t } = useTranslation();
@@ -34,11 +36,12 @@ export default function HomeScreen({navigation}){
     }, [products]);
 
     useEffect(() => {
-        if (products && randomCategories.length > 0) {
-            setLoading(false);
-        }
-    }, 
-    [products, randomCategories]);
+        setTimeout(() => {
+            if (products && randomCategories.length > 0) {
+                setLoading(false);
+            }
+        }, 100);
+    }, [products, randomCategories]);
 
     return(
         <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -53,7 +56,14 @@ export default function HomeScreen({navigation}){
                             </TouchableOpacity>
                         </View>
                         {loading ? (
-                            <ActivityIndicator size="large" color={colors.primary} style={{marginTop: 20}} />
+                            <FlatList
+                                data={[1, 2, 3, 4]}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={() => <SkeletonCategoryItem />}
+                                scrollEnabled={false}
+                            />
                         ) : (
                             <FlatList
                                 data={randomCategories}
@@ -77,66 +87,99 @@ export default function HomeScreen({navigation}){
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.new')}</Text>
                         </View>
-                        <FlatList
-                            data={newProducts}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => (
-                                <ProductCard key={item.token} product={item} navigation={navigation}/>
-                            )}
-                            initialNumToRender={1}
-                            maxToRenderPerBatch={2}
-                            ListEmptyComponent={() => (
-                                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
-                                    <Text style={{textAlign: 'center'}}>{t('common.noProducts')}</Text>
-                                </View>
-                            )}
-                        />
+                        {loading ? (
+                            <FlatList
+                                data={[1, 2]}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={() => <SkeletonProductCard />}
+                                scrollEnabled={false}
+                            />
+                        ) : (
+                            <FlatList
+                                data={newProducts}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item }) => (
+                                    <ProductCard key={item.token} product={item} navigation={navigation}/>
+                                )}
+                                initialNumToRender={1}
+                                maxToRenderPerBatch={2}
+                                ListEmptyComponent={() => (
+                                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                                        <Text style={{textAlign: 'center'}}>{t('common.noProducts')}</Text>
+                                    </View>
+                                )}
+                            />
+                        )}
                     </View>
 
                     <View style={{margin: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.limitedTimeOffer')}</Text>
                         </View>
-                        <FlatList
-                            data={limitedTimeProducts}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => (
-                                <ProductCard key={item.token} product={item} navigation={navigation}/>
-                            )}
-                            initialNumToRender={1}
-                            maxToRenderPerBatch={2}
-                            ListEmptyComponent={() => (
-                                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
-                                    <Text style={{textAlign: 'center'}}>{t('common.noProducts')}</Text>
-                                </View>
-                            )}
-                        />
+                        {loading ? (
+                            <FlatList
+                                data={[1, 2]}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={() => <SkeletonProductCard />}
+                                scrollEnabled={false}
+                            />
+                        ) : (
+                            <FlatList
+                                data={limitedTimeProducts}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item }) => (
+                                    <ProductCard key={item.token} product={item} navigation={navigation}/>
+                                )}
+                                initialNumToRender={1}
+                                maxToRenderPerBatch={2}
+                                ListEmptyComponent={() => (
+                                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                                        <Text style={{textAlign: 'center'}}>{t('common.noProducts')}</Text>
+                                    </View>
+                                )}
+                            />
+                        )}
                     </View>
 
                     <View style={{margin: 10}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
                             <Text style={{marginBottom: 8, color: colors.primary, fontWeight: 'bold',fontSize: 17}}>{t('home.bestArticles')}</Text>
                         </View>
-                        <FlatList
-                            data={bestArticlesProducts}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => (
-                                <ProductCard key={item.token} product={item} navigation={navigation}/>
-                            )}
-                            initialNumToRender={1}
-                            maxToRenderPerBatch={2}
-                            ListEmptyComponent={() => (
-                                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
-                                    <Text style={{textAlign: 'center'}}>{t('common.noProducts')}</Text>
-                                </View>
-                            )}
-                        />
+                        {loading ? (
+                            <FlatList
+                                data={[1, 2]}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={() => <SkeletonProductCard />}
+                                scrollEnabled={false}
+                            />
+                        ) : (
+                            <FlatList
+                                data={bestArticlesProducts}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item }) => (
+                                    <ProductCard key={item.token} product={item} navigation={navigation}/>
+                                )}
+                                initialNumToRender={1}
+                                maxToRenderPerBatch={2}
+                                ListEmptyComponent={() => (
+                                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                                        <Text style={{textAlign: 'center'}}>{t('common.noProducts')}</Text>
+                                    </View>
+                                )}
+                            />
+                        )}
                     </View>
 
                 </View>
