@@ -51,6 +51,8 @@ export default function DetailProductScreen({navigation, route}){
             setLoadingRegions(true);
             setSelectedRegion(null);
             setSelectedCommune(null);
+            setSelectedDeliveryType(null);
+            setLoadingDeliveryPrice(false);
             getRegions(selectedCountry.id || selectedCountry).then(() => {
                 setLoadingRegions(false);
             }).catch(() => {
@@ -65,6 +67,7 @@ export default function DetailProductScreen({navigation, route}){
             setLoadingMunicipalities(true);
             setSelectedCommune(null);
             setSelectedDeliveryType(null);
+            setLoadingDeliveryPrice(false);
             getMunicipalities(selectedRegion.id || selectedRegion).then(() => {
                 setLoadingMunicipalities(false);
             }).catch(() => {
@@ -72,6 +75,14 @@ export default function DetailProductScreen({navigation, route}){
             });
         }
     }, [selectedRegion]);
+
+    // Charger les types de livraison quand la commune change
+    useEffect(() => {
+        if (selectedCommune && selectedRegion && selectedCountry) {
+            setSelectedDeliveryType(null);
+            setLoadingDeliveryPrice(false);
+        }
+    }, [selectedCommune]);
 
     const handleChange = async() => {
 
@@ -227,191 +238,181 @@ export default function DetailProductScreen({navigation, route}){
                                 <FlottingCart navigation={navigation}/>
                             </View>
                         </View>
-                        <View style={{margin: 13}}>
-                            <Text style={{fontSize: 17, marginBottom: 3, fontWeight: '500'}} numberOfLines={2}>{mainProduct?.name}</Text>
-                            <Text style={{fontSize: 17, marginBottom: 8, color: '#ccc'}} numberOfLines={2}>{mainProduct?.title}</Text>
-                            <View style={{flexDirection: 'row', }}>
-                                <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(finalPrice || 0)} {mainProduct?.currency || 'F CFA' } </Text>
-                                { mainProduct?.reduction_rate != null && (
-                                    <Text style={{fontSize: 20, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through', marginLeft: 5}}>{formatAmount(mainProduct?.base_price || 0)} {mainProduct?.currency}</Text>
-                                ) }  
-                            </View>
-                            <View style={{backgroundColor: '#03045e', padding: 4, marginBottom: 10, borderRadius: 5, alignSelf: 'flex-start'}}>
-                                <Text style={{fontWeight: '600', fontSize: 14, color: '#fff'}}>{mainProduct?.category || 'Non disponible'}</Text>
-                            </View>
-                            
-                            {ratio === 0 ? (
-                                <Text style={{color: 'red', fontWeight: '400', fontSize: 16, marginBottom: 5}}>{t('common.productOutOfStock')}</Text>
-                            ) :(
-                                <View style={{marginBottom: 10}}>
-                                    <Text style={{fontWeight: '300', fontSize: 16, marginBottom: 5}}>{mainProduct?.remaining_stock || 0} {t('common.itemsLeft')}</Text>
-                                    <ProgressBar progress={ratio} color={colors.primary} />
+                        <View style={{marginTop: 1}}>
+                            <View style={{marginTop: 5, marginBottom: 5, padding: 12, backgroundColor: '#ffffff'}}>
+                                <Text style={{fontSize: 17, marginBottom: 3, fontWeight: '500'}} numberOfLines={2}>{mainProduct?.name}</Text>
+                                <Text style={{fontSize: 17, marginBottom: 8, color: '#ccc'}} numberOfLines={2}>{mainProduct?.title}</Text>
+                                <View style={{flexDirection: 'row', }}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 25, marginBottom: 8}}>{formatAmount(finalPrice || 0)} {mainProduct?.currency || 'F CFA' } </Text>
+                                    { mainProduct?.reduction_rate != null && (
+                                        <Text style={{fontSize: 20, color: colors.primary, marginTop: 3, textDecorationLine: 'line-through', marginLeft: 5}}>{formatAmount(mainProduct?.base_price || 0)} {mainProduct?.currency}</Text>
+                                    ) }  
                                 </View>
-                            )}
-                            {/* VARIANTS */}
-                            <View style={{marginBottom: 10}}>
-                                {mainProduct?.variants?.map((variantGroup, index) => (
-                                <View key={index} style={{ marginTop: 10 }}>
-
-                                    <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 10 }}>
-                                    {variantGroup.name} :
-                                    </Text>
-
-                                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                                    {variantGroup.items.map((item) => {
-                                        
-                                        const isSelected =
-                                        selectedVariants[variantGroup.name]?.token === item.token;
-
-                                        return (
-                                        <TouchableOpacity
-                                            key={item.token}
-                                            onPress={() => handleSelectVariant(variantGroup.name, item)}
-                                            style={{
-                                            paddingHorizontal: 10,
-                                            paddingVertical: 6,
-                                            backgroundColor: isSelected ? "#ffa100" : "#ddd",
-                                            marginRight: 10,
-                                            marginBottom: 10,
-                                            borderRadius: 6,
-                                            }}
-                                        >
-                                            <Text
-                                            style={{
-                                                fontWeight: "600",
-                                                color: isSelected ? "white" : "black",
-                                            }}
-                                            >
-                                            {item.name}
-                                            </Text>
-                                        </TouchableOpacity>
-                                        );
-                                    })}
-                                    </View>
-
+                                <View style={{backgroundColor: '#03045e', padding: 4, marginBottom: 10, borderRadius: 5, alignSelf: 'flex-start'}}>
+                                    <Text style={{fontWeight: '600', fontSize: 14, color: '#fff'}}>{mainProduct?.category || 'Non disponible'}</Text>
                                 </View>
-                                ))}
-                            </View>
-                            
-                            <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.description')}</Text>
-                            <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
-                            
-                            {/* DELIVERY CARD */}
-                            <View style={{borderWidth: 0.8, borderColor: '#ccc', borderRadius: 10, marginBottom: 15, marginTop: 15, overflow: 'hidden'}}>
-                                <TouchableOpacity 
-                                    onPress={() => setIsDeliveryExpanded(!isDeliveryExpanded)} 
-                                    style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15}}
-                                >
-                                    <Text style={{color: colors.primary, fontSize: 15, fontWeight: '600'}}>📦 {t('common.delivery') || 'Livraison'}</Text>
-                                    <FontAwesome5 name={isDeliveryExpanded ? 'chevron-up' : 'chevron-down'} size={15} color="black" />
-                                </TouchableOpacity>
-                                {isDeliveryExpanded && (
-                                    <View style={{borderTopWidth: 0.8, borderTopColor: '#ccc', padding: 16, backgroundColor: '#f9f9f9'}}>
-
-                                        {/* SELECTS */}
-                                        <View style={{marginTop: 2}}>
-                                            <SearchableSelect
-                                                label={t('input.countryTitle') || "Pays"}
-                                                data={countries}
-                                                value={selectedCountry}
-                                                onChange={setSelectedCountry}
-                                                placeholder={t('input.countryPlaceholder') || "Sélectionner un pays"}
-                                                isRequired
-                                            />
-                                            <SearchableSelect
-                                                label={t('input.regionTitle') || "Région"}
-                                                data={regions}
-                                                value={selectedRegion}
-                                                onChange={setSelectedRegion}
-                                                placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
-                                                isRequired
-                                                disabled={!selectedCountry || loadingRegions}
-                                                loading={loadingRegions}
-                                            />
-                                            <SearchableSelect
-                                                label={t('input.municipalityTitle') || "Commune"}
-                                                data={municipalities}
-                                                value={selectedCommune}
-                                                onChange={setSelectedCommune}
-                                                placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
-                                                isRequired
-                                                disabled={!selectedRegion || loadingMunicipalities}
-                                                loading={loadingMunicipalities}
-                                            />
-
-                                            <CustomSelect
-                                                label={t('input.deliveryModeTitle') || "Type de livraison"}
-                                                data={typeDelivery}
-                                                value={selectedDeliveryType}
-                                                onChange={setSelectedDeliveryType}
-                                                placeholder="Sélectionner un type de livraison"
-                                                isRequired
-                                                labelKey="name"
-                                                valueKey="token"
-                                                disabled={!selectedCommune || loadingMunicipalities}
-                                            />
-
-                                            {loadingDeliveryPrice ? (
-                                                <View style={{
-                                                    marginTop: 5,
-                                                    padding: 12,
-                                                    backgroundColor: '#eff6ff',
-                                                    borderRadius: 8,
-                                                    borderLeftWidth: 4,
-                                                    borderLeftColor: '#0284c7',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center'
-                                                }}>
-                                                    <ActivityIndicator size="large" color="#0284c7" />
-                                                    <Text style={{
-                                                        fontSize: 12,
-                                                        color: '#0c4a6e',
-                                                        marginTop: 3
-                                                    }}>
-                                                        {t('input.deliveryFeesCalculating') || 'Calcul des frais de livraison...'}
-                                                    </Text>
-                                                </View>
-                                            ) : selectedDeliveryType?.token ? (
-                                                <View style={{
-                                                    marginTop: 5,
-                                                    padding: 12,
-                                                    backgroundColor: '#eff6ff',
-                                                    borderRadius: 8,
-                                                    borderLeftWidth: 4,
-                                                    borderLeftColor: '#0284c7'
-                                                }}>
-
-                                                    <Text style={{
-                                                        fontSize: 12,
-                                                        color: '#0c4a6e',
-                                                        lineHeight: 18
-                                                    }}>
-                                                        {t('input.deliveryFeesText', {
-                                                            price: formatAmount(productDeliveryPrice?.price || 0),
-                                                            currency: productDeliveryPrice?.currency || 'F CFA',
-                                                            time: productDeliveryPrice?.time || 'quelques jours'
-                                                        })}
-                                                    </Text>
-                                                </View>
-                                            ) : null}
-                                        </View>
+                                 {ratio === 0 ? (
+                                    <Text style={{color: 'red', fontWeight: '400', fontSize: 16, marginBottom: 5}}>{t('common.productOutOfStock')}</Text>
+                                ) :(
+                                    <View style={{marginBottom: 3}}>
+                                        <Text style={{fontWeight: '300', fontSize: 16, marginBottom: 5}}>{mainProduct?.remaining_stock || 0} {t('common.itemsLeft')}</Text>
+                                        <ProgressBar progress={ratio} color={colors.primary} />
                                     </View>
                                 )}
+                                {/* VARIANTS */}
+                                <View style={{marginBottom: 3}}>
+                                    {mainProduct?.variants?.map((variantGroup, index) => (
+                                    <View key={index} style={{ marginTop: 10 }}>
+
+                                        <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 10 }}>
+                                        {variantGroup.name} :
+                                        </Text>
+
+                                        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                                        {variantGroup.items.map((item) => {
+                                            
+                                            const isSelected =
+                                            selectedVariants[variantGroup.name]?.token === item.token;
+
+                                            return (
+                                            <TouchableOpacity
+                                                key={item.token}
+                                                onPress={() => handleSelectVariant(variantGroup.name, item)}
+                                                style={{
+                                                paddingHorizontal: 10,
+                                                paddingVertical: 6,
+                                                backgroundColor: isSelected ? "#ffa100" : "#ddd",
+                                                marginRight: 10,
+                                                marginBottom: 10,
+                                                borderRadius: 6,
+                                                }}
+                                            >
+                                                <Text
+                                                style={{
+                                                    fontWeight: "600",
+                                                    color: isSelected ? "white" : "black",
+                                                }}
+                                                >
+                                                {item.name}
+                                                </Text>
+                                            </TouchableOpacity>
+                                            );
+                                        })}
+                                        </View>
+
+                                    </View>
+                                    ))}
+                                </View>
+                            </View>
+                            <View style={{marginTop: 5,marginBottom: 5, padding: 12, backgroundColor: '#ffffff'}}>
+                                <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.description')}</Text>
+                                <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
+                            </View>
+                            <View style={{marginTop: 5,marginBottom: 5, padding: 12, backgroundColor: '#ffffff'}}>
+                                <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>📦 {t('common.delivery') || 'Livraison'}</Text>
+                                <View style={{marginTop: 2}}>
+                                    <SearchableSelect
+                                        label={t('input.countryTitle') || "Pays"}
+                                        data={countries}
+                                        value={selectedCountry}
+                                        onChange={setSelectedCountry}
+                                        placeholder={t('input.countryPlaceholder') || "Sélectionner un pays"}
+                                        isRequired
+                                    />
+                                    <SearchableSelect
+                                        label={t('input.regionTitle') || "Région"}
+                                        data={regions}
+                                        value={selectedRegion}
+                                        onChange={setSelectedRegion}
+                                        placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
+                                        isRequired
+                                        disabled={!selectedCountry || loadingRegions}
+                                        loading={loadingRegions}
+                                    />
+                                    <SearchableSelect
+                                        label={t('input.municipalityTitle') || "Commune"}
+                                        data={municipalities}
+                                        value={selectedCommune}
+                                        onChange={setSelectedCommune}
+                                        placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
+                                        isRequired
+                                        disabled={!selectedRegion || loadingMunicipalities}
+                                        loading={loadingMunicipalities}
+                                    />
+
+                                    <CustomSelect
+                                        label={t('input.deliveryModeTitle') || "Type de livraison"}
+                                        data={typeDelivery}
+                                        value={selectedDeliveryType}
+                                        onChange={setSelectedDeliveryType}
+                                        placeholder="Sélectionner un type de livraison"
+                                        isRequired
+                                        labelKey="name"
+                                        valueKey="token"
+                                        disabled={!selectedCommune || loadingMunicipalities}
+                                    />
+
+                                    {loadingDeliveryPrice ? (
+                                        <View style={{
+                                            marginTop: 5,
+                                            padding: 12,
+                                            backgroundColor: '#eff6ff',
+                                            borderRadius: 8,
+                                            borderLeftWidth: 4,
+                                            borderLeftColor: '#0284c7',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <ActivityIndicator size="large" color="#0284c7" />
+                                            <Text style={{
+                                                fontSize: 12,
+                                                color: '#0c4a6e',
+                                                marginTop: 3
+                                            }}>
+                                                {t('input.deliveryFeesCalculating') || 'Calcul des frais de livraison...'}
+                                            </Text>
+                                        </View>
+                                    ) : selectedDeliveryType?.token ? (
+                                        <View style={{
+                                            marginTop: 5,
+                                            padding: 12,
+                                            backgroundColor: '#eff6ff',
+                                            borderRadius: 8,
+                                            borderLeftWidth: 4,
+                                            borderLeftColor: '#0284c7'
+                                        }}>
+
+                                            <Text style={{
+                                                fontSize: 12,
+                                                color: '#0c4a6e',
+                                                lineHeight: 18
+                                            }}>
+                                                {t('input.deliveryFeesText', {
+                                                    price: formatAmount(productDeliveryPrice?.price || 0),
+                                                    currency: productDeliveryPrice?.currency || 'F CFA',
+                                                    time: productDeliveryPrice?.time || 'quelques jours'
+                                                })}
+                                            </Text>
+                                        </View>
+                                    ) : null}
+                                </View>
+                            </View>
+                            <View style={{marginTop: 5, padding: 12, backgroundColor: '#ffffff'}}>
+                                <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>{t('common.reviews')}</Text>
+                                <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
+                                    <TouchableOpacity onPress={()=>navigation.navigate('RateDetailProduct',{product: product})} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row'}}>
+                                            {renderStars(mainProduct?.note || 0)}
+                                            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 6}}>
+                                                <Text style={{fontSize: 18, fontWeight: 'bold'}}>{mainProduct?.note || 0} / 5</Text>
+                                                <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>({mainProduct?.comment ? mainProduct?.comment : "Pas d'avis"})</Text>
+                                            </View>
+                                        </View>
+                                        <FontAwesome5 name="chevron-right" size={20} color="#000"/>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                             
-                            <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>{t('common.reviews')}</Text>
-                            <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
-                                <TouchableOpacity onPress={()=>navigation.navigate('RateDetailProduct',{product: product})} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                    <View style={{flexDirection: 'row'}}>
-                                        {renderStars(mainProduct?.note || 0)}
-                                        <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 6}}>
-                                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{mainProduct?.note || 0} / 5</Text>
-                                            <Text style={{fontSize: 15, color: colors.gray, fontWeight: '400', marginLeft: 5}}>({mainProduct?.comment ? mainProduct?.comment : "Pas d'avis"})</Text>
-                                        </View>
-                                    </View>
-                                    <FontAwesome5 name="chevron-right" size={20} color="#000"/>
-                                </TouchableOpacity>
-                            </View>
                         </View>
                     </ScrollView>
                     <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>

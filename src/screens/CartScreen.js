@@ -8,12 +8,14 @@ import colors from "../utils/colors";
 import CartCard from "../components/CartCard";
 import { formatAmount } from "../utils/utils";
 import { useTranslation } from "../context/LocalizationContext";
+import Btn from "../components/Btn";
 
 export default function CartScreen({ navigation, }) {
     const { t } = useTranslation();
 
     const { cart, loading, clearCart, getTotal, currency } = useCart();
     const [loadingCart, setLoadingCart] = useState(false);
+    const [loadingOrder, setLoadingOrder] = useState(false);
 
     const handleClearCart = () => {
         setLoadingCart(true);
@@ -32,6 +34,14 @@ export default function CartScreen({ navigation, }) {
             { cancelable: false }
         );
     };
+
+    const handleClick = () => {
+        setLoadingOrder(true);
+        setTimeout(() => {
+            navigation.navigate('OrderStepOne');
+            setLoadingOrder(false);
+        }, 100);
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -65,14 +75,17 @@ export default function CartScreen({ navigation, }) {
                                         <Text style={{ color: '#c3c3c3', fontSize: 18 }}>Total :</Text>
                                         <Text style={{ fontSize: 25, fontWeight: 'bold', color: colors.primary }}> {formatAmount(getTotal() || 0)} {currency}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => navigation.navigate('OrderStepOne')} style={{ backgroundColor: colors.primary, padding: 12, borderRadius: 10, marginBottom: 10 }}>
-                                        <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>{t('buttons.validOrder')}</Text>
-                                    </TouchableOpacity>
+                                    <Btn
+                                        label={t('buttons.validOrder')}
+                                        action={handleClick}
+                                        loader={loadingOrder}
+                                        disabled={loadingOrder}
+                                    />
                                     <TouchableOpacity onPress={() => handleClearCart()}>
                                         {loadingCart ? (
                                             <ActivityIndicator size="small" color="red" />
                                         ) : (
-                                            <Text style={{ color: 'red', fontWeight: '400', textDecorationLine: 'underline', textAlign: 'center' }}>{t('buttons.clearCart')}</Text>
+                                            <Text style={{ color: 'red', marginTop: 5, marginBottom: 5, fontWeight: '400', textDecorationLine: 'underline', textAlign: 'center' }}>{t('buttons.clearCart')}</Text>
                                         )}
                                     </TouchableOpacity>
                                 </View>

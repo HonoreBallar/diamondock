@@ -189,7 +189,7 @@ export default function OrderStepOne({navigation}) {
                                 </View>
                             </View>
                             <View style={{marginTop: 20}}>
-                                <Btn label={t('order.checkout')} loader={loading} action={handleNext} />
+                                <Btn label={t('order.checkout')} loader={loading} disabled={loading} action={handleNext} />
                             </View>
                             <TouchableOpacity onPress={()=>navigation.goBack()} style={{marginTop: 5}}>
                                 <Text style={{color: '#ccc', fontWeight: 'bold', textDecorationLine: 'underline', textAlign: 'center'}}>{t('common.cart')}</Text>
