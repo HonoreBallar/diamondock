@@ -23,8 +23,10 @@ export default function CustomSelect({
     loading = false,
     searchable = false,
     error = null,
-    labelKey = 'name',  // Clé pour le texte affiché
-    valueKey = 'id'     // Clé pour la valeur unique
+    labelKey = 'name',        // Clé pour le texte affiché
+    valueKey = 'id',          // Clé pour la valeur unique
+    disabledKey = null,       // Clé pour vérifier si l'option est désactivée
+    disabledValue = true      // Valeur qui indique que l'option est désactivée
 }) {
     const [visible, setVisible] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -133,24 +135,30 @@ export default function CustomSelect({
                         <FlatList
                             data={filteredData}
                             keyExtractor={(item, index) => item[valueKey]?.toString() || index.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={[
-                                        styles.option,
-                                        isItemSelected(item) && styles.optionSelected
-                                    ]}
-                                    onPress={() => handleSelect(item)}
-                                >
-                                    <Text
+                            renderItem={({ item }) => {
+                                const isDisabled = disabledKey ? item[disabledKey] === disabledValue : false;
+                                return (
+                                    <TouchableOpacity
                                         style={[
-                                            styles.optionText,
-                                            isItemSelected(item) && styles.optionTextSelected
+                                            styles.option,
+                                            isItemSelected(item) && styles.optionSelected,
+                                            isDisabled && styles.optionDisabled
                                         ]}
+                                        onPress={() => !isDisabled && handleSelect(item)}
+                                        disabled={isDisabled}
                                     >
-                                        {item[labelKey]}
-                                    </Text>
-                                </TouchableOpacity>
-                            )}
+                                        <Text
+                                            style={[
+                                                styles.optionText,
+                                                isItemSelected(item) && styles.optionTextSelected,
+                                                isDisabled && styles.optionTextDisabled
+                                            ]}
+                                        >
+                                            {item[labelKey]}
+                                        </Text>
+                                    </TouchableOpacity>
+                                );
+                            }}
                             scrollEnabled
                             nestedScrollEnabled
                             maxHeight={300}
@@ -275,6 +283,10 @@ const styles = StyleSheet.create({
     optionSelected: {
         backgroundColor: '#f1f4f7ff',
     },
+    optionDisabled: {
+        opacity: 0.5,
+        backgroundColor: '#f9fafb',
+    },
     optionText: {
         fontSize: 14,
         color: '#1f2937',
@@ -283,6 +295,9 @@ const styles = StyleSheet.create({
     optionTextSelected: {
         color: '#ffa100',
         fontWeight: '600',
+    },
+    optionTextDisabled: {
+        color: '#9ca3af',
     },
     emptyContainer: {
         paddingVertical: 20,

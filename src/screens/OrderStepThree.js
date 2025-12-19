@@ -162,6 +162,8 @@ export default function OrderStepThree({ navigation, route }) {
                                     isRequired
                                     labelKey="name"
                                     valueKey="name"
+                                    disabledKey="state"
+                                    disabledValue="disabled"
                                 />
                             )}
 
