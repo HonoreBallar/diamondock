@@ -16,6 +16,7 @@ import { useApiClient } from "../context/ApiContext";
 import CustomSelect from "../components/CustomSelect";
 import { useRootContext } from "../context/RootContext";
 import SearchableSelect from "../components/SearchableSelect";
+import SkeletonDetailProduct from "../components/SkeletonDetailProduct";
 
 export default function DetailProductScreen({navigation, route}){
 
@@ -193,10 +194,9 @@ export default function DetailProductScreen({navigation, route}){
             {loading ? (
                 <>
                     <HeaderLogo />
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                        <ActivityIndicator size={50} color={colors.primary} />
-                        <Text style={{marginTop: 10, fontSize: 16, color: colors.gray}}>{t('common.loading')}</Text>
-                    </View>
+                    <ScrollView style={{flex: 1}}>
+                        <SkeletonDetailProduct />
+                    </ScrollView>
                 </>
             ) : (
                 <>
