@@ -218,6 +218,9 @@
     "paiementWainting": "Paiement en cours de validation...",
     "productRemovedToWishlist": "Produit supprimé des favoris",
     "paiementInfo": "Vous serez redirigé vers la page de paiement sécurisée.",
-    "cashInfo": "Vous paierez à la réception de votre commande."
+    "cashInfo": "Vous paierez à la réception de votre commande.",
+    "selectCountry": "Veuillez sélectionner un pays",
+    "selectRegion": "Veuillez sélectionner une région",
+    "selectMunicipality": "Veuillez sélectionner une commune"
   }
 }

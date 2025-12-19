@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import HeaderLogo from "../components/HeaderLogo";
@@ -12,16 +12,19 @@ import { formatDateToEnglish, formatAmount } from "../utils/utils";
 import { useCart } from "../context/CartContext";
 import { useTranslation } from "../context/LocalizationContext";
 import { useRootContext } from "../context/RootContext";
+import { useApiClient } from "../context/ApiContext";
 
 export default function OrderStepThree({ navigation, route }) {
 
     const { t } = useTranslation();
-    const { modePayment, fetchOrder } = useOrders();
+    const { fetchOrder } = useOrders();
     const { clearCart } = useCart();
+    const apiClient = useApiClient();
     const { datas } = route.params;
     
     const [loading, setLoading] = useState(false);
     const [payment, setPayment] = useState('cash');
+    const [modePayment, setModePayment] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [isSummaryExpanded, setIsSummaryExpanded] = useState(true);
 
@@ -30,13 +33,22 @@ export default function OrderStepThree({ navigation, route }) {
         { id: 'online', name: 'Paiement en ligne' }
     ];
 
-    const paymentOptions = modePayment || [
-        { id: 'stripe', name: 'Stripe' },
-        { id: 'paypal', name: 'PayPal' },
-        { id: 'momobi', name: 'Mobile Money' }
-    ];
+    const fetchMode = async () => {
+        try {
+            const dataMode = await apiClient.get('/setting/payment-methods');
+            console.log('Payment Methods Fetched:', dataMode?.data?.data.online_payment_options ?? []);
+            setModePayment(dataMode?.data?.data.online_payment_options ?? []);
+        } catch (error) {
+            console.error('Error loading seller products :', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchMode();
+    }, []);
 
     const handleSubmit = () => {
+        return;
         if (payment === 'online' && !selectedPayment?.id) {
             showMessage({
                 message: t('alerts.paymentMethod') || 'Veuillez sélectionner une méthode de paiement',
@@ -69,7 +81,7 @@ export default function OrderStepThree({ navigation, route }) {
                             icon: { icon: "success", position: "left" },
                             duration: 2000,
                         });
-                        clearCart(false);
+                        // clearCart(false);
                         navigation.navigate('Main');
                         setLoading(false);
                     } else {
@@ -143,12 +155,14 @@ export default function OrderStepThree({ navigation, route }) {
                             {/* Options de paiement si paiement en ligne est sélectionné */}
                             {payment === 'online' && (
                                 <CustomSelect
+                                    data={modePayment}
                                     label={t('common.paymentOption') || "Options de paiement"}
-                                    data={paymentOptions}
+                                    placeholder="Sélectionner une option de paiement"
                                     value={selectedPayment}
                                     onChange={setSelectedPayment}
-                                    placeholder="Sélectionner une option de paiement"
                                     isRequired
+                                    labelKey="name"
+                                    valueKey="name"
                                 />
                             )}
 

@@ -215,6 +215,9 @@
     "orderSuccess": "Order placed successfully",
     "paiementWainting": "Payment pending...",
     "paiementInfo": "You will be redirected to the secure payment page.",
-    "cashInfo": "You will pay upon receipt of your order."
+    "cashInfo": "You will pay upon receipt of your order.",
+    "selectCountry": "Please select a country",
+    "selectRegion": "Please select a region",
+    "selectMunicipality": "Please select a municipality"
   }
 }

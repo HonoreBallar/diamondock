@@ -10,7 +10,7 @@ export const OrderProvider = ({children})=>{
     const fetchMode = async () => {
         try {
             const dataMode = await apiClient.get('/setting/payment-methods');
-            setModePayment(dataMode?.data.online_payment_options ?? []);
+            setModePayment(dataMode?.data?.online_payment_options ?? []);
         } catch (error) {
             console.error('Error loading seller products :', error);
         }
@@ -25,13 +25,24 @@ export const OrderProvider = ({children})=>{
         }
     }
 
+    const getDeliveryPrice = async (datas)=>{
+        try {
+            console.log('Delivery Price Request Data:', datas);
+            const response = await apiClient.post('/order/amount-payable', datas);
+            console.log('Delivery Price Response:', response);
+            return response;
+        } catch (error) {
+            console.error('Error fetching delivery price:', error?.response?.data || error?.message || error);
+        }
+    }
+
     // Charger les produits depuis l'API
     useEffect(() => {
         fetchMode();
     }, []);
 
     return (
-        <OrderContext.Provider value={{modePayment, fetchOrder }}>
+        <OrderContext.Provider value={{modePayment, fetchOrder, fetchMode, getDeliveryPrice}}>
             {children}
         </OrderContext.Provider>
     );
