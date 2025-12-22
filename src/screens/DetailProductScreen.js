@@ -124,10 +124,13 @@ export default function DetailProductScreen({navigation, route}){
     }, [selectedDeliveryType]);
 
 
-    const handleSelectVariant = (groupName, item) => {
+    const handleSelectVariant = (groupName, item, parentToken) => {
         setSelectedVariants(prev => ({
             ...prev,
-            [groupName]: item
+            [groupName]: {
+                ...item,
+                parentToken: parentToken
+            }
         }));
     };
 
@@ -277,7 +280,7 @@ export default function DetailProductScreen({navigation, route}){
                                             return (
                                             <TouchableOpacity
                                                 key={item.token}
-                                                onPress={() => handleSelectVariant(variantGroup.name, item)}
+                                                onPress={() => handleSelectVariant(variantGroup.name, item, variantGroup.token)}
                                                 style={{
                                                 paddingHorizontal: 10,
                                                 paddingVertical: 6,

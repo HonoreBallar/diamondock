@@ -65,7 +65,7 @@ export default function OrderStepOne({navigation}) {
             customer: customer,
             products: productListInCart,
         };
-
+        
         setLoading(true);
         setTimeout(()=>{
             navigation.navigate('OrderStepTwo', {datas: datas});

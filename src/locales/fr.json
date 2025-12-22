@@ -167,6 +167,7 @@
     "deliveryAddressPlaceholder": "Entrez votre adresse de livraison",
     "system": "Mode de paiement",
     "deliveryFeesCalculating": "Calcul des frais de livraison...",
+    "deliveryAmount": "Le montant de la livraison est de :",
     "deliveryFeesText": "Les frais de livraison pour cet article sont estimés à {{price}} {{currency}}. Il sera livré dans {{time}} si vous commandez dès maintenant."
     
   },

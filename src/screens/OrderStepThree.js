@@ -47,8 +47,7 @@ export default function OrderStepThree({ navigation, route }) {
     }, []);
 
     const handleSubmit = () => {
-        return;
-        if (payment === 'online' && !selectedPayment?.id) {
+        if (payment === 'online' && !selectedPayment) {
             showMessage({
                 message: t('alerts.paymentMethod') || 'Veuillez sélectionner une méthode de paiement',
                 type: "danger",
@@ -62,14 +61,17 @@ export default function OrderStepThree({ navigation, route }) {
             ...datas,
             payment: {
                 method: payment,
-                option: selectedPayment?.id || payment
+                option: selectedPayment?.name || payment
             }
         };
 
         setTimeout(async () => {
             setLoading(true);
             try {
+                console.log('Submitting Order:', order);
                 const response = await fetchOrder(order);
+                console.log('Order Response:', response);
+                return;
                 const responseData = response?.data?.data;
                 if (response.status) {
                     clearCart();
@@ -182,7 +184,7 @@ export default function OrderStepThree({ navigation, route }) {
                                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12}}>
                                             <Text style={{fontSize: 14, color: '#666'}}>{t('common.subtotal') || 'Sous-total'}</Text>
                                             <Text style={{fontSize: 14, fontWeight: '600', color: '#000'}}>
-                                                {formatAmount(datas?.subtotal || 0)} {datas?.currency || 'F CFA'}
+                                                {formatAmount(datas?.productDeliveryPrice?.amount_due || 0)} {datas?.productDeliveryPrice?.currency || 'F CFA'}
                                             </Text>
                                         </View>
 
@@ -190,7 +192,7 @@ export default function OrderStepThree({ navigation, route }) {
                                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, paddingBottom: 12, borderBottomWidth: 0.5, borderBottomColor: '#ddd'}}>
                                             <Text style={{fontSize: 14, color: '#666'}}>{t('common.delivery') || 'Livraison'}</Text>
                                             <Text style={{fontSize: 14, fontWeight: '600', color: '#000'}}>
-                                                {formatAmount(datas?.delivery_price || 0)} {datas?.currency || 'F CFA'}
+                                                {formatAmount(datas?.productDeliveryPrice?.delivery_charges || 0)} {datas?.productDeliveryPrice?.currency || 'F CFA'}
                                             </Text>
                                         </View>
 
@@ -198,7 +200,7 @@ export default function OrderStepThree({ navigation, route }) {
                                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                             <Text style={{fontSize: 16, fontWeight: '700', color: '#000'}}>{t('common.total') || 'Total'}</Text>
                                             <Text style={{fontSize: 16, fontWeight: '700', color: '#f29f03'}}>
-                                                {formatAmount((datas?.subtotal || 0) + (datas?.delivery_price || 0))} {datas?.currency || 'F CFA'}
+                                                {formatAmount((datas?.productDeliveryPrice?.total_amount || 0))} {datas?.productDeliveryPrice?.currency || 'F CFA'}
                                             </Text>
                                         </View>
                                     </View>

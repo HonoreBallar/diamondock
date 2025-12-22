@@ -45,10 +45,13 @@ const VariantsBottomSheet = ({
         }
     }, [visible, slideAnim]);
 
-    const handleSelectVariant = (groupName, item) => {
+    const handleSelectVariant = (groupName, item, parentToken) => {
         setSelectedVariants((prev) => ({
             ...prev,
-            [groupName]: item,
+            [groupName]: {
+                ...item,
+                parentToken: parentToken
+            },
         }));
     };
 
@@ -170,7 +173,7 @@ const VariantsBottomSheet = ({
                                             <View key={item.token} style={styles.variantRowContainer}>
                                                 <TouchableOpacity
                                                     onPress={() =>
-                                                        handleSelectVariant(variantGroup.name, item)
+                                                        handleSelectVariant(variantGroup.name, item, variantGroup.token)
                                                     }
                                                     style={[
                                                         styles.variantRow,

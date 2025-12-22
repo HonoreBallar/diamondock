@@ -172,8 +172,9 @@ export const CartProvider = ({ children }) => {
 
     const productListInCart = cart.map(item => {
         const variants = Object.values(item.selectedVariants || []).map(v => ({
-            token: v.token,
-            value: v.name
+            token: v.parentToken,
+            value: v.name,
+            parentToken: v.parentToken
         }));
         
         const product = {
