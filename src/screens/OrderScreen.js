@@ -44,7 +44,6 @@ export default function OrderScreen({navigation}){
                 setLoading(true);
                 try {
                     const response = await apiClient.get(`/order/all/${auth?.user?.phone}`);
-                    console.log(response);
                     if (response?.data?.status) {
                         const ordersData = response?.data?.data || [];
                         const filteredData = ordersData.filter(order =>

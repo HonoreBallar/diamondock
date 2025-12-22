@@ -2,11 +2,11 @@
   "expo": {
     "name": "Diamondock",
     "slug": "diamondock",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "splash": {
       "image": "./src/assets/icon.png",
       "resizeMode": "contain",
