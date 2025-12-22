@@ -174,7 +174,7 @@
     "orders": "My Orders",
     "language": "Language and currency",
     "about": "About Us",
-    "terms": "Terms and conditions",
+    "seller": "Sell on Diamondock",
     "address": "Addresses",
     "account": "My Account",
     "reviews": "Reviews"
@@ -219,6 +219,54 @@
     "cashInfo": "You will pay upon receipt of your order.",
     "selectCountry": "Please select a country",
     "selectRegion": "Please select a region",
-    "selectMunicipality": "Please select a municipality"
+    "selectMunicipality": "Please select a municipality",
+    "firstnameRequired": "Please enter your name and last name",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email address",
+    "messageRequired": "Please enter your message",
+    "messageMin": "The message must contain at least 10 characters",
+    "messageSent": "Your message has been sent successfully",
+    "errorMessage": "Error sending message",
+    "ratingRequired": "Please select a rating",
+    "reviewTextRequired": "Please enter your review",
+    "reviewMinLength": "Review must contain at least 10 characters",
+    "reviewSubmitted": "Your review has been published successfully",
+    "reviewError": "Error publishing review"
+  },
+  "aboutUs": {
+    "title": "About Diamondock",
+    "introduction": "Diamondock is a multi-service e-commerce platform designed to provide a secure, premium and simple online shopping experience. Our ambition: to bring together authentic products, digital services and financing solutions to facilitate national and international commerce.",
+    "meaningTitle": "What does Diamondock mean",
+    "meaningContent": "Diamondock combines diamond (value, authenticity) and dock (quay: logistics, storage). The name evokes a secure space where precious goods and quality services are prepared for the global market.",
+    "servicesTitle": "Our services",
+    "digitalMallTitle": "Digital Mall",
+    "digitalMallContent": "Marketplace with personalized storefronts, secure payments, integrated logistics and analysis tools to optimize sales.",
+    "socialMediaTitle": "Social Media Manager",
+    "socialMediaContent": "Complete management of networks: content strategy, visual creation, community management and measurable advertising campaigns.",
+    "diamondAresTitle": "Diamond Ares",
+    "diamondAresContent": "Direct intermediation between project promoters and investors: qualified referral, file preparation and transactional support.",
+    "differencesTitle": "Our key differences",
+    "difference1": "Security and traceability: authenticity control and transaction protection.",
+    "difference2": "Integrated offer: marketplace, digital visibility and access to financing on the same platform.",
+    "difference3": "Verified quality: selected sellers and controlled products to reassure the buyer.",
+    "difference4": "Tailored support: responsive customer support and solutions adapted to the needs of businesses and consumers.",
+    "difference5": "African origin, global scope: local anchorage with international openness to value unique products."
+  },
+  "contactUs": {
+    "title": "Contact Us",
+    "subtitle": "Do you have a question or comment? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.",
+    "messageLabel": "Your Message",
+    "messagePlaceholder": "Write your message here...",
+    "send": "Send Message"
+  },
+  "reviews": {
+    "noReviews": "No reviews yet",
+    "noReviewsSubtitle": "Start adding reviews on your favorite products",
+    "addReview": "Add a review",
+    "rating": "Rating",
+    "reviewText": "Your review",
+    "reviewPlaceholder": "Describe your experience with this product...",
+    "submitReview": "Publish review",
+    "reviewInstruction": "Share your experience with this product to help other customers make the best choice."
   }
 }

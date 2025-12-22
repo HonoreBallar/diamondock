@@ -56,16 +56,16 @@ export default function ProfilScreen({navigation}){
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, marginBottom: 10, borderWidth: 0.1}}>
                         <ProfilLine icon="user-tie" iconColor={"orange"} title={t('profil.account')} onPress={()=>navigation.navigate('EditProfilScreen')}/>
-                        <ProfilLine icon="map-marker-alt" iconColor={"blue"} title={t('profil.address')} onPress={handleBuild}/>
+                        <ProfilLine icon="shopping-cart" iconColor={"#8cbdef"} title={t('profil.orders')} onPress={()=>navigation.navigate('OrderScreen')}/>
                     </View>
                     <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
-                        <ProfilLine icon="shopping-cart" iconColor={"#8cbdef"} title={t('profil.orders')} onPress={()=>navigation.navigate('OrderScreen')}/>
                         <ProfilLine icon="globe" iconColor={"#bf73ef"} title={t('profil.language')} onPress={()=>navigation.navigate('LanguageScreen')}/>
-                        <ProfilLine icon="comment-dots" iconColor={"#43e6e5"} title={t('profil.reviews')} onPress={handleBuild}/>
+                        <ProfilLine icon="comment-dots" iconColor={"#43e6e5"} title={t('profil.reviews')} onPress={()=>navigation.navigate('ReviewsScreen')}/>
                     </View>
-                    <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 10, borderWidth: 0.1}}>
-                        <ProfilLine icon="scroll" iconColor={"#8cbdef"} title={t('profil.terms')} onPress={handleBuild}/>
-                        <ProfilLine icon="warehouse" iconColor={"#bf73ef"} title={t('profil.about')} onPress={handleBuild}/>
+                    <View style={{marginTop: 15, backgroundColor: '#f7f8fa', borderRadius: 15, borderWidth: 0.1}}>
+                        <ProfilLine icon="user-tie" iconColor={"#8cbdef"} title={t('profil.seller')} isExternalLink={true} navigateTo="https://seller.diamondock.com/#signup"/>
+                        <ProfilLine icon="warehouse" iconColor={"#bf73ef"} title={t('profil.about')} onPress={()=>navigation.navigate('AboutUsScreen')}/>
+                        <ProfilLine icon="envelope" iconColor={"#ff6b6b"} title={t('contactUs.title')} onPress={()=>navigation.navigate('ContactUsScreen')}/>
                     </View>
                     <TouchableOpacity onPress={handleLogout} style={{backgroundColor: colors.primary, padding: 10,borderRadius:10, marginBottom: 10, marginTop: 20 }}>
                         <View style={{flexDirection: 'row',justifyContent: "center", alignItems: 'center'}}>
