@@ -7,7 +7,7 @@ export default function ChangeLangueScreen({navigation}){
     useEffect(() => {
         const timeout = setTimeout(() => {
             navigation.navigate('Main');
-        }, 1000);
+        }, 500);
 
         return () => clearTimeout(timeout); 
     }, []);

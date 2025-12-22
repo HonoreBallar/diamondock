@@ -29,6 +29,9 @@ import LanguageScreen from '../screens/LanguageScreen';
 import ChangeLangueScreen from '../screens/ChangeLangueScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import OrderStepThree from '../screens/OrderStepThree';
+import AboutUsScreen from '../screens/AboutUsScreen';
+import ContactUsScreen from '../screens/ContactUsScreen';
+import ReviewsScreen from '../screens/ReviewsScreen';
 
 
 const StackNavigator = () => {
@@ -104,6 +107,9 @@ const StackNavigator = () => {
       <Stack.Screen name="RateDetailProduct" component={RateDetailProduct} options={{ headerShown: false }} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }} />
       <Stack.Screen name="LanguageScreen" component={LanguageScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="AboutUsScreen" component={AboutUsScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ContactUsScreen" component={ContactUsScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ReviewsScreen" component={ReviewsScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ChangeLangueScreen" component={ChangeLangueScreen} options={{ headerShown: false }} />
 
      

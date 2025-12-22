@@ -176,7 +176,7 @@
     "orders": "Mes commandes",
     "language": "Langue et devise",
     "about": "À propos de nous",
-    "terms": "Termes et conditions",
+    "seller": "Vendre sur Diamondock",
     "address": "Mes adresses",
     "account": "Mon compte",
     "reviews": "Mes avis"
@@ -222,6 +222,54 @@
     "cashInfo": "Vous paierez à la réception de votre commande.",
     "selectCountry": "Veuillez sélectionner un pays",
     "selectRegion": "Veuillez sélectionner une région",
-    "selectMunicipality": "Veuillez sélectionner une commune"
+    "selectMunicipality": "Veuillez sélectionner une commune",
+    "firstnameRequired": "Veuillez entrer votre nom et prénoms",
+    "emailRequired": "Veuillez entrer votre email",
+    "emailInvalid": "Veuillez entrer une adresse email valide",
+    "messageRequired": "Veuillez entrer votre message",
+    "messageMin": "Le message doit contenir au moins 10 caractères",
+    "messageSent": "Votre message a été envoyé avec succès",
+    "errorMessage": "Erreur lors de l'envoi du message",
+    "ratingRequired": "Veuillez sélectionner une note",
+    "reviewTextRequired": "Veuillez entrer votre avis",
+    "reviewMinLength": "L'avis doit contenir au moins 10 caractères",
+    "reviewSubmitted": "Votre avis a été publié avec succès",
+    "reviewError": "Erreur lors de la publication de l'avis"
+  },
+  "aboutUs": {
+    "title": "À propos de Diamondock",
+    "introduction": "Diamondock est une plateforme e‐commerce multiservice conçue pour offrir une expérience d'achat en ligne sécurisée, premium et simple. Notre ambition : réunir produits authentiques, services digitaux et solutions de financement pour faciliter le commerce national et international.",
+    "meaningTitle": "Que signifie Diamondock",
+    "meaningContent": "Diamondock combine diamond (diamant : valeur, authenticité) et dock (quai : logistique, stockage). Le nom évoque un espace sécurisé où marchandises précieuses et services de qualité sont préparés pour le marché mondial.",
+    "servicesTitle": "Nos services",
+    "digitalMallTitle": "Digital Mall",
+    "digitalMallContent": "Place de marché avec vitrines personnalisées, paiements sécurisés, logistique intégrée et outils d'analyse pour optimiser les ventes.",
+    "socialMediaTitle": "Social Media Manager",
+    "socialMediaContent": "Gestion complète des réseaux : stratégie de contenu, création visuelle, community management et campagnes publicitaires mesurables.",
+    "diamondAresTitle": "Diamond Ares",
+    "diamondAresContent": "Intermédiation directe entre promoteurs de projets et investisseurs : mise en relation qualifiée, préparation des dossiers et accompagnement transactionnel.",
+    "differencesTitle": "Nos différences clés",
+    "difference1": "Sécurité et traçabilité : contrôle d'authenticité et protection des transactions.",
+    "difference2": "Offre intégrée : marketplace, visibilité digitale et accès au financement sur une même plateforme.",
+    "difference3": "Qualité vérifiée : vendeurs sélectionnés et produits contrôlés pour rassurer l'acheteur.",
+    "difference4": "Accompagnement sur mesure : support client réactif et solutions adaptées aux besoins des entreprises et consommateurs.",
+    "difference5": "Origine africaine, portée mondiale : ancrage local avec une ouverture internationale pour valoriser des produits uniques."
+  },
+  "contactUs": {
+    "title": "Nous Contacter",
+    "subtitle": "Avez-vous une question ou un commentaire ? Nous aimerions avoir de vos nouvelles. Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible.",
+    "messageLabel": "Votre Message",
+    "messagePlaceholder": "Écrivez votre message ici...",
+    "send": "Envoyer le message"
+  },
+  "reviews": {
+    "noReviews": "Aucun avis pour le moment",
+    "noReviewsSubtitle": "Commencez à ajouter des avis sur vos produits favoris",
+    "addReview": "Ajouter un avis",
+    "rating": "Note",
+    "reviewText": "Votre avis",
+    "reviewPlaceholder": "Décrivez votre expérience avec ce produit...",
+    "submitReview": "Publier l'avis",
+    "reviewInstruction": "Partagez votre expérience avec ce produit pour aider les autres clients à faire le meilleur choix."
   }
 }
