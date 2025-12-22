@@ -29,8 +29,6 @@ const WelcomeScreen = () => {
       return;
     }
     setIsLoading(true);
-    // console.log('Saving preferences:', selectedLanguage, selectedCurrency);
-    // return;
     try {
         await setItemInStorage(LANGUAGE_KEY, selectedLanguage);
         await setItemInStorage(CURRENCY_KEY, selectedCurrency);

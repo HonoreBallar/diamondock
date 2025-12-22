@@ -100,8 +100,6 @@ export default function OrderStepTwo({ navigation, route }) {
         };
 
         try {
-            // console.log(requestData);
-            // return;
             const response = await getDeliveryPrice(requestData);
             
             if (response?.status === false) {
