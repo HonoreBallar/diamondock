@@ -166,6 +166,7 @@
     "deliveryAddressPlaceholder": "Enter your delivery address",
     "system": "System",
     "deliveryFeesCalculating": "Calculating shipping fees...",
+    "deliveryAmount": "Delivery amount is:",
     "deliveryFeesText": "Estimated shipping fees for this item are {{price}} {{currency}}. It will be delivered within {{time}} if you order now."
   },
   "profil":{

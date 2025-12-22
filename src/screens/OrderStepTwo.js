@@ -100,16 +100,14 @@ export default function OrderStepTwo({ navigation, route }) {
         };
 
         try {
-            console.log(requestData);
-            return;
+            // console.log(requestData);
+            // return;
             const response = await getDeliveryPrice(requestData);
             
-            console.log('Delivery Price Response:', response);
-            return;
             if (response?.status === false) {
                 setProductDeliveryPrice([]);
             } else {
-                setProductDeliveryPrice(response?.data || []);
+                setProductDeliveryPrice(response?.data?.data || []);
             }
         } catch (error) {
             console.error('Error fetching delivery price:', error);
@@ -201,6 +199,7 @@ export default function OrderStepTwo({ navigation, route }) {
                 code: "", 
                 amount: ""
             },
+            productDeliveryPrice : productDeliveryPrice,
         }
 
         setLoading(true);
@@ -298,13 +297,23 @@ export default function OrderStepTwo({ navigation, route }) {
                                     borderLeftColor: '#0284c7'
                                 }}>
 
-                                    <Text style={{
-                                        fontSize: 12,
-                                        color: '#0c4a6e',
-                                        lineHeight: 18
-                                    }}>
-                                        Le montant de la  livraison est de : {formatAmount(productDeliveryPrice?.delivery_charges || 0)} {productDeliveryPrice?.currency || 'F CFA'}
-                                    </Text>
+                                    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                        <Text style={{
+                                            fontSize: 12,
+                                            color: '#0c4a6e',
+                                            lineHeight: 18
+                                        }}>
+                                            {t('input.deliveryAmount') || 'Le montant de la livraison est de :'}{' '}
+                                        </Text>
+                                        <Text style={{
+                                            fontSize: 12,
+                                            color: '#0c4a6e',
+                                            lineHeight: 18,
+                                            fontWeight: 'bold'
+                                        }}>
+                                            {formatAmount(productDeliveryPrice?.delivery_charges || 0)} {productDeliveryPrice?.currency || 'F CFA'}
+                                        </Text>
+                                    </View>
                                 </View>
                             ) : null}
                             
