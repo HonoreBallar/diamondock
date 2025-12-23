@@ -43,7 +43,7 @@ export default function LanguageScreen({navigation}) {
             
             clearCart();
             showMessage({
-                message: "Langue et devise mises à jour. Rafraîchissement en cours...",
+                message: t('language.updateSuccess'),
                 type: "info",
                 duration: 2000,
             });

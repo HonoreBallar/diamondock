@@ -2,11 +2,10 @@
   "expo": {
     "name": "Diamondock",
     "slug": "diamondock",
-    "version": "1.0.13",
+    "version": "1.0.15",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./src/assets/icon.png",
       "resizeMode": "contain",
@@ -36,7 +35,8 @@
     },
     "owner": "honore.amounan",
     "plugins": [
-      "expo-localization"
+      "expo-localization",
+      "expo-font"
     ]
   }
 }
