@@ -187,7 +187,8 @@
   "language":{
     "chooseLanguage": "Choose a language",
     "chooseCurrency": "Choose a currency",
-    "save": "Save"
+    "save": "Save",
+    "updateSuccess": "Language and currency updated. Refreshing..."
   },
   "alerts": {
     "infoBuilding": "Under construction",
@@ -253,7 +254,7 @@
     "difference5": "African origin, global scope: local anchorage with international openness to value unique products."
   },
   "contactUs": {
-    "title": "Contact Us",
+    "title": "Contact us",
     "subtitle": "Do you have a question or comment? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.",
     "messageLabel": "Your Message",
     "messagePlaceholder": "Write your message here...",
