@@ -129,7 +129,7 @@
   },
   "buttons": {
     "addToCart": "Ajouter",
-    "validOrder": "Valider la commande",
+    "validOrder": "Passer la commande",
     "clearCart": "Vider le panier",
     "search": "Rechercher",
     "submit": "Soumettre",
@@ -161,6 +161,7 @@
     "deliveryModeTitle": "Mode de livraison",
     "paymentModeTitle": "Mode de paiement",
     "paymentModePlaceholder": "Choisissez votre mode de paiement",
+    "paymentTitle": "Paiement",
     "deliveryDateTitle": "Date de livraison",
     "deliveryDatePlaceholder": "Choisissez une date de livraison",
     "deliveryAddressTitle": "Adresse de livraison",

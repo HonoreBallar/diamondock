@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import HeaderLogo from "../components/HeaderLogo";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import Title from "../components/Title";
 import Btn from "../components/Btn";
 import Input from "../components/Input";
@@ -188,12 +188,17 @@ export default function OrderStepOne({navigation}) {
                                     <Text style={{color: colors.primary, fontSize: 20, fontWeight: 'bold'}}>{formatAmount(getTotal())} {currency}</Text>
                                 </View>
                             </View>
-                            <View style={{marginTop: 20}}>
-                                <Btn label={t('order.checkout')} loader={loading} disabled={loading} action={handleNext} />
+                            <View style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 15}}>
+                                <TouchableOpacity onPress={()=>navigation.goBack()} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: colors.primary}}>
+                                    <FontAwesome5 name="arrow-left" size={16} color={colors.primary} />
+                                    <Text style={{color: colors.primary, fontWeight: 'bold', marginLeft: 8, fontSize: 14}}>{t('common.cart')}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={handleNext} disabled={loading} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, backgroundColor: colors.primary, opacity: loading ? 0.6 : 1}}>
+                                    {loading && <ActivityIndicator size="small" color="white" style={{marginRight: 8}} />}
+                                    <Text style={{color: 'white', fontWeight: 'bold', marginRight: 8, fontSize: 14}}>{t('common.delivery')}</Text>
+                                    <FontAwesome5 name="arrow-right" size={16} color="white" />
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity onPress={()=>navigation.goBack()} style={{marginTop: 5}}>
-                                <Text style={{color: '#ccc', fontWeight: 'bold', textDecorationLine: 'underline', textAlign: 'center'}}>{t('common.cart')}</Text>
-                            </TouchableOpacity>
                         </View>
                     </ScrollView>
                 </View>

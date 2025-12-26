@@ -160,6 +160,7 @@
     "municipalityPlaceholder": "Select a municipality",
     "deliveryModeTitle": "Delivery mode",
     "paymentModeTitle": "Paiment method",
+    "paymentTitle": "Payment",
     "deliveryDateTitle": "Delivery date",
     "deliveryDatePlaceholder": "Choisissez une date de livraison",
     "deliveryAddressTitle": "Delivery address",

@@ -13,6 +13,8 @@ import { useApiClient } from "../context/ApiContext";
 import SearchableSelect from "../components/SearchableSelect";
 import { useTranslation } from "../context/LocalizationContext";
 import { useRootContext } from "../context/RootContext";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import colors from "../utils/colors";
 
 
 export default function OrderStepTwo({ navigation, route }) {
@@ -90,7 +92,7 @@ export default function OrderStepTwo({ navigation, route }) {
         const requestData = {
             delivery: {
                 country_id: selectedCountry?.id, 
-                municipality_id: selectedCommune?.id, 
+                municipality_id: selectedCommune?.id || null, 
                 address: "Cocody", 
                 date: "2025-09-17", 
                 method: "at_home", 
@@ -134,25 +136,25 @@ export default function OrderStepTwo({ navigation, route }) {
             return;
         }
 
-        if (selectedRegion == null) {
-            showMessage({
-                message: t('alerts.selectRegion'),
-                type: "danger",
-                icon: { icon: "danger", position: "left" },
-                duration: 2000,
-            });
-            return;
-        }
+        // if (selectedRegion == null) {
+        //     showMessage({
+        //         message: t('alerts.selectRegion'),
+        //         type: "danger",
+        //         icon: { icon: "danger", position: "left" },
+        //         duration: 2000,
+        //     });
+        //     return;
+        // }
 
-        if (selectedCommune == null) {
-            showMessage({
-                message: t('alerts.selectMunicipality'),
-                type: "danger",
-                icon: { icon: "danger", position: "left" },
-                duration: 2000,
-            });
-            return;
-        }
+        // if (selectedCommune == null) {
+        //     showMessage({
+        //         message: t('alerts.selectMunicipality'),
+        //         type: "danger",
+        //         icon: { icon: "danger", position: "left" },
+        //         duration: 2000,
+        //     });
+        //     return;
+        // }
 
         if(typeDelivery == null){
             showMessage({
@@ -236,7 +238,6 @@ export default function OrderStepTwo({ navigation, route }) {
                                 data={regions}
                                 value={selectedRegion}
                                 onChange={setSelectedRegion}
-                                isRequired
                                 placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
                                 disabled={!selectedCountry || loadingRegions}
                                 loading={loadingRegions}
@@ -246,7 +247,6 @@ export default function OrderStepTwo({ navigation, route }) {
                                 data={municipalities}
                                 value={selectedCommune}
                                 onChange={setSelectedCommune}
-                                isRequired
                                 placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
                                 disabled={!selectedRegion || loadingMunicipalities}
                                 loading={loadingMunicipalities}
@@ -261,7 +261,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                 isRequired
                                 labelKey="name"
                                 valueKey="token"
-                                disabled={!selectedCommune || loadingMunicipalities}
+                                disabled={!selectedCountry}
                             />
 
                             {loadingDeliveryPrice ? (
@@ -314,7 +314,7 @@ export default function OrderStepTwo({ navigation, route }) {
                                     </View>
                                 </View>
                             ) : null}
-                            
+
                             <Input
                                 label={t('input.deliveryAddressTitle')}
                                 icon="map-marker-alt"
@@ -324,13 +324,16 @@ export default function OrderStepTwo({ navigation, route }) {
                                 isRequired={true}
                             />
                            
-                            <View style={{ marginBottom: 15, marginTop: 12 }}>
-                                <Btn
-                                    label={t('common.save')}
-                                    loader={loading}
-                                    disabled={selectedDeliveryType == null || loadingDeliveryPrice}
-                                    action={handleSubmit}
-                                />
+                            <View style={{marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 15}}>
+                                <TouchableOpacity onPress={()=>navigation.goBack()} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: colors.primary}}>
+                                    <FontAwesome5 name="arrow-left" size={16} color={colors.primary} />
+                                    <Text style={{color: colors.primary, fontWeight: 'bold', marginLeft: 8, fontSize: 14}}>{t('common.delivery')}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={handleSubmit} disabled={selectedDeliveryType == null || loadingDeliveryPrice || loading} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, backgroundColor: colors.primary, opacity: (selectedDeliveryType == null || loadingDeliveryPrice || loading) ? 0.6 : 1}}>
+                                    {loading && <ActivityIndicator size="small" color="white" style={{marginRight: 8}} />}
+                                    <Text style={{color: 'white', fontWeight: 'bold', marginRight: 8, fontSize: 14}}>{t('input.paymentTitle') || 'Paiement'}</Text>
+                                    <FontAwesome5 name="arrow-right" size={16} color="white" />
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </ScrollView>

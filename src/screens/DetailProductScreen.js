@@ -87,7 +87,7 @@ export default function DetailProductScreen({navigation, route}){
 
     const handleChange = async() => {
 
-        if(!selectedDeliveryType.token && !selectedCountry && !selectedRegion && !selectedCommune) {
+        if(!selectedDeliveryType.token && !selectedCountry) {
             return;
         }
 
@@ -312,7 +312,7 @@ export default function DetailProductScreen({navigation, route}){
                                 <RenderHTML source={{html: mainProduct?.description || ''}} contentWidth={300} baseStyle={{fontSize: 14, lineHeight: 22, marginBottom: 9}} />
                             </View>
                             <View style={{marginTop: 5,marginBottom: 5, padding: 12, backgroundColor: '#ffffff'}}>
-                                <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>📦 {t('common.delivery') || 'Livraison'}</Text>
+                                <Text style={{fontWeight: '600', fontSize: 16, marginBottom: 9}}>{t('common.delivery') || 'Livraison'}</Text>
                                 <View style={{marginTop: 2}}>
                                     <SearchableSelect
                                         label={t('input.countryTitle') || "Pays"}
@@ -328,7 +328,6 @@ export default function DetailProductScreen({navigation, route}){
                                         value={selectedRegion}
                                         onChange={setSelectedRegion}
                                         placeholder={t('input.regionPlaceholder') || "Sélectionner une région"}
-                                        isRequired
                                         disabled={!selectedCountry || loadingRegions}
                                         loading={loadingRegions}
                                     />
@@ -338,7 +337,6 @@ export default function DetailProductScreen({navigation, route}){
                                         value={selectedCommune}
                                         onChange={setSelectedCommune}
                                         placeholder={t('input.municipalityPlaceholder') || "Sélectionner une commune"}
-                                        isRequired
                                         disabled={!selectedRegion || loadingMunicipalities}
                                         loading={loadingMunicipalities}
                                     />
@@ -352,7 +350,7 @@ export default function DetailProductScreen({navigation, route}){
                                         isRequired
                                         labelKey="name"
                                         valueKey="token"
-                                        disabled={!selectedCommune || loadingMunicipalities}
+                                        disabled={!selectedCountry || loadingDeliveryPrice}
                                     />
 
                                     {loadingDeliveryPrice ? (
@@ -449,9 +447,9 @@ export default function DetailProductScreen({navigation, route}){
                                     <Text style={{color: 'white'}}> {t('common.outOfStock')}</Text>
                                 </TouchableOpacity>
                             ) : (
-                                <TouchableOpacity disabled={isAddButtonDisabled} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: isAddButtonDisabled ? colors.gray : "#000", padding: 9, borderRadius: 8, alignItems: 'center'}}>
-                                    { isAddedToCart ? <ActivityIndicator size="small" color="white" /> :<FontAwesome5 name="cart-plus" size={20} color="white"/>}
-                                    <Text style={{color: 'white', marginLeft: 8}}>{t('common.add')}</Text>
+                                <TouchableOpacity disabled={isAddButtonDisabled} onPress={addToCartHandler} style={{flexDirection: 'row', backgroundColor: isAddButtonDisabled ? colors.gray : "#ffa100", padding: 9, borderRadius: 8, alignItems: 'center'}}>
+                                    { isAddedToCart ? <ActivityIndicator size="small" color="#000" /> :<FontAwesome5 name="cart-plus" size={20} color="#000"/>}
+                                    <Text style={{color: '#000', marginLeft: 8}}>{t('common.add')}</Text>
                                 </TouchableOpacity>
                             )}
                         </View>
