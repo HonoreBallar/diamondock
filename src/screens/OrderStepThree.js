@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import colors from "../utils/colors";
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
@@ -208,13 +209,17 @@ export default function OrderStepThree({ navigation, route }) {
                             </View>
 
                             {/* Bouton de validation */}
-                            <View style={{ marginBottom: 15, marginTop: 15 }}>
-                                <Btn
-                                    label={payment === 'online' ? (t('common.proceedPayment') || 'Procéder au paiement') : (t('common.confirmOrder') || 'Confirmer la commande')}
-                                    loader={loading}
-                                    disabled={loading}
-                                    action={handleSubmit}
-                                />
+                            <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 15 }}>
+                                <TouchableOpacity onPress={()=>navigation.goBack()} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: colors.primary}}>
+                                    <FontAwesome5 name="arrow-left" size={16} color={colors.primary} />
+                                    <Text style={{color: colors.primary, fontWeight: 'bold', marginLeft: 8, fontSize: 14}}>{t('input.paymentTitle') || 'Paiement'}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={handleSubmit} disabled={loading} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, backgroundColor: colors.primary, opacity: loading ? 0.6 : 1}}>
+                                    {loading && <ActivityIndicator size="small" color="white" style={{marginRight: 2}} />}
+                                    <Text style={{color: 'white', fontWeight: 'bold', fontSize: 14}}>
+                                        {payment === 'online' ? (t('common.proceedPayment') || 'Procéder au paiement') : (t('common.confirmOrder') || 'Confirmer la commande')}
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
 
                             {/* Information supplémentaire */}
