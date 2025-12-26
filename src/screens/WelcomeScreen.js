@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-na
 import { setItemInStorage } from '../utils/utils';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useRootContext } from '../context/RootContext';
 
 const LANGUAGE_KEY = '@app_language';

@@ -1,7 +1,4 @@
 import { Image, Keyboard, KeyboardAvoidingView, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import Header from '../components/Header';
-import Title from '../components/Title';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Input from '../components/Input';
 import HeaderSimple from '../components/HeaderSimple';
 import Btn from '../components/Btn';

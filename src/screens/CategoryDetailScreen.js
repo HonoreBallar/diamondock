@@ -1,7 +1,6 @@
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
-import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";

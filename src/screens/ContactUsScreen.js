@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TextInput, Platform, ActivityIndicator } from 'react-native';
 import HeaderSimple from '../components/HeaderSimple';
 import Input from '../components/Input';
 import Btn from '../components/Btn';
 import { useTranslation } from '../context/LocalizationContext';
-import FlashMessage, { showMessage } from 'react-native-flash-message';
-import colors from '../utils/colors';
+import { showMessage } from 'react-native-flash-message';
 
 export default function ContactUsScreen({ navigation }) {
     const { t } = useTranslation();

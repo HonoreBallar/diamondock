@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Constants from 'expo-constants';
 import { ActivityIndicator, Image, Text, View } from "react-native";
 

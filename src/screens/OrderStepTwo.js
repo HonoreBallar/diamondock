@@ -3,7 +3,6 @@ import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, ScrollView,
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
 import Input from "../components/Input";
-import Btn from "../components/Btn";
 import CustomSelect from "../components/CustomSelect";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';

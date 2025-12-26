@@ -6,7 +6,6 @@ import { useRootContext } from "../context/RootContext";
 import { useEffect, useRef, useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { wait } from "../utils/utils";
-import SingleDropdownSelect from "../components/SingleDropdownSelect";
 import PhoneInput from "react-native-phone-number-input";
 import { useTranslation } from "../context/LocalizationContext";
 

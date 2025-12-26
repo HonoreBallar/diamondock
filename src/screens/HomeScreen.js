@@ -1,6 +1,5 @@
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Header from "../components/Header";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
 import { useCategories } from "../context/CategoryContext";
 import { useProducts } from "../context/ProductContext";

@@ -1,11 +1,11 @@
-import { ActivityIndicator, Button, Image, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
-import { formatAmount, ratio, renderStars } from "../utils/utils";
+import { formatAmount, renderStars } from "../utils/utils";
 import { ProgressBar } from "react-native-paper";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
@@ -36,7 +36,6 @@ export default function DetailProductScreen({navigation, route}){
     const apiClient = useApiClient();
 
     const [selectedVariants, setSelectedVariants] = useState({});
-    const [isDeliveryExpanded, setIsDeliveryExpanded] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);

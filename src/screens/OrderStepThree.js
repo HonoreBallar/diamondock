@@ -1,18 +1,15 @@
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
-import Input from "../components/Input";
-import Btn from "../components/Btn";
 import CustomSelect from "../components/CustomSelect";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { formatDateToEnglish, formatAmount } from "../utils/utils";
 import { useCart } from "../context/CartContext";
 import { useTranslation } from "../context/LocalizationContext";
-import { useRootContext } from "../context/RootContext";
 import { useApiClient } from "../context/ApiContext";
 
 export default function OrderStepThree({ navigation, route }) {
