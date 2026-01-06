@@ -82,7 +82,7 @@ export default function OrderStepTwo({ navigation, route }) {
     // Charger le prix quand le mode de paiement change
     const handleChange = async() => {
 
-        if(!selectedDeliveryType.token && !selectedCountry && !selectedRegion && !selectedCommune) {
+        if(!selectedDeliveryType.token && !selectedCountry) {
             return;
         }
 
@@ -91,7 +91,7 @@ export default function OrderStepTwo({ navigation, route }) {
         const requestData = {
             delivery: {
                 country_id: selectedCountry?.id, 
-                municipality_id: selectedCommune?.id || null, 
+                municipality_id: selectedCommune?.id || '', 
                 address: "Cocody", 
                 date: "2025-09-17", 
                 method: "at_home", 
@@ -188,7 +188,7 @@ export default function OrderStepTwo({ navigation, route }) {
             ...datas,
             delivery: {
                 country_id: selectedCountry?.id, 
-                municipality_id: selectedCommune?.id, 
+                municipality_id: selectedCommune?.id || '', 
                 address: delivery, 
                 date: "2025-09-17", 
                 method: "at_home", 

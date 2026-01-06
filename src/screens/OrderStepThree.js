@@ -21,13 +21,13 @@ export default function OrderStepThree({ navigation, route }) {
     const { datas } = route.params;
     
     const [loading, setLoading] = useState(false);
-    const [payment, setPayment] = useState('cash');
+    const [payment, setPayment] = useState('ondelivery');
     const [modePayment, setModePayment] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [isSummaryExpanded, setIsSummaryExpanded] = useState(true);
 
     const paymentMethods = [
-        { id: 'cash', name: 'Paiement à la livraison' },
+        { id: 'ondelivery', name: 'Paiement à la livraison' },
         { id: 'online', name: 'Paiement en ligne' }
     ];
 
@@ -59,21 +59,18 @@ export default function OrderStepThree({ navigation, route }) {
             ...datas,
             payment: {
                 method: payment,
-                option: selectedPayment?.name || payment
+                option: selectedPayment?.name || ''
             }
         };
 
         setTimeout(async () => {
             setLoading(true);
             try {
-                console.log('Submitting Order:', order);
                 const response = await fetchOrder(order);
-                console.log('Order Response:', response);
-                return;
                 const responseData = response?.data?.data;
                 if (response.status) {
                     clearCart();
-                    if (responseData?.payment_method == 'cash') {
+                    if (responseData?.payment_method == 'ondelivery') {
                         showMessage({
                             message: t('alerts.orderSuccess') || 'Commande créée avec succès',
                             type: "success",

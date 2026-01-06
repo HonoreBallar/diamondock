@@ -22,6 +22,7 @@ export const OrderProvider = ({children})=>{
             return response;
         } catch (error) {
             console.error('Error :', error);
+            console.log('Order Creation Error Response:', error?.response?.data || error?.message || error);
         }
     }
 
