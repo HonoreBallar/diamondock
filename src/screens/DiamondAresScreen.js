@@ -1,7 +1,5 @@
 import { ScrollView, Text, TouchableOpacity, View } from "react-native"
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Header from "../components/Header";
-import Title from "../components/Title";
 import colors from "../utils/colors";
 
 export default function DiamondAresScreen({navigation}){

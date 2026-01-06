@@ -3,7 +3,7 @@ import HeaderSimple from '../components/HeaderSimple';
 import Input from "../components/Input";
 import Btn from "../components/Btn";
 import { useRootContext } from "../context/RootContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { wait } from "../utils/utils";
 import { useTranslation } from "../context/LocalizationContext";

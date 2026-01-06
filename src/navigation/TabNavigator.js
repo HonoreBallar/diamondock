@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import HomeScreen from '../screens/HomeScreen';
 import WishlistScreen from '../screens/WishlistScreen';
@@ -16,6 +17,8 @@ import { useTranslation } from '../context/LocalizationContext';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+
+  const insets = useSafeAreaInsets();
 
   const { t } = useTranslation();
 
@@ -50,7 +53,11 @@ const TabNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: '#666',
-        tabBarStyle: { backgroundColor: '#f8f9fa', height: 55},
+        tabBarStyle: { 
+          backgroundColor: '#f8f9fa', 
+          height: 55 + insets.bottom,
+          paddingBottom: insets.bottom,
+        },
         tabBarBadgeStyle:{ backgroundColor: "#03045e", color: "white"}
       })}
     >

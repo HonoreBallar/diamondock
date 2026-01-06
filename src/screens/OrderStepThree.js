@@ -1,18 +1,15 @@
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { ActivityIndicator, Keyboard, KeyboardAvoidingView, Linking, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import colors from "../utils/colors";
 import HeaderLogo from "../components/HeaderLogo";
 import Title from "../components/Title";
-import Input from "../components/Input";
-import Btn from "../components/Btn";
 import CustomSelect from "../components/CustomSelect";
 import { useOrders } from "../context/OrderContext";
 import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { formatDateToEnglish, formatAmount } from "../utils/utils";
 import { useCart } from "../context/CartContext";
 import { useTranslation } from "../context/LocalizationContext";
-import { useRootContext } from "../context/RootContext";
 import { useApiClient } from "../context/ApiContext";
 
 export default function OrderStepThree({ navigation, route }) {
@@ -24,13 +21,13 @@ export default function OrderStepThree({ navigation, route }) {
     const { datas } = route.params;
     
     const [loading, setLoading] = useState(false);
-    const [payment, setPayment] = useState('cash');
+    const [payment, setPayment] = useState('ondelivery');
     const [modePayment, setModePayment] = useState([]);
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [isSummaryExpanded, setIsSummaryExpanded] = useState(true);
 
     const paymentMethods = [
-        { id: 'cash', name: 'Paiement à la livraison' },
+        { id: 'ondelivery', name: 'Paiement à la livraison' },
         { id: 'online', name: 'Paiement en ligne' }
     ];
 
@@ -62,21 +59,18 @@ export default function OrderStepThree({ navigation, route }) {
             ...datas,
             payment: {
                 method: payment,
-                option: selectedPayment?.name || payment
+                option: selectedPayment?.name || ''
             }
         };
 
         setTimeout(async () => {
             setLoading(true);
             try {
-                console.log('Submitting Order:', order);
                 const response = await fetchOrder(order);
-                console.log('Order Response:', response);
-                return;
                 const responseData = response?.data?.data;
                 if (response.status) {
                     clearCart();
-                    if (responseData?.payment_method == 'cash') {
+                    if (responseData?.payment_method == 'ondelivery') {
                         showMessage({
                             message: t('alerts.orderSuccess') || 'Commande créée avec succès',
                             type: "success",

@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { setItemInStorage } from '../utils/utils';
-// import { useNavigation } from '@react-navigation/native';
-import { CommonActions } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { useRootContext } from '../context/RootContext';
 import { useTranslation } from '../context/LocalizationContext';
 import FlashMessage, { showMessage } from 'react-native-flash-message';

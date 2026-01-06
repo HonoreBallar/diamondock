@@ -2,7 +2,6 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import HeaderSimple from "../components/HeaderSimple";
 import { useState } from "react";
 import { RadioButton } from "react-native-paper";
-import colors from "../utils/colors";
 
 export default function MethodPaymentScreen({navigation}){
 

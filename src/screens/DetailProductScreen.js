@@ -1,11 +1,11 @@
-import { ActivityIndicator, Button, Image, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import FlottingCart from "../components/FlottingCart";
-import { formatAmount, ratio, renderStars } from "../utils/utils";
+import { formatAmount, renderStars } from "../utils/utils";
 import { ProgressBar } from "react-native-paper";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
@@ -36,7 +36,6 @@ export default function DetailProductScreen({navigation, route}){
     const apiClient = useApiClient();
 
     const [selectedVariants, setSelectedVariants] = useState({});
-    const [isDeliveryExpanded, setIsDeliveryExpanded] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCommune, setSelectedCommune] = useState(null);
@@ -124,11 +123,12 @@ export default function DetailProductScreen({navigation, route}){
     }, [selectedDeliveryType]);
 
 
-    const handleSelectVariant = (groupName, item, parentToken) => {
+    const handleSelectVariant = (groupName, item, itemIndex, parentToken) => {
         setSelectedVariants(prev => ({
             ...prev,
             [groupName]: {
                 ...item,
+                itemIndex: itemIndex,
                 parentToken: parentToken
             }
         }));
@@ -264,23 +264,23 @@ export default function DetailProductScreen({navigation, route}){
                                 )}
                                 {/* VARIANTS */}
                                 <View style={{marginBottom: 3}}>
-                                    {mainProduct?.variants?.map((variantGroup, index) => (
-                                    <View key={index} style={{ marginTop: 10 }}>
+                                    {mainProduct?.variants?.map((variantGroup, groupIndex) => (
+                                    <View key={`variant-group-${groupIndex}`} style={{ marginTop: 10 }}>
 
                                         <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 10 }}>
                                         {variantGroup.name} :
                                         </Text>
 
                                         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                                        {variantGroup.items.map((item) => {
+                                        {variantGroup.items.map((item, itemIndex) => {
                                             
                                             const isSelected =
-                                            selectedVariants[variantGroup.name]?.token === item.token;
+                                            selectedVariants[variantGroup.name] && selectedVariants[variantGroup.name].itemIndex === itemIndex;
 
                                             return (
                                             <TouchableOpacity
-                                                key={item.token}
-                                                onPress={() => handleSelectVariant(variantGroup.name, item, variantGroup.token)}
+                                                key={`${variantGroup.name}-${itemIndex}`}
+                                                onPress={() => handleSelectVariant(variantGroup.name, item, itemIndex, variantGroup.token)}
                                                 style={{
                                                 paddingHorizontal: 10,
                                                 paddingVertical: 6,

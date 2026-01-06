@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import { setItemInStorage } from '../utils/utils';
-import { useRootContext } from '../context/RootContext';
+import { View, Text, ScrollView } from 'react-native';
 import { useTranslation } from '../context/LocalizationContext';
-import FlashMessage, { showMessage } from 'react-native-flash-message';
 import HeaderSimple from '../components/HeaderSimple';
-import { useCart } from '../context/CartContext';
 
 
 export default function AboutUsScreen({navigation}) {
     const {t} = useTranslation();
-    const [isLoading, setIsLoading] = useState(false);
 
     const SectionTitle = ({ title }) => (
         <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 16, marginBottom: 8, color: '#03045e' }}>
