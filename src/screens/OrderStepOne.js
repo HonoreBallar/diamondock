@@ -38,7 +38,7 @@ export default function OrderStepOne({navigation}) {
     },[auth?.user]);
 
     const handleNext = () => {
-        if (phone.trim() === '' || firstname.trim() === '' || lastname.trim() === '' || email.trim() === '' || address.trim() === '') {
+        if (phone.trim() === '' || firstname.trim() === '' || lastname.trim() === '' || address.trim() === '') {
             showMessage({
                 message: "Veuillez remplir tous les champs",
                 type: "danger",
@@ -139,7 +139,6 @@ export default function OrderStepOne({navigation}) {
                             />
                             <Input
                                 label={t('input.emailTitle')}
-                                isRequired 
                                 icon="user-tie"
                                 placeholder={t('input.emailPlaceholder')}
                                 value={email}

@@ -123,12 +123,11 @@ export default function DetailProductScreen({navigation, route}){
     }, [selectedDeliveryType]);
 
 
-    const handleSelectVariant = (groupName, item, itemIndex, parentToken) => {
+    const handleSelectVariant = (groupName, item, parentToken) => {
         setSelectedVariants(prev => ({
             ...prev,
             [groupName]: {
                 ...item,
-                itemIndex: itemIndex,
                 parentToken: parentToken
             }
         }));
@@ -264,23 +263,23 @@ export default function DetailProductScreen({navigation, route}){
                                 )}
                                 {/* VARIANTS */}
                                 <View style={{marginBottom: 3}}>
-                                    {mainProduct?.variants?.map((variantGroup, groupIndex) => (
-                                    <View key={`variant-group-${groupIndex}`} style={{ marginTop: 10 }}>
+                                    {mainProduct?.variants?.map((variantGroup, index) => (
+                                    <View key={index} style={{ marginTop: 10 }}>
 
                                         <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 10 }}>
                                         {variantGroup.name} :
                                         </Text>
 
                                         <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                                        {variantGroup.items.map((item, itemIndex) => {
+                                        {variantGroup.items.map((item) => {
                                             
                                             const isSelected =
-                                            selectedVariants[variantGroup.name] && selectedVariants[variantGroup.name].itemIndex === itemIndex;
+                                            selectedVariants[variantGroup.name]?.token === item.token;
 
                                             return (
                                             <TouchableOpacity
-                                                key={`${variantGroup.name}-${itemIndex}`}
-                                                onPress={() => handleSelectVariant(variantGroup.name, item, itemIndex, variantGroup.token)}
+                                                key={item.token}
+                                                onPress={() => handleSelectVariant(variantGroup.name, item, variantGroup.token)}
                                                 style={{
                                                 paddingHorizontal: 10,
                                                 paddingVertical: 6,

@@ -204,7 +204,7 @@ export default function OrderStepThree({ navigation, route }) {
 
                             {/* Bouton de validation */}
                             <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 15 }}>
-                                <TouchableOpacity onPress={()=>navigation.goBack()} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: colors.primary}}>
+                                <TouchableOpacity onPress={()=>navigation.goBack()} disabled={loading} style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 10, borderWidth: 1, borderColor: colors.primary, opacity: loading ? 0.6 : 1}}>
                                     <FontAwesome5 name="arrow-left" size={16} color={colors.primary} />
                                     <Text style={{color: colors.primary, fontWeight: 'bold', marginLeft: 8, fontSize: 14}}>{t('input.paymentTitle') || 'Paiement'}</Text>
                                 </TouchableOpacity>

@@ -45,12 +45,11 @@ const VariantsBottomSheet = ({
         }
     }, [visible, slideAnim]);
 
-    const handleSelectVariant = (groupName, item, itemIndex, parentToken) => {
+    const handleSelectVariant = (groupName, item, parentToken) => {
         setSelectedVariants((prev) => ({
             ...prev,
             [groupName]: {
                 ...item,
-                itemIndex: itemIndex,
                 parentToken: parentToken
             },
         }));
@@ -160,20 +159,21 @@ const VariantsBottomSheet = ({
 
                         {/* Variantes */}
                         {product?.variants && product.variants.length > 0 ? (
-                            product.variants.map((variantGroup, groupIndex) => (
-                                <View key={`variant-group-${groupIndex}`} style={styles.variantSection}>
+                            product.variants.map((variantGroup, index) => (
+                                <View key={index} style={styles.variantSection}>
                                     <Text style={styles.variantGroupTitle}>
                                         {variantGroup.name}
                                     </Text>
-                                    {variantGroup.items.map((item, itemIndex) => {
+                                    {variantGroup.items.map((item) => {
                                         const isSelected =
-                                            selectedVariants[variantGroup.name] && selectedVariants[variantGroup.name].itemIndex === itemIndex;
+                                            selectedVariants[variantGroup.name]?.token ===
+                                            item.token;
                                         const itemQty = getItemQuantity(item.token);
                                         return (
-                                            <View key={`${variantGroup.name}-${itemIndex}`} style={styles.variantRowContainer}>
+                                            <View key={item.token} style={styles.variantRowContainer}>
                                                 <TouchableOpacity
                                                     onPress={() =>
-                                                        handleSelectVariant(variantGroup.name, item, itemIndex, variantGroup.token)
+                                                        handleSelectVariant(variantGroup.name, item, variantGroup.token)
                                                     }
                                                     style={[
                                                         styles.variantRow,
@@ -411,8 +411,8 @@ const styles = StyleSheet.create({
         borderColor: '#e0e0e0',
     },
     variantRowSelected: {
-        backgroundColor: '#ffa100',
-        borderColor: '#ffa100',
+        backgroundColor: colors.primary,
+        borderColor: colors.primary,
     },
     variantLeftContent: {
         flex: 1,

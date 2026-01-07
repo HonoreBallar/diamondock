@@ -55,7 +55,7 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: '#666',
         tabBarStyle: { 
           backgroundColor: '#f8f9fa', 
-          height: 55 + insets.bottom,
+          height: 55,
           paddingBottom: insets.bottom,
         },
         tabBarBadgeStyle:{ backgroundColor: "#03045e", color: "white"}
