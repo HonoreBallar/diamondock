@@ -104,6 +104,7 @@ export default function OrderStepThree({ navigation, route }) {
                         icon: { icon: "danger", position: "left" },
                         duration: 2000,
                     });
+                    navigation.navigate('Main');
                     setLoading(false);
                 }
             } catch (error) {
@@ -113,6 +114,7 @@ export default function OrderStepThree({ navigation, route }) {
                     icon: { icon: "danger", position: "left" },
                     duration: 2000,
                 });
+                navigation.navigate('Main');
                 setLoading(false);
             }
             finally {

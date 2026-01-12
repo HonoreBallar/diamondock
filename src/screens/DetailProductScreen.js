@@ -4,6 +4,7 @@ import Swiper from "react-native-swiper";
 import colors from "../utils/colors";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FlottingCart from "../components/FlottingCart";
 import { formatAmount, renderStars } from "../utils/utils";
 import { ProgressBar } from "react-native-paper";
@@ -19,7 +20,7 @@ import SearchableSelect from "../components/SearchableSelect";
 import SkeletonDetailProduct from "../components/SkeletonDetailProduct";
 
 export default function DetailProductScreen({navigation, route}){
-
+    const insets = useSafeAreaInsets();
     const {t} = useTranslation();
     const {countries, getMunicipalities, getRegions, regions, municipalities, typeDelivery, getProductDeliveryPrice} = useRootContext();
     const {product} = route.params;
@@ -397,7 +398,7 @@ export default function DetailProductScreen({navigation, route}){
                                     ) : null}
                                 </View>
                             </View>
-                            <View style={{marginTop: 5, padding: 12, backgroundColor: '#ffffff'}}>
+                            <View style={{marginTop: 5, marginBottom: 25, padding: 12, backgroundColor: '#ffffff'}}>
                                 <Text style={{fontWeight: '500', fontSize: 20, marginBottom: 5}}>{t('common.reviews')}</Text>
                                 <View style={{borderTopWidth: 0.3, borderTopColor: '#999', padding: 8, marginBottom: 10}}>
                                     <TouchableOpacity onPress={()=>navigation.navigate('RateDetailProduct',{product: product})} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -415,7 +416,7 @@ export default function DetailProductScreen({navigation, route}){
                             
                         </View>
                     </ScrollView>
-                    <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2, height: 85 ,width: '100%', backgroundColor: '#f9f9f9', padding: 15, elevation: 8}}>
+                    <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2 ,width: '100%', backgroundColor: '#f9f9f9', paddingHorizontal: 15, elevation: 8, paddingBottom: insets.bottom + 15}}>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <TouchableOpacity onPress={()=>handleAddProductToWishlist(mainProduct)}>
                                 {loadingWishlist ? (

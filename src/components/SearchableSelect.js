@@ -227,13 +227,13 @@ const styles = StyleSheet.create({
         zIndex: 999,
     },
     modalContainer: {
-        zIndex: 1000,
+        zIndex: 10000,
     },
     modalContent: {
         backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        maxHeight: SCREEN_HEIGHT * 0.55,
+        maxHeight: SCREEN_HEIGHT * 0.6,
         paddingBottom: 16,
     },
     modalHeader: {

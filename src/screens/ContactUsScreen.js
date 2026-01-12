@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Btn from '../components/Btn';
 import { useTranslation } from '../context/LocalizationContext';
 import { showMessage } from 'react-native-flash-message';
+import { postRequest } from '../utils/api';
 
 export default function ContactUsScreen({ navigation }) {
     const { t } = useTranslation();
@@ -73,19 +74,37 @@ export default function ContactUsScreen({ navigation }) {
         // Submit form
         setLoading(true);
         try {
-            // TODO: Send form data to API
-            setTimeout(() => {
+            const datas = {
+                name: firstname,
+                email: email,
+                description: message,
+            };
+            const response = await postRequest('/contact/create',datas);
+            console.log('Contact Us response :', response);
+            if (response?.status === false) {
                 showMessage({
-                    message: t('alerts.messageSent'),
-                    type: "success",
-                    icon: { icon: "success", position: "left" },
+                    message: response?.message,
+                    type: "danger",
+                    icon: { icon: "danger", position: "left" },
                     duration: 2000,
                 });
-                setFirstname('');
-                setEmail('');
-                setMessage('');
                 setLoading(false);
-            }, 1000);
+                return;
+            }
+            // TODO: Send form data to API
+            showMessage({
+                message: t('alerts.messageSent'),
+                type: "success",
+                icon: { icon: "success", position: "left" },
+                duration: 2000,
+            });
+
+            setFirstname('');
+            setEmail('');
+            setMessage('');
+            setLoading(false);
+            navigation.goBack();
+
         } catch (error) {
             console.error('Error sending message:', error);
             showMessage({

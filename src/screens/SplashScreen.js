@@ -35,7 +35,7 @@ export default function SplashScreen(){
                 resizeMode='contain'
             />
             <ActivityIndicator size="large" color="#000000" style={{marginTop: 40}} />
-            <Text style={{position:'absolute', bottom: 15 , color: '#999', alignSelf: 'center'}}>Version : {Constants?.expoConfig.version} © Diamondock</Text>
+            <Text style={{position:'absolute', bottom: 20 , color: '#999', alignSelf: 'center'}}>Version : {Constants?.expoConfig.version} © Diamondock</Text>
         </View>
     )
 }

@@ -202,7 +202,7 @@ export default function OrderScreen({navigation}){
                             <Text style={{ marginTop: 10 }}>{t('order.loadingOrders')}</Text>
                         </View>
                     ) : (
-                        <View style={{margin: 8}}>
+                        <View style={{margin: 8, paddingBottom: 20}}>
                             <FlatList
                                 data={filteredOrders}
                                 scrollEnabled={false}
