@@ -102,14 +102,17 @@ export default function DigitalMallScreen({ navigation }) {
                         >
                             <Image
                                 source={{ uri: item?.avatar }}
-                                style={{ width: '100%', height: 150, borderRadius: 10 }}
+                                contentFit="cover"
+                                style={{ width: '100%', height: 120, borderRadius: 10 }}
                             />
                             <Text style={{
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: 'bold',
                                 textAlign: 'center',
                                 marginTop: 8
-                            }}>
+                            }}
+                            numberOfLines={2}
+                            >
                                 {item?.name}
                             </Text>
                             <Text style={{

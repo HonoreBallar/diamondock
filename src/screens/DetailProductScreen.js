@@ -213,7 +213,7 @@ export default function DetailProductScreen({navigation, route}){
                         backgroundColor: 'black',
                         zIndex: 1,
                     }} />
-                    <ScrollView style={{flex: 1, marginBottom: 80}}>
+                    <ScrollView style={{flex: 1, marginBottom: 70}}>
                         <View>
                             <Swiper
                                 style={{height: 350}}
@@ -416,8 +416,8 @@ export default function DetailProductScreen({navigation, route}){
                             
                         </View>
                     </ScrollView>
-                    <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2 ,width: '100%', backgroundColor: '#f9f9f9', paddingHorizontal: 15, elevation: 8, paddingBottom: insets.bottom + 15}}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <View style={{position: 'absolute', bottom: 0, left: 0, borderWidth: 0.2 ,width: '100%', backgroundColor: '#ffffff', paddingHorizontal: 15, elevation: 8, paddingBottom: insets.bottom + 10}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', margin: 5, backgroundColor: '#ffffff'}}>
                             <TouchableOpacity onPress={()=>handleAddProductToWishlist(mainProduct)}>
                                 {loadingWishlist ? (
                                     <ActivityIndicator size={22} color="black" />

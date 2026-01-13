@@ -273,5 +273,15 @@
     "reviewPlaceholder": "Décrivez votre expérience avec ce produit...",
     "submitReview": "Publier l'avis",
     "reviewInstruction": "Partagez votre expérience avec ce produit pour aider les autres clients à faire le meilleur choix."
+  },
+  "filter": {
+    "title": "Filtres",
+    "min": "Min",
+    "max": "Max",
+    "selectCategory": "Sélectionner une catégorie",
+    "country": "Pays",
+    "selectCountry": "Sélectionner un pays",
+    "reset": "Réinitialiser",
+    "view": "Voir"
   }
 }
