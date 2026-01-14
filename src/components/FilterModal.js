@@ -75,6 +75,7 @@ export default function FilterModal({
             <View style={{ flexDirection: "row", gap: 10 }}>
               <TextInput
                 placeholder={t('filter.min') || 'Min'}
+                placeholderTextColor="#000"
                 keyboardType="numeric"
                 value={minPrice}
                 onChangeText={setMinPrice}
@@ -83,11 +84,13 @@ export default function FilterModal({
                   borderWidth: 1,
                   borderColor: "#ddd",
                   borderRadius: 6,
-                  padding: 8
+                  padding: 8,
+                  height: 40,
                 }}
               />
               <TextInput
                 placeholder={t('filter.max') || 'Max'}
+                placeholderTextColor="#000"
                 keyboardType="numeric"
                 value={maxPrice}
                 onChangeText={setMaxPrice}
@@ -96,7 +99,8 @@ export default function FilterModal({
                   borderWidth: 1,
                   borderColor: "#ddd",
                   borderRadius: 6,
-                  padding: 8
+                  padding: 8,
+                  height: 40,
                 }}
               />
             </View>
@@ -127,7 +131,8 @@ export default function FilterModal({
             style={{
               flexDirection: "row",
               gap: 10,
-              marginTop: 15
+              marginTop: 15,
+              marginBottom: 50
             }}
           >
             <TouchableOpacity

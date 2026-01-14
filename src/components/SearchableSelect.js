@@ -158,14 +158,6 @@ const SearchableSelect = ({
                                 }
                                 scrollEnabled={true}
                             />
-
-                            {/* Close Button */}
-                            {/* <TouchableOpacity
-                                style={styles.closeButton}
-                                onPress={handleClose}
-                            >
-                                <Text style={styles.closeButtonText}>Fermer</Text>
-                            </TouchableOpacity> */}
                         </View>
                     </View>
                 </View>
@@ -233,8 +225,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        maxHeight: SCREEN_HEIGHT * 0.6,
-        paddingBottom: 16,
+        height: SCREEN_HEIGHT * 0.8,
+        maxHeight: SCREEN_HEIGHT * 1.0,
+        paddingBottom: 50,
     },
     modalHeader: {
         flexDirection: 'row',

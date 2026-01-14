@@ -32,7 +32,7 @@ export default function AboutUsScreen({navigation}) {
            
             <HeaderSimple title={t('aboutUs.title')} />
             
-            <ScrollView style={{ flex: 1, padding: 15, marginBottom: 20 }} showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ flex: 1, padding: 15, marginBottom: 40 }} showsVerticalScrollIndicator={false}>
                 
                 {/* Introduction */}
                 <SectionContent content={t('aboutUs.introduction')} />

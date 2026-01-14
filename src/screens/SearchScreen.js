@@ -78,7 +78,7 @@ export default function SearchScreen({ navigation }) {
   };
   
   return (
-    <View style={{ flex: 1, marginHorizontal: 5, backgroundColor: "#fff"  }}>
+    <View style={{ flex: 1, marginHorizontal: 5, backgroundColor: "#fff", paddingBottom: 8}}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginHorizontal: 10}}>
         <View style={{flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight: 10}}>
@@ -93,7 +93,7 @@ export default function SearchScreen({ navigation }) {
       <View style={{marginVertical: 15}}>
           <View style={{flexDirection: 'row',borderWidth: 0.1, marginHorizontal: 10, borderRadius: 5, backgroundColor: '#f4f4f4', height: 45, alignItems: 'center'}}>
             <FontAwesome5 name="search" size={18} color="#000" style={{marginTop: 3, marginLeft: 15}}/>
-            <TextInput autoFocus={false} keyboardType="default" placeholder={t('search.searchPlaceholder')} value={searchText} maxLength={50} onChangeText={setSearchText}   style={{flex: 1, padding: 10}}/>
+            <TextInput autoFocus={false} keyboardType="default" placeholder={t('search.searchPlaceholder')} placeholderTextColor="#000" value={searchText} maxLength={50} onChangeText={setSearchText}   style={{flex: 1, padding: 10}}/>
             {searchText.length > 0 && (
               <TouchableOpacity onPress={handleSearch} style={{marginRight: 10}}>
                 <FontAwesome5 name="times" size={18} color="#000" style={{marginLeft: 15}}/>
