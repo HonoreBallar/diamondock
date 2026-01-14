@@ -135,26 +135,6 @@ export default function OrderStepTwo({ navigation, route }) {
             return;
         }
 
-        // if (selectedRegion == null) {
-        //     showMessage({
-        //         message: t('alerts.selectRegion'),
-        //         type: "danger",
-        //         icon: { icon: "danger", position: "left" },
-        //         duration: 2000,
-        //     });
-        //     return;
-        // }
-
-        // if (selectedCommune == null) {
-        //     showMessage({
-        //         message: t('alerts.selectMunicipality'),
-        //         type: "danger",
-        //         icon: { icon: "danger", position: "left" },
-        //         duration: 2000,
-        //     });
-        //     return;
-        // }
-
         if(typeDelivery == null){
             showMessage({
                 message: t('alerts.deliveryMode'),
