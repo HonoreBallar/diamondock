@@ -2,7 +2,7 @@
   "expo": {
     "name": "Diamondock",
     "slug": "diamondock",
-    "version": "1.0.20",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,8 @@
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.honore.amounan.diamondock"
+      "package": "com.honore.amounan.diamondock",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
