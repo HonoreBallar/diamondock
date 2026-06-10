@@ -17,8 +17,8 @@ export default function DrawerScreen({navigation}){
             </View>
             <View style={{margin: 18, marginTop: 35}}>
                 <CardNavigation icon={'store'} title={'Digital Mall'} navigateTo={"DigitalMallScreen"}/>
-                <CardNavigation icon={'laptop-code'} title={'Social Media Manager'} isExternalLink={true} navigateTo={"https://manager.diamondock.com"}/>
-                <CardNavigation icon={'trophy'} title={'Diamond Ares'} isExternalLink={true} navigateTo={"https://ares.diamondock.com"}/>
+                <CardNavigation icon={'laptop-code'} title={'Social Media Manager'} isExternalLink={true} navigateTo={"https://social-media-manager.diamondock.com/"}/>
+                <CardNavigation icon={'trophy'} title={'Diamond Ares'} isExternalLink={true} navigateTo={"https://diamondares.diamondock.com/"}/>
                 <View style={{borderWidth: 1, backgroundColor: '#f9f9f9', marginVertical: 10, borderStyle: 'dashed', marginVertical: 35}}/>
                 <CardNavigation icon={'user-tie'} title={t('common.becomeSeller')} isExternalLink={true} navigateTo={"https://seller.diamondock.com/#signup"}/>
             </View>
