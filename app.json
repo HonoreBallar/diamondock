@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.honore.amounan.diamondock",
+      "bundleIdentifier": "com.diamondock",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -23,7 +23,7 @@
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.honore.amounan.diamondock",
+      "package": "com.diamondock",
       "versionCode": 1
     },
     "web": {
