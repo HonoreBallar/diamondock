@@ -23,8 +23,7 @@
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.diamondock",
-      "versionCode": 1
+      "package": "com.diamondock"
     },
     "web": {
       "favicon": "./assets/favicon.png"
